@@ -1,0 +1,51 @@
+---
+title: "Probability and Statistics"
+author: "David J. Hunter"
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE}
+library(metathis)
+meta() %>%
+  meta_description(
+    "Slides, assignments, and code for my probability and statistics class."
+  ) %>%
+  meta_name("github-repo" = "djhunter/cryptography") %>%
+  meta_viewport() %>%
+  meta_social(
+    title = "Probability and Statistics",
+    url = "https://djhunter.github.io/prob-stat/index.html",
+    image = "https://upload.wikimedia.org/wikipedia/commons/1/1f/Pi_statistisch.png",
+    image_alt = "Monte Carlo estimation of Pi",
+    og_author = c("David J. Hunter")
+  )
+```
+
+This site provides slides, assignments, and other resources for an upper-division course in probability and statistics. The material in this course draws from the following textbooks.
+
+- [GS]: [Grinstead and Snell's Introduction to Probability](https://math.dartmouth.edu/~prob/prob/prob.pdf), The Chance Project.
+- [JWHT]: [An Introduction to Statistical Learning](https://hastie.su.domains/ISLR2/ISLRv2_website.pdf), James, Witten, Hastie, Tibshirani. 
+- [ER]: [Probability and Statistics](https://www.utstat.toronto.edu/mikevans/jeffrosenthal/book.pdf), Evans and Rosenthal.
+
+# Slides 
+
+# Assignments
+
+# Other Resources
+
+- [Syllabus](syllabus/ma130hunterS23.pdf) (PDF)
+- [Installing R and RStudio](assignments/installRStudio.html)
+
+All of the pages and slides on this site were authored in RMarkdown. The source code is available on GitHub: https://github.com/djhunter/prob-stat
+

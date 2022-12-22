@@ -1,0 +1,40 @@
+---
+title: "Installing R and RStudio"
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+R and RStudio are both free and open-source. Please install them on your laptop as described below.
+
+## Step 1: Install R
+
+The installer is here: https://cran.rstudio.com/
+
+Choose the appropriate installer for your operating system. The latest release of R is 4.2.2 (Innocent and Trusting). 
+
+- Mac users: pay attention to the MacOS prerequisites, and choose the appropriate version for your system (Apple silicon arm64 or Intel). R version 4.2.2 requires MacOS 10.13 or greater. 
+- Windows users: just run the .exe file. 
+- Linux users: R can often be found using the package manager (e.g., see [these instructions](https://www.digitalocean.com/community/tutorials/how-to-install-r-on-ubuntu-22-04) for getting the latest version of R for Ubuntu.)
+
+## Step 2: Install RStudio
+
+Once you have installed R, you can install RStudio Desktop using the installer that you can get here: https://posit.co/download/rstudio-desktop/
+
+Again, choose the appropriate installer. 
+
+- Mac Users: Notice that the latest version of RStudio requires MacOS 10.15 or greater. If you have an older version of MacOS (e.g., 10.13), you will need to use an [older installer](https://www.rstudio.com/products/rstudio/older-versions/) (e.g., Version 1.3.1093 should work on MacOS 10.13). Also, make sure you complete the step of dragging the RStudio icon into the Applications folder.
+
+
+
+
+
