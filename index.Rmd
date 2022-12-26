@@ -40,6 +40,29 @@ This site provides slides, assignments, and other resources for an upper-divisio
 
 # Slides 
 
+---
+# 1. [Discrete Probability Distributions]()
+# 2. [Continuous Probability Distributions]()
+# 3. [Conditional Probability]()
+# 4. [Important Distributions]()
+# 5. [Expected Value and Variance]()
+# 6. [Sums of Random Variables]()
+# 7. [The Law of Large Numbers]()
+# 8. [The Central Limit Theorem]()
+# 9. [CLT: Applications]()
+# 10. [Hypothesis Testing and Confidence Intervals]()
+# 11. [Statistical Learning]()
+# 12. [Linear Regression]()
+# 13. [Multiple Linear Regression]()
+# 14. [Logistic Regression]()
+# 15. [Generative Models for Classification]()
+# 16. [Resampling Methods]()
+# 17. [Model Selection]()
+# 18. []()
+# 19. []()
+# 20. []()
+---
+
 # Assignments
 
 # Other Resources

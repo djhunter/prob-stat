@@ -1,0 +1,110 @@
+---
+title: "Discrete Probability Distributions"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+```
+
+
+# Overview
+
+For further reading, see [GS], pp. 1-40.
+
+# Simulation of Discrete Probabilities
+
+## Discrete Random Variables
+
+A **random variable** is an expression whose value is the outcome of a random experiment.
+
+- Example: Roll a 6-sided die. Let $X$ be the number that comes up.
+    - $P(X = 1) = P(X = 2) = \cdots = P(X = 6) = 1/6$
+    - $P(X \leq 4) = 2/3$
+- Example: Flip 2 coins. Let $Y$ be the total number of heads.
+    - $P(Y = 0) = 0.25$, $P(Y = 1) = 0.5$, $P(Y = 2) = 0.25$
+
+## Distribution Functions
+
+A **distribution function** $m$ assigns a nonnegative number $m(\omega_j)$ to each possible
+value $\omega_j$ of a random variable.
+
+- Example: Roll a 6-sided die. Let $X$ be the number that comes up.
+    - Possible outcomes: $\omega_1 = 1, \omega_2 = 2, \ldots, \omega_6 = 6$.
+    - $m(\omega_j) = 1/6$ for all $j$.
+- Example: Flip 2 coins. Let $Y$ be the total number of heads.
+    - Possible outcomes: $\omega_1 = 0, \omega_2 = 1, \omega_3 = 2$.
+    - $m(\omega_1) = 0.25$, $m(\omega_2) = 0.5$, $m(\omega_3) = 0.25$
+    
+. . .
+
+Note: A distribution function always has "total mass" 1:
+
+$$
+\sum_{\text{all } j} m(\omega_j) = 1
+$$
+
+## Example: Peter and Paul
+
+Peter and Paul play a game: flip a coin 40 times. 
+
+- If heads, Peter wins one dollar from Paul. 
+- If tails, Peter gives one dollar to Paul.
+- Let $X$ be Peter's total winnings. How is $X$ distributed?
+
+(See R Console for a demonstration)
+
+## Simulation using R (summary)
+
+```{r, fig.align='center', fig.width=6, fig.height=3.5}
+set.seed(1234)
+pwinnings <- replicate(10000, sum(sample(c(-1,1), 40, replace = TRUE)))
+probs <- table(pwinnings)/10000
+plot(probs)
+```
+
+---
+#   ## Example: Times in lead
+#   
+#   - Let $Y$ be the number of times during the game that Peter's winnings are positive.
+#   - How is $Y$ distributed?
+#   
+#   (See R Console)
+#   
+#   ## Times in lead (summary)
+#   
+#   ```{r, fig.align='center', fig.width=6, fig.height=3.5}
+#   set.seed(1234)
+#   pinlead <- replicate(10000, sum(cumsum(sample(c(-1,1), 40, replace = TRUE)) > 0))
+#   probs2 <- table(pinlead)/10000
+#   plot(probs2)
+#   ```
+---
+
+---
+# Exercise: Random walk (1D) how is distance from zero distributed? what is the average distance from zero?
+---
+
+# Discrete Probability Distributions
+
+## Random Variables and Sample Spaces
+
+## Distribution Functions
+
+

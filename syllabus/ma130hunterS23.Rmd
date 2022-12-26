@@ -65,11 +65,11 @@ In particular, providing someone with an electronic copy of your work is a breac
    \begin{quote}
     \textit{Midterm \#1}     
    \end{quote}
-      \item Statistical Practice: Hypothesis testing and confidence intervals, statistical learning models, the bias-variance trade-off, linear regression, logistic regression, cross validation, bootstrapping. 
+      \item Statistical Practice: Hypothesis testing and confidence intervals, statistical learning models, the bias-variance trade-off, linear regression, logistic regression, cross validation, bootstrapping, model selection. 
    \begin{quote}
     \textit{Midterm \#2}  
    \end{quote}
-      \item Further Applications: Time permitting, a selection of topics from model selection, principal components analysis, decision trees, random forests, support vector machines, or other statistical learning methods.
+      \item Further Applications: Time permitting, a selection of topics from principal components analysis, decision trees, random forests, support vector machines, or other statistical learning methods.
    \begin{quote}
     \textit{Final Exam}     (cumulative)
    \end{quote}

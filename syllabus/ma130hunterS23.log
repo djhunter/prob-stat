@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.12.7)  22 DEC 2022 14:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.12.7)  26 DEC 2022 11:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -936,11 +936,11 @@ File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 
 ] (./ma130hunterS23.aux) ) 
 Here is how much of TeX's memory you used:
- 16862 strings out of 480247
- 266491 string characters out of 5896151
+ 16858 strings out of 480247
+ 266447 string characters out of 5896151
  587555 words of memory out of 5000000
  34271 multiletter control sequences out of 15000+600000
- 511593 words of font info for 197 fonts, out of 8000000 for 9000
+ 511358 words of font info for 194 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  74i,11n,77p,1011b,400s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/
@@ -950,7 +950,7 @@ t/fonts/type1/bitstrea/charter/bchr8a.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/bitstrea/charter/bchri8a.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt
 10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathdesign/mdbch/md-ch
 r8t.pfb>
-Output written on ma130hunterS23.pdf (2 pages, 81496 bytes).
+Output written on ma130hunterS23.pdf (2 pages, 81491 bytes).
 PDF statistics:
  90 PDF objects out of 1000 (max. 8388607)
  75 compressed objects within 1 object stream
