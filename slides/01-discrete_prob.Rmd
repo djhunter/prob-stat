@@ -79,6 +79,64 @@ probs <- table(pwinnings)/10000
 plot(probs)
 ```
 
+## Example: Roll until you get a 6
+
+- You get one dollar for each roll of a six-sided die.
+- You keep rolling till you get a 6.
+
+(See console for demo)
+
+## Group Exercise
+
+<div class="column-left">
+
+1. What is the exact probability of winning 1 dollar (i.e., of rolling a 6 on the first roll)? Does this match the graph from the simulation?
+2. What is the exact probability of winning 2 dollars (i.e., of rolling a non-6 on the first roll, then rolling a 6 on the second roll)?
+3. What is the exact probability of winning $k$ dollars?
+
+</div>
+
+<div class="column-right">
+```{r, fig.align='center', fig.width=4, fig.height=4, echo=FALSE}
+set.seed(4321)
+dwinnings <- replicate(10000, {
+  i <- 1
+  while(sample(6, 1) != 6) i <- i + 1
+  i
+  })
+probs <- table(dwinnings)/10000
+plot(probs)
+```
+
+</div>
+
+## Simulation using R (distribution)
+
+```{r, fig.align='center', fig.width=6, fig.height=3.5}
+set.seed(4321)
+dwinnings <- replicate(10000, {
+  i <- 1
+  while(sample(6, 1) != 6) i <- i + 1
+  i
+  })
+probs <- table(dwinnings)/10000
+plot(probs)
+```
+
+
+## Simulation using R (mean winnings)
+
+```{r, fig.align='center', fig.width=6, fig.height=3.5}
+set.seed(4321)
+dwinnings <- replicate(10000, {
+  i <- 1
+  while(sample(6, 1) != 6) i <- i + 1
+  i
+  })
+mean(dwinnings)
+```
+
+
 ---
 #   ## Example: Times in lead
 #   
@@ -103,8 +161,36 @@ plot(probs)
 
 # Discrete Probability Distributions
 
-## Random Variables and Sample Spaces
+## Random Variables, Sample Spaces, Distributions
+
+- The **sample space** $\Omega$ of a random experiment is the set of all possible outcomes.
+- An **event** is a subset of a sample space.
+- A **random variable** is a numerical result of a random experiment.
+
+. . . 
+
+*Warning.* These definitions depend on which book you read.
+
+- [GS] uses "random variable" and "sample space" interchangeably, sometimes. (See pp. 18-19) 
+- [ER] defines a random variable as a function $X : \Omega \longrightarrow \mathbb{R}$. (See pp. 34-38)
+
+
+## Example: Flip a coin twice.
+
+There is more than one way to represent the sample space.
+
+- Sample space: $\Omega = \{TT, TH, HT, HH\}$
+    - Event that the coins differ: $E = \{TH, HT\}$
+    - Random variable: $X =$ number of heads.
+- Alternatively, Sample space $\Omega = \{0, 1, 2\}$
+    - Event that the coins differ: $E = \{1 \}$
+    - $X(\omega) = \omega$, for all $\omega \in \Omega$.
 
 ## Distribution Functions
 
+A **distribution function** is a function $m$ that assigns a probability to each $\omega \in \Omega$.
+
+- $m : \Omega \longrightarrow [0, 1]$
+- $\displaystyle{\sum_{\omega \in \Omega}} m(\omega) = 1$
+- If $E \subseteq \Omega$, then the **probability** of the event $E$ is $P(E) = \displaystyle{\sum_{\omega \in E}} m(\omega)$
 
