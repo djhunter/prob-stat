@@ -194,3 +194,34 @@ A **distribution function** is a function $m$ that assigns a probability to each
 - $\displaystyle{\sum_{\omega \in \Omega}} m(\omega) = 1$
 - If $E \subseteq \Omega$, then the **probability** of the event $E$ is $P(E) = \displaystyle{\sum_{\omega \in E}} m(\omega)$
 
+## Group Exercise
+
+Let $\Omega = \{a, b, c, d}$ with $m(a) = m(b) = 2m(c) = 3m(d)$. 
+
+1. Determine $m(a), m(b), m(c), m(d)$.
+
+2. Let $E = \{b, c\}$ be an event. Compute $P(E)$ and $P(\tilde{E})$. ($\tilde{E}$ is the set complement of $E$.)
+
+3. Let $F = \{c, d \}$. Compute $P(E \cup F)$.
+
+## Properties of discrete probability
+
+See [GS], pp. 22-24.
+
+- Theorem 1.1: Elementary properties
+- Theorem 1.2, 1.3: Disjoint events
+- Theorem 1.4: Inclusion-Exclusion principle
+
+## Odds
+
+Suppose $P(E) = p$.
+
+- The **odds** in favor of $E$ are $r : s$ ($r$ to $s$) where $r/s = p/(1-p)$.
+- If the odds of $E$ are $r$ to $s$, then $P(E) = r/(r + s)$.
+
+. . . 
+
+Example, a sports book is giving 15 to 1 odds that a certain team wins the Super Bowl.
+
+- You win 15 dollars for a 1 dollar bet.
+- If the probability that this team will win is $1/16$, the book will break even. (Check this.)
