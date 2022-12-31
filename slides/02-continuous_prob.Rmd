@@ -1,0 +1,102 @@
+---
+title: "Continuous Probability Distributions"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+```
+
+
+# Overview
+
+For further reading, see [GS], pp. 41-70.
+
+# Simulation of Continuous Probabilities
+
+## (Pseudo-) Random Number Generation  
+
+- Assume we have a function $\text{rnd}$ that returns a random number in the interval $[0,1]$.
+- In R, the `runif` function implements $\text{rnd}$.
+
+```{r}
+runif(5)
+```
+
+## Monte Carlo Procedures
+
+Problem: Estimate $\text{Area of } E = \int_0^1 x^2 \, dx$ without calculus.
+
+
+```{r, echo=FALSE, fig.align='center', fig.width=4}
+knitr::include_graphics("images/xsquared.png")
+```
+
+Solution: Generate pairs $x = \text{rnd}$ and $y = \text{rnd}$ and compute the proportion of times $y < x^2$. (See console.)
+
+## Monte Carlo integrals in R
+
+```{r}
+set.seed(3242)
+n <- 100000
+x <- runif(n)
+y <- runif(n)
+sum(y < x^2)/n
+```
+
+*Note:* In general you need to multiply by the area of the rectangle, too.
+
+## Group Exercise
+
+## Buffon's Needle
+
+Two things are random and independent:
+
+- The distance between the center of the needle and the nearest line. 
+    - $d = \frac{1}{2} \text{rnd}$
+    - $0 \leq d \leq 1/2$
+- The acute angle made by the line of the needle and the lines.
+    - $\theta = \frac{\pi}{2} \text{rnd}$
+    - $0 \leq \theta \leq \pi/2$
+
+The needle will intersect a line iff $\displaystyle{\frac{d}{\sin\theta} < \frac{1}{2}}$. (board)
+
+## Buffon's Needle in R
+
+```{r}
+set.seed(8783)
+n <- 100000
+d <- runif(n, min = 0, max = 0.5)
+theta <- runif(n, min = 0, max = pi/2)
+sum(d < 0.5 * sin(theta))/n
+```
+
+## Buffon's Needle: Exact Solution
+
+- We are drawing $(\theta, d)$ from the rectangle $[0, \pi/2] \times [0, 1/2]$.
+- We are counting the points where $d < \frac{1}{2}\sin(\theta)$.
+    - This is like doing a Monte Carlo estimate of an integral.
+- So we are estimating the following:
+
+$$
+\frac{1}{\pi/4} \int_0^{\pi/2} \frac{1}{2}\sin \theta \, d\theta = \frac{2}{\pi}
+$$
+
+# Continuous Density Functions
+
