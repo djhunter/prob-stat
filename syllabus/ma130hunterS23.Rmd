@@ -75,7 +75,7 @@ In particular, providing someone with an electronic copy of your work is a breac
    \end{quote}
   \end{itemize}
 
-\item[Accommodations for Students with Disabilities:] Students who have been diagnosed with a disability (learning, physical or psychological) are strongly encouraged to contact the Disability Services office as early as possible to discuss appropriate accommodations for this course. Formal accommodations will only be granted for students whose disabilities have been verified by the Disability Services office.  These accommodations may be necessary to ensure your equal access to this course.  Please contact Sheri Noble, Director of Disability Services (310A Voskuyl Library, 565-6186, \href{mailto:snoble@westmont.edu}{\tt snoble@westmont.edu}) or visit \url{https://www.westmont.edu/disability-services} for more information.
+\item[Accommodations for Students with Disabilities:] Students who have been diagnosed with a disability (learning, physical or psychological) are strongly encouraged to contact the Disability Services office as early as possible to discuss appropriate accommodations for this course. Formal accommodations will only be granted for students whose disabilities have been verified by the Disability Services office.  These accommodations may be necessary to ensure your equal access to this course.  Please contact the Office of Disability Services (\href{mailto:ods@westmont.edu}{\tt ods@westmont.edu}) or visit \url{https://www.westmont.edu/disability-services} for more information.
 
 \item[Program and Institutional Learning Outcomes:] The
          mathematics department at Westmont College has formulated the
