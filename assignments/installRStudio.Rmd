@@ -51,7 +51,7 @@ in the console and hit the *enter* key, you should see the result in the console
 Install the `tidyverse` and `ISLR2` packages by executing the following command in the console.
 
 ```{r eval=FALSE}
-install.packages(c("openintro", "tidyverse"), type = "binary")
+install.packages(c("ISLR2", "tidyverse"), type = "binary")
 ```
 
 This command will install several packages and data sets that we will use throughout the course. It might take a while to finish. If you encounter any error messages, take a screenshot and email me.
