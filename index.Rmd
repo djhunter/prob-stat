@@ -40,8 +40,9 @@ This site provides slides, assignments, and other resources for an upper-divisio
 
 # Slides 
 
+1. [Discrete Probability Distributions](slides/01-discrete_prob.html)
+
 ---
-# 1. [Discrete Probability Distributions]()
 # 2. [Continuous Probability Distributions]()
 # 3. [Conditional Probability]()
 # 4. [Important Distributions]()
@@ -64,6 +65,8 @@ This site provides slides, assignments, and other resources for an upper-divisio
 ---
 
 # Assignments
+
+1. [Discrete Probability](assignments/01-disc_prob.html), due 1/16.
 
 # Other Resources
 

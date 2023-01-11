@@ -26,6 +26,14 @@ options(width = 100)
 
 # Overview
 
+- Simulation of Discrete Probabilities
+    - Discrete random variables
+    - Distribution functions
+    - R
+- Discrete Probability Distributions
+    - Random Variables, Sample Spaces, Distribution Functions
+    - Properties of Discrete Probability
+
 For further reading, see [GS], pp. 1-40.
 
 # Simulation of Discrete Probabilities
