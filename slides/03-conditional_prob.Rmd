@@ -1,0 +1,119 @@
+---
+title: "Continuous Probability Distributions"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+```
+
+
+# Overview
+
+- Conditional probability in the discrete case
+    - Independence
+- Continuous conditional probability
+- Joint density and cumulative distribution functions
+    - Independence
+    
+For further reading, see [GS], pp. 162-172.
+
+# Conditional Probability: The Discrete Case
+
+## Conditional Probability
+
+Let $E$ and $F$ be events in a sample space $\Omega$. 
+
+- The **conditional probability** of $F$ given $E$ is denoted $P(F \mid E)$.
+- $P(F \mid E)$ is the probability that $F$ occurs, given that $E$ has/must occur(red).
+
+Examples:
+
+- Flip three coins. What is the probability that all are heads, given that the first is heads?
+- Roll a six-sided die. What is the probability of rolling a six, given that the roll is even?
+
+## Rules for discrete conditional probability
+
+>- Restriction rule: The conditional probability of $F$ given $E$ is the probability of $F$ when we *restrict* the sample space to $E$:
+$$
+P(F \mid E) = \frac{P(F \cap E)}{P(E)}
+$$
+>- Multiplication rule: $P(F \cap E) = P(F)\cdot P(E \mid F) = P(E)\cdot P(F \mid E)$
+>    - Two events are **independent** iff $P(E \cap F) = P(E)P(F)$.
+>- Bayes' rule: 
+$$
+P(F \mid E) = \frac{P(E\mid F)\cdot P(F)}{P(E)} = \frac{P(E \mid F)\cdot P(F)}{P(F)\cdot P(E \mid F) + P(\tilde{F})\cdot P(E \mid \tilde{F})}
+$$
+
+## Group Exercise
+
+It is estimated that 1% of the population have a certain rare disease. A test for this disease will correctly detect an infection 98% of the time. However, this test has a 5% false positive rate: That is, the probability that someone tests positive, given that they don't have the disease, is 0.05. What is the probability that a randomly chosen person has this disease, given that they tested positive for it?
+
+---
+# exercises 26, 29 on pp. 153-154 of [GS]
+---
+
+# Continuous Conditional Probability
+
+## PDFs for conditional probability
+
+Suppose $X$ is a continuous random variable with density function $f(x)$. Let $E$ be an event with nonzero probability. Then the **conditional density function** for $X$ given $E$ is
+
+$$
+f(x \mid E) = \begin{cases} 
+f(x)/P(E) & \text{if } x \in E \\
+0 & \text{if } x \not\in E
+\end{cases}
+$$
+Sanity check: This definition is consistent with the restriction rule:
+
+$$
+P(F \mid E) = \int_F f(x \mid E) \, dx = \int_{E \cap F} \frac{f(x)}{P(E)} \, dx = \frac{P(E \cap F)}{P(E)}
+$$
+
+Example: Spinner
+
+## Group Exercise
+
+Let $X$ and $Y$ be uniform random variables on $[0,1]$, and let $Z = X + Y$. Last time we proved that $Z$ has the following PDF:
+$$
+f(z) = \begin{cases}
+0 & \text{if } z<0 \\
+z & \text{if } 0 \leq z \leq 1 \\
+2-z & \text{if } 1 \leq z \leq 2 \\
+0 &\text{if } z > 2
+\end{cases}
+$$
+
+Let $E$ be the event that $Z$ is greater than 0.5. Derive a formula for $f(x \mid E)$, and compute the probability that $Z$ is greater than 1, given that it is greater than 0.5.
+
+## Example: Exponential density
+
+
+# Joint Density Functions
+
+## Double integrals
+
+## Joint density function
+
+## Joint cumulative distribution function
+
+## Independence
+
+

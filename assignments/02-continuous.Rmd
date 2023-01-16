@@ -1,0 +1,21 @@
+---
+title: "Continuous Probability"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Produce a PDF with solutions to the following problems, and submit the PDF on Canvas; due 1/19, 11:59pm. 
+
+1. Do Exercise 7 on page 53 of [GS] using R. Where it says, "compare with Buffon's method described in Exercise 6", note that you can compare this method to the script we wrote in class for Buffon's method.
+
+2. Do Exercise 2 on page 71 of [GS]. In addition to parts (a), (b), and (c), also find the cumulative distribution function of $X$.
+
+3. Do Exercise 6 on page 72 of [GS].
+
+

@@ -26,6 +26,10 @@ options(width = 100)
 
 # Overview
 
+- Simulation of continuous probabilities
+- Modeling continuous probabilites
+- Density functions: Definitions and examples
+
 For further reading, see [GS], pp. 41-70.
 
 # Simulation of Continuous Probabilities
@@ -203,8 +207,8 @@ $$
 Suppose $X$ takes values on the interval $[l, r]$, and each point is equally likely. Then $X$ is distributed according to the **uniform** distribution:
 $$
 f(x) = \begin{cases}
-1/(r-l), & \text{if } l \leq x \leq r \\
-0, & \text{otherwise.}
+1/(r-l) & \text{if } l \leq x \leq r \\
+0 & \text{otherwise.}
 \end{cases}
 $$
 
@@ -213,8 +217,8 @@ $$
 Let $X$ be the distance a random dart landing in the unit circle is from $(0,0)$. Claim: Its PDF is
 $$
 f(x) = \begin{cases}
-2x, & \text{if } 0 \leq x \leq 1\\
-0, & \text{otherwise.}
+2x & \text{if } 0 \leq x \leq 1\\
+0 & \text{otherwise.}
 \end{cases}
 $$
 
@@ -242,9 +246,9 @@ and therefore, by the second Fundamental Theorem of Calculus, $f(x) = F'(x)$.
 Suppose $X$ has a uniform distribution on $[0,1]$. In other words, $X = \text{rnd}$. Its CDF is
 $$
 F(x) = \begin{cases} 
-0, & \text{if } x < 0 \\
-x, & \text{if } 0 \leq x \leq 1 \\
-1, & \text{if } x>1
+0 & \text{if } x < 0 \\
+x & \text{if } 0 \leq x \leq 1 \\
+1 & \text{if } x>1
 \end{cases}
 $$
 
@@ -259,10 +263,10 @@ Suppose $Z = X + Y$, where $X$ and $Y$ are uniform random variables on $[0,1]$.
     
 $$
 F(z) = \begin{cases}
-0, & \text{if } z<0 \\
-z^2/2, & \text{if } 0 \leq z \leq 1 \\
-1 - (2-z)^2/2, & \text{if } 1 \leq z \leq 2 \\
-1, &\text{if } z > 2
+0 & \text{if } z<0 \\
+z^2/2 & \text{if } 0 \leq z \leq 1 \\
+1 - (2-z)^2/2 & \text{if } 1 \leq z \leq 2 \\
+1 &\text{if } z > 2
 \end{cases}
 $$
 
@@ -274,8 +278,8 @@ Let $\lambda>0$ be a real parameter. The **exponential** density function is
 
 $$
 f(x) = \begin{cases}
-\lambda e^{-\lambda t}, & \text{if } t \geq 0 \\
-0, & \text{if } t < 0
+\lambda e^{-\lambda t} & \text{if } t \geq 0 \\
+0 & \text{if } t < 0
 \end{cases}
 $$
 
