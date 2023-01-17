@@ -34,6 +34,8 @@ For further reading, see [GS], pp. 41-70.
 
 # Simulation of Continuous Probabilities
 
+## Discrete vs. Continuous
+
 ## (Pseudo-) Random Number Generation  
 
 - Assume we have a function $\text{rnd}$ that returns a random number in the interval $[0,1]$.
@@ -97,6 +99,19 @@ theta <- runif(n, min = 0, max = pi/2)
 sum(d < 0.5 * sin(theta))/n
 ```
 
+## Buffon's Needle: Function version
+
+```{r}
+BuffonProb <- function(n) {
+  d <- runif(n, min = 0, max = 0.5)
+  theta <- runif(n, min = 0, max = pi/2)
+  return(sum(d < 0.5 * sin(theta))/n)
+}
+set.seed(8783)
+BuffonProb(100000)
+```
+
+
 ## Buffon's Needle: Exact Solution
 
 - We are drawing $(\theta, d)$ from the rectangle $[0, \pi/2] \times [0, 1/2]$.
@@ -157,6 +172,9 @@ hist(values, freq = FALSE) # density histogram
 
 - Throw a dart so that it lands randomly inside the circle $x^2 + y ^2 = 1$.
 - $X = \sqrt{x^2 + y^2}$
+- How do we do this with `runif`?
+
+. . .
 
 ```{r}
 dartdist <- function() {
