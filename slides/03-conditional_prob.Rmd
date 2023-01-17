@@ -108,12 +108,32 @@ Let $E$ be the event that $Z$ is greater than 0.5. Derive a formula for $f(x \mi
 
 # Joint Density Functions
 
+## Motivating example
+
+1. Consider drawing a point at random from the square region $[0,1] \times [0,1]$. Let $X$ and $Y$ be the coordinates of the point.
+2. Consider drawing a point at random from the region bounded by the triangle with vertices $(0,0)$, $(1,0)$, and $(0,1)$. Let $X$ and $Y$ be the coordinates of the point.
+
+In each case, does the distribution of $Y$ depend on the value of $X$ (and vice versa)?
+
+## Independence
+
+Two continuous random variables $X$ and $Y$ are **independent** if the conditional PDF for $X$ given $Y = y$ does not depend on $y$. That is, for any value of $y$,
+$$
+f_{X \mid Y}(x \mid Y = y) = f_X(x)
+$$
+is a function of $x$ only (and not $y$).
+
 ## Double integrals
+
+- A (positive, continuous) function of two variables $z = f(x,y)$ defines a surface (above the $xy$-plane).
+- The *volume* between a region $E$ in the $xy$-plane and the surface is given by the **double integral**
+$$
+\iint_E f(x,y)\, dx\,dy
+$$
 
 ## Joint density function
 
 ## Joint cumulative distribution function
 
-## Independence
 
 
