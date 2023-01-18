@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <title>Continuous Probability Distributions</title>
+  <title>Conditional Probability and Independence</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -1805,7 +1805,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
     <div class="slides">
 
 <section>
-    <h1 class="title">Continuous Probability Distributions</h1>
+    <h1 class="title">Conditional Probability and Independence</h1>
 </section>
 
 <section id="overview" class="title-slide slide level1">
@@ -1821,15 +1821,15 @@ document.addEventListener('DOMContentLoaded', function(e) {
 <li>Independence</li>
 </ul></li>
 </ul>
-<p>For further reading, see [GS], pp. 162-172.</p>
+<p>For further reading, see [GS], pp. 162-168.</p>
 </section>
 
 <section>
-<section id="conditional-probability-the-discrete-case" class="title-slide slide level1">
-<h1>Conditional Probability: The Discrete Case</h1>
+<section id="conditional-probability" class="title-slide slide level1">
+<h1>Conditional Probability</h1>
 
 </section>
-<section id="conditional-probability" class="slide level2">
+<section id="conditional-probability-1" class="slide level2">
 <h2>Conditional Probability</h2>
 <p>Let <span class="math inline">\(E\)</span> and <span class="math inline">\(F\)</span> be events in a sample space <span class="math inline">\(\Omega\)</span>.</p>
 <ul>
@@ -1837,7 +1837,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 <li><span class="math inline">\(P(F \mid E)\)</span> is the probability
 that <span class="math inline">\(F\)</span> occurs, given that <span class="math inline">\(E\)</span> has/must occur(red).</li>
 </ul>
-<p>Examples:</p>
+<p>Examples (discrete):</p>
 <ul>
 <li>Flip three coins. What is the probability that all are heads, given
 that the first is heads?</li>
@@ -1845,8 +1845,8 @@ that the first is heads?</li>
 given that the roll is even?</li>
 </ul>
 </section>
-<section id="rules-for-discrete-conditional-probability" class="slide level2">
-<h2>Rules for discrete conditional probability</h2>
+<section id="rules-for-conditional-probability" class="slide level2">
+<h2>Rules for conditional probability</h2>
 <ul>
 <li class="fragment">Restriction rule: The conditional probability of
 <span class="math inline">\(F\)</span> given <span class="math inline">\(E\)</span> is the probability of <span class="math inline">\(F\)</span> when we <em>restrict</em> the sample
@@ -1895,7 +1895,11 @@ restriction rule:</p>
 P(F \mid E) = \int_F f(x \mid E) \, dx = \int_{E \cap F}
 \frac{f(x)}{P(E)} \, dx = \frac{P(E \cap F)}{P(E)}
 \]</span></p>
-<p>Example: Spinner</p>
+<div class="fragment">
+<p>Example: Let <span class="math inline">\(X = \text{rnd}\)</span>.
+What is <span class="math inline">\(P(X \geq 3/4 \mid X \geq
+1/4)\)</span>?</p>
+</div>
 </section>
 <section id="group-exercise-1" class="slide level2">
 <h2>Group Exercise</h2>
@@ -1914,23 +1918,96 @@ probability that <span class="math inline">\(Z\)</span> is greater than
 </section>
 <section id="example-exponential-density" class="slide level2">
 <h2>Example: Exponential density</h2>
+<p>The <a href="https://twitter.com/earthquakebot">Earthquate Robot</a>
+Twitter account sends out a tweet whenever there is a earthquake
+somewhere in the world with magnitude greater than 5.0. The number of
+hours <span class="math inline">\(X\)</span> between such earthquakes
+can be modeled by the exponential distribution. <span class="math display">\[
+f(x) = \begin{cases}
+0.2 e^{-0.2x} &amp; \text{if } x \geq 0 \\
+0 &amp; \text{if } x &lt; 0
+\end{cases}
+\]</span></p>
+<ol type="1">
+<li>What is the probability that there will be an earthquake in the next
+12 hours?</li>
+<li>What is the probability that there will be an earthquake between 10
+and 22 hours from now, given that there won’t be an earthquake in the
+next 10 hours?</li>
+</ol>
 </section></section>
 <section>
 <section id="joint-density-functions" class="title-slide slide level1">
 <h1>Joint Density Functions</h1>
 
 </section>
-<section id="double-integrals" class="slide level2">
-<h2>Double integrals</h2>
-</section>
-<section id="joint-density-function" class="slide level2">
-<h2>Joint density function</h2>
-</section>
-<section id="joint-cumulative-distribution-function" class="slide level2">
-<h2>Joint cumulative distribution function</h2>
+<section id="motivating-example" class="slide level2">
+<h2>Motivating example</h2>
+<ol type="1">
+<li>Consider drawing a point at random from the square region <span class="math inline">\([0,1] \times [0,1]\)</span>. Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> be the coordinates of the point.</li>
+<li>Consider drawing a point at random from the region bounded by the
+triangle with vertices <span class="math inline">\((0,0)\)</span>, <span class="math inline">\((1,0)\)</span>, and <span class="math inline">\((0,1)\)</span>. Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> be the coordinates of the point.</li>
+</ol>
+<p>In each case, does the distribution of <span class="math inline">\(Y\)</span> depend on the value of <span class="math inline">\(X\)</span> (and vice versa)?</p>
 </section>
 <section id="independence" class="slide level2">
 <h2>Independence</h2>
+<p>Two continuous random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <strong>independent</strong> if the
+conditional PDF for <span class="math inline">\(X\)</span> given <span class="math inline">\(Y = y\)</span> does not depend on <span class="math inline">\(y\)</span>. That is, for any value of <span class="math inline">\(y\)</span>, <span class="math display">\[
+f_{X \mid Y}(x \mid Y = y) = f_X(x)
+\]</span> is a function of <span class="math inline">\(x\)</span> only
+(and not <span class="math inline">\(y\)</span>).</p>
+</section>
+<section id="double-integrals" class="slide level2">
+<h2>Double integrals</h2>
+<ul>
+<li>A (positive, continuous) function of two variables <span class="math inline">\(z = f(x,y)\)</span> defines a surface (above the
+<span class="math inline">\(xy\)</span>-plane).</li>
+<li>The <em>volume</em> between a region <span class="math inline">\(E\)</span> in the <span class="math inline">\(xy\)</span>-plane and the surface is given by the
+<strong>double integral</strong> <span class="math display">\[
+\iint_E f(x,y)\, dy \, dx
+\]</span></li>
+</ul>
+</section>
+<section id="joint-density-functions-1" class="slide level2">
+<h2>Joint density functions</h2>
+<p>Suppose the sample space <span class="math inline">\(\Omega\)</span>
+is two-dimensional: <span class="math inline">\(\Omega \subseteq
+\mathbb{R}^2\)</span>. In this case we can consider random variables
+<span class="math inline">\((X, Y)\)</span> drawn from this sample
+space, and an event <span class="math inline">\(E\)</span> is a
+two-dimensional region in <span class="math inline">\(\Omega\)</span>. A
+<strong>joint density function</strong> for <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is a function <span class="math inline">\(f(x,y)\)</span> such that <span class="math display">\[
+P((X,Y)\in E) = \iint_E f(x,y) dy \, dx
+\]</span></p>
+</section>
+<section id="joint-cumulative-distribution-functions" class="slide level2">
+<h2>Joint cumulative distribution functions</h2>
+<p>Similarly, we can define the <strong>joint cumulative distribution
+function</strong> for <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> as <span class="math display">\[
+F(x,y) = P(X \leq x \text{ and } Y \leq y)
+\]</span></p>
+<p>Facts: <span class="math inline">\(f\)</span> and <span class="math inline">\(F\)</span> are related as follows. <span class="math display">\[
+F(x,y) = \int_{-\infty}^x \int_{-\infty}^y f(s,t) \, dt \, ds
+\]</span> and <span class="math display">\[
+f(x,y) = \frac{\partial^2F(x,y)}{\partial x \partial y}
+\]</span></p>
+</section>
+<section id="equivalent-conditions-for-independence" class="slide level2">
+<h2>Equivalent conditions for independence</h2>
+<p>Suppose <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are continuous random variables with
+PDFs <span class="math inline">\(f_X(x)\)</span> and <span class="math inline">\(f_Y(y)\)</span> and CDFs <span class="math inline">\(F_X(x)\)</span> and <span class="math inline">\(F_Y(y)\)</span>. Then either of the following
+conditions imply that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent.</p>
+<ul>
+<li>The joint density function <span class="math inline">\(f(x,y) =
+f_X(x) f_Y(y)\)</span>.</li>
+<li>The joint distribution function <span class="math inline">\(F(x,y) =
+F_X(x)F_Y(y)\)</span>.</li>
+</ul>
+<p>For more details, see [ER], pp. 95-100.</p>
+<div class="fragment">
+<p>Example: <span class="math inline">\(f(x,y) = 4xy\)</span> on <span class="math inline">\(\Omega = [0,1]\times[0,1]\)</span></p>
+</div>
 </section></section>
     </div>
   </div>

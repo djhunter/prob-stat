@@ -1,0 +1,25 @@
+---
+title: "Conditional Probability and Independence"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Produce a PDF with solutions to the following problems, and submit the PDF on Canvas; due 1/22, 11:59pm. 
+
+1. Do Exercises 26 and 28 pp. 153-154 of [GS].
+
+2. Do Exercises 1, 2, 5, 6, and 8 on pp. 172-174 of [GS]. Hints and advice:
+    - On 1d, factor the polynomial.
+    - For 5, compute the probabilities by taking ratios of areas.
+    - For 6c, see the last part of Example 4.19.
+    - Notice that Exercise 8 continues onto page 174. There are four events labeled (a), (b), (c), (d), so there are six pairs to consider.
+
+
+
+

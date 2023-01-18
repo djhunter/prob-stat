@@ -1,5 +1,5 @@
 ---
-title: "Continuous Probability Distributions"
+title: "Conditional Probability and Independence"
 output: 
   revealjs::revealjs_presentation:
     fig_width: 14 
@@ -32,9 +32,9 @@ options(width = 100)
 - Joint density and cumulative distribution functions
     - Independence
     
-For further reading, see [GS], pp. 162-172.
+For further reading, see [GS], pp. 162-168.
 
-# Conditional Probability: The Discrete Case
+# Conditional Probability
 
 ## Conditional Probability
 
@@ -43,12 +43,12 @@ Let $E$ and $F$ be events in a sample space $\Omega$.
 - The **conditional probability** of $F$ given $E$ is denoted $P(F \mid E)$.
 - $P(F \mid E)$ is the probability that $F$ occurs, given that $E$ has/must occur(red).
 
-Examples:
+Examples (discrete):
 
 - Flip three coins. What is the probability that all are heads, given that the first is heads?
 - Roll a six-sided die. What is the probability of rolling a six, given that the roll is even?
 
-## Rules for discrete conditional probability
+## Rules for conditional probability
 
 >- Restriction rule: The conditional probability of $F$ given $E$ is the probability of $F$ when we *restrict* the sample space to $E$:
 $$
@@ -87,7 +87,9 @@ $$
 P(F \mid E) = \int_F f(x \mid E) \, dx = \int_{E \cap F} \frac{f(x)}{P(E)} \, dx = \frac{P(E \cap F)}{P(E)}
 $$
 
-Example: Spinner
+. . .
+
+Example: Let $X = \text{rnd}$. What is $P(X \geq 3/4 \mid X \geq 1/4)$?
 
 ## Group Exercise
 
@@ -105,6 +107,16 @@ Let $E$ be the event that $Z$ is greater than 0.5. Derive a formula for $f(x \mi
 
 ## Example: Exponential density
 
+The [Earthquate Robot](https://twitter.com/earthquakebot) Twitter account sends out a tweet whenever there is a earthquake somewhere in the world with magnitude greater than 5.0. The number of hours $X$ between such earthquakes can be modeled by the exponential distribution.
+$$
+f(x) = \begin{cases}
+0.2 e^{-0.2x} & \text{if } x \geq 0 \\
+0 & \text{if } x < 0
+\end{cases}
+$$
+
+1. What is the probability that there will be an earthquake in the next 12 hours?
+2. What is the probability that there will be an earthquake between 10 and 22 hours from now, given that there won't be an earthquake in the next 10 hours?
 
 # Joint Density Functions
 
@@ -128,12 +140,43 @@ is a function of $x$ only (and not $y$).
 - A (positive, continuous) function of two variables $z = f(x,y)$ defines a surface (above the $xy$-plane).
 - The *volume* between a region $E$ in the $xy$-plane and the surface is given by the **double integral**
 $$
-\iint_E f(x,y)\, dx\,dy
+\iint_E f(x,y)\, dy \, dx
 $$
 
-## Joint density function
+## Joint density functions
 
-## Joint cumulative distribution function
+Suppose the sample space $\Omega$ is two-dimensional: $\Omega \subseteq \mathbb{R}^2$. In this case we can consider random variables $(X, Y)$ drawn from this sample space, and an event $E$ is a two-dimensional region in $\Omega$. A **joint density function** for $X$ and $Y$ is a function $f(x,y)$ such that
+$$
+P((X,Y)\in E) = \iint_E f(x,y) dy \, dx
+$$
+
+## Joint cumulative distribution functions
+
+Similarly, we can define the **joint cumulative distribution function** for $X$ and $Y$ as
+$$
+F(x,y) = P(X \leq x \text{ and } Y \leq y)
+$$
+
+Facts: $f$ and $F$ are related as follows.
+$$
+F(x,y) = \int_{-\infty}^x \int_{-\infty}^y f(s,t) \, dt \, ds
+$$
+and 
+$$
+f(x,y) = \frac{\partial^2F(x,y)}{\partial x \partial y}
+$$
 
 
+## Equivalent conditions for independence
+
+Suppose $X$ and $Y$ are continuous random variables with PDFs $f_X(x)$ and $f_Y(y)$ and CDFs $F_X(x)$ and $F_Y(y)$. Then either of the following conditions imply that $X$ and $Y$ are independent.
+
+- The joint density function $f(x,y) = f_X(x) f_Y(y)$.
+- The joint distribution function $F(x,y) = F_X(x)F_Y(y)$.
+
+For more details, see [ER], pp. 95-100.
+
+. . .
+
+Example: $f(x,y) = 4xy$ on $\Omega = [0,1]\times[0,1]$
 
