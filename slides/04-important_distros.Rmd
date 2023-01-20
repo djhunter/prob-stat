@@ -1,0 +1,56 @@
+---
+title: "Important Distributions"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+```
+
+
+# Overview
+
+- Important Discrete Distributions
+    - Binomial
+    - Geometric
+    - Poisson
+- Important Continuous Distributions
+    - Exponential
+    - Gamma
+    - Normal
+    - Chi-Squared
+
+For further reading, see [GS], pp. 180-192,  
+
+# Important Discrete Distributions
+
+## Binomial
+## Geometric
+## Poisson
+
+# Important Continuous Distributions
+
+## Exponential
+
+## Gamma
+
+## Normal
+
+## Chi-Squared
+
