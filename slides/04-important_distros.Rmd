@@ -32,25 +32,199 @@ options(width = 100)
     - Poisson
 - Important Continuous Distributions
     - Exponential
-    - Gamma
+    - Functions of a random variable
     - Normal
-    - Chi-Squared
+    - Simulating random draws
 
-For further reading, see [GS], pp. 180-192,  
+For further reading, see [GS], pp. 180-192, 205-215.  See also [ER], pp. 45-47, 54, 57  
 
 # Important Discrete Distributions
 
-## Binomial
 ## Geometric
+
+A **geometric random variable** $T$ counts the number of trials it takes to obtain a success, if each trial has success probability $p$ and failure probability $q$.
+
+$$
+P(T = n) = q^{n-1}p
+$$
+
+. . .
+
+Examples: Roll till you get a 6. 
+
+## Binomial
+
+A **binomial random variable** counts the number of successes $X$ in $n$ trials, where each trial has a probability $p$ of success and $q = 1-p$ is the probability of failure.
+
+$$
+P(X = k) = b(n,p,k) = \binom{n}{k} p^k q^{n-k}
+$$
+
+. . . 
+
+Examples: Peter and Paul, Flip 3 coins
+
 ## Poisson
+
+- Suppose, in the binomial distribution, $n$ is very large, and $p$ is very small.
+    - e.g., $n$ is the number of houses in a city, $p$ is the probability that the house will burn down on a given day.
+    - We might not even know $n$ and $p$, but we know, on average, how many houses burn down in a city each day.
+        - $\lambda = np$
+    - The **Poisson** distribution approximates a binomial distribution in this situation.
+
+## Poisson distribution function
+
+- Start with binomial: $P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}$
+- Substitute $\lambda/n$ for $p$.
+- Let $n \rightarrow \infty$, while $k$ is fixed.
+
+## Start with binomial: 
+
+Substitute $\lambda/n$ for $p$.
+
+$$
+\begin{align}
+P(X = k) &= \binom{n}{k} \left( \frac{\lambda}{n}\right)^k\left( 1- \frac{\lambda}{n}\right)^{n-k} \\
+&= \frac{n(n-1)\cdots (n-k+1)}{k!} \left( \frac{\lambda}{n}\right)^k\left( 1- \frac{\lambda}{n}\right)^{n-k} \\
+\end{align}
+$$
+
+## Take limits
+
+Send $n \rightarrow \infty$. Note $k$ is fixed.
+
+$$
+\frac{n(n-1)\cdots (n-k+1)}{n^k} \rightarrow 1
+$$
+
+. . . 
+
+$$
+\left( 1- \frac{\lambda}{n}\right)^{n-k} = \left( 1- \frac{\lambda}{n}\right)^{n}\left( 1- \frac{\lambda}{n}\right)^{-k} \rightarrow e^{-\lambda} \cdot 1 = e^{-\lambda}
+$$
+
+. . . 
+
+We obtain the **Poisson distribution:** $P(X = k) = \displaystyle{\frac{\lambda^k}{k!}e^{-\lambda}}$
+
+## Activity: Binomial and Poisson in R
+
+1. Make a function `bin(n,p,k)` implementing the binomial.
+2. Make a function `poi(lambda,k)` implementing the Poisson.
+3. Compare.
+
+## Activity Solution
+
+```{r, eval=FALSE}
+bin <- function(n,p,k) {
+  choose(n,k)*p^k*(1-p)^(n-k)
+  }
+bin(100, 0.1, 5)
+poi <- function(lambda, k) {
+  lambda^k/factorial(k)*exp(-lambda)
+  }
+poi(10, 5)
+plot(bin(100, 0.1, 0:100))
+plot(poi(10, 0:100))
+```
 
 # Important Continuous Distributions
 
 ## Exponential
 
-## Gamma
+Recall the exponential density function.
 
-## Normal
+$$
+f(x) = \begin{cases}
+\lambda e^{-\lambda x} & \text{if } x \geq 0 \\
+0 & \text{otherwise}
+\end{cases}
+$$
 
-## Chi-Squared
+The constant $\lambda$ is called a **parameter**.
+
+. . .
+
+It is easy to derive the corresponding cumulative distribution function:
+
+$$
+F(x) = \int_{-\infty}^x f(t)\, dt = 
+\begin{cases}
+0 & \text{if } x < 0 \\
+1 - e^{-\lambda x} & \text{if } x\geq 0
+\end{cases}
+$$
+
+## Standard Normal
+
+The **standard normal** density function is the following.
+
+$$
+f(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}
+$$
+
+. . .
+
+- There is no antiderivative of this function in terms of elementary functions.
+- We have to resort to numerical integration to compute probabilities.
+
+## Activity: Normal probabilites by hand
+
+1. Define a function `f(x)` implementing the Normal PDF.
+2. Use `integrate` to compute some areas.
+3. Compare to the built-in `pnorm` function.
+
+## Activity Solution
+
+```{r, eval=FALSE}
+f <- function(x) {1/sqrt(2*pi)*exp(-x^2/2)}
+integrate(f, -1, 1)
+pnorm(1.645)
+integrate(f, -Inf, 1.645)
+```
+
+## Functions of a random variable
+
+**Theorem 5.1.** Suppose $X$ is a continuous random variable, and $\phi(x)$ is a strictly increasing function of the range of $X$. Suppose that $X$ and $Y$ have CDFs $F_X$ and $F_Y$. Then
+$$
+F_Y(y) = F_X(\phi^{-1}(y)).
+$$
+(proof, example)
+
+. . . 
+
+**Corollary.** $\displaystyle{f_Y(y) = f_X(\phi^{-1}(y))\frac{d}{dy}\phi^{-1}(y)}$
+
+## Normal Distribution with parameters
+
+- Let $X$ be a standard normal random variable, and let $Y = \sigma X + \mu$.
+- We have $X = (Y - \mu)/\sigma$, so $\phi^{-1}(y) = (y - \mu)/\sigma$. 
+- Use the Corollary to get a Normal distribution with parameters $\mu$ and $\sigma$.
+
+. . .
+
+$$
+f_Y(y) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left(\frac{-(y- \mu)^2}{2\sigma^2}\right)
+$$
+
+
+## Simulating random draws
+
+TODO
+
+## Activity: Exponential draws by hand
+
+1. Define a function `Finv(y)` implementing the *inverse* of the exponential CDF (use $\lambda = 1$). 
+2. Use your function, and `runif`, to produce some random draws from the exponential distribution.
+3. Compare to the built-in `rexp` function.
+
+## Activity Solution
+
+```{r, eval=FALSE}
+Finf <- function(y) {
+  -log(1-y)
+}
+hist(rexp(10000))
+hist(Finf(runif(10000)))
+```
 
