@@ -2074,7 +2074,7 @@ that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)<
 F_Y(y) = F_X(\phi^{-1}(y)).
 \]</span> (proof, example)</p>
 <div class="fragment">
-<p><strong>Corollary.</strong> <span class="math inline">\(\displaystyle{f_Y(y) =
+<p><strong>Corollary 5.1.</strong> <span class="math inline">\(\displaystyle{f_Y(y) =
 f_X(\phi^{-1}(y))\frac{d}{dy}\phi^{-1}(y)}\)</span></p>
 </div>
 </section>
@@ -2098,7 +2098,14 @@ f_Y(y) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left(\frac{-(y-
 </section>
 <section id="simulating-random-draws" class="slide level2">
 <h2>Simulating random draws</h2>
-<p>TODO</p>
+<p><strong>Corollary 5.2.</strong> Let <span class="math inline">\(Y\)</span> be a random variable with CDF <span class="math inline">\(F_Y\)</span> that is a strictly increasing
+function. Then to simulate random draws of <span class="math inline">\(Y\)</span>, you can just simulate random draws of
+<span class="math inline">\(F_Y^{-1}(\text{rnd})\)</span>.</p>
+<div class="fragment">
+<p>Proof: Let <span class="math inline">\(U = \text{rnd}\)</span>, set
+<span class="math inline">\(Z = F_Y^{-1}(U)\)</span>, and apply Theorem
+5.1.</p>
+</div>
 </section>
 <section id="activity-exponential-draws-by-hand" class="slide level2">
 <h2>Activity: Exponential draws by hand</h2>

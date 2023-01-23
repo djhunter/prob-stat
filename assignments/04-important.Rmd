@@ -1,0 +1,24 @@
+---
+title: "Poisson, Binomial, and Normal Distributions"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Produce a PDF with solutions to the following problems, and submit the PDF on Canvas; due 1/24, 11:59pm. 
+
+1. Do Exercise 16 on page 199 of [GS]. In addition to computing the probability using the Poisson approximation, also compute the exact probability using the binomial distribution.
+
+2. Do Exercise 31 on page 201 of [GS]. To "[f]it a Poisson distribution to this data," you just need to choose an appropriate value of $\lambda$, which should be the average death rate per corps, based on the given data (total deaths divided by total number of corps). To "see if you think that the Poisson distribution is appropriate," you should compute the predicted probabilities of having 0, 1, 2, 3, and 4 deaths using the Poisson distribution, multiply them by the total number of corps, and see how well the numbers match the data.
+
+3. Do Exercises 1 and 37 on pp. 219-244 of [GS]. These problems are direct applications of Theorem 5.1 and Corollary 5.1. For Problem 37, let $X$ be the standard normal (i.e., take $\mu = 0$ and $\sigma = 1$.)
+
+4. Do Exercise 27 on page 22 of [GS]. If $X$ represents the test scores, then $Z = (X - \mu)/\sigma$ is standard normal. Therefore you can compute the required probabilities using `pnorm`. (For example, $\mu + \sigma < X$ implies $[(\mu + \sigma) - \mu]/\sigma < (X - \mu)/\sigma$, so you can just compute $P(1 < Z)$ using `pnorm`.)
+
+
+

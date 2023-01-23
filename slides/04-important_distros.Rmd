@@ -193,7 +193,7 @@ $$
 
 . . . 
 
-**Corollary.** $\displaystyle{f_Y(y) = f_X(\phi^{-1}(y))\frac{d}{dy}\phi^{-1}(y)}$
+**Corollary 5.1.** $\displaystyle{f_Y(y) = f_X(\phi^{-1}(y))\frac{d}{dy}\phi^{-1}(y)}$
 
 ## Normal Distribution with parameters
 
@@ -210,7 +210,11 @@ $$
 
 ## Simulating random draws
 
-TODO
+**Corollary 5.2.** Let $Y$ be a random variable with CDF $F_Y$ that is a strictly increasing function. Then to simulate random draws of $Y$, you can just simulate random draws of $F_Y^{-1}(\text{rnd})$.
+
+. . .
+
+Proof: Let $U = \text{rnd}$, set $Z = F_Y^{-1}(U)$, and apply Theorem 5.1.
 
 ## Activity: Exponential draws by hand
 
