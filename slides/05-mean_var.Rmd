@@ -1,0 +1,170 @@
+---
+title: "Expected Value and Variance"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+```
+
+
+# Overview
+
+- Expected Value
+- Variance
+- Important Identities
+
+For further reading, see [GS], pp. 268-275
+
+# Expected Value
+
+## General Idea:
+
+**Expected Value** $E(X)$. Out of all the values a given random variable $X$ can take, what value, on average, do we expect to see?
+
+1. Standard Normal: $E(Z) = 0$.
+
+2. Exponential?
+$$
+f(x) = \begin{cases}
+\lambda e^{-\lambda x} & \text{if } x \geq 0 \\
+0 & \text{otherwise}
+\end{cases}
+$$
+
+
+## Motivation: Simulation
+
+Let $\lambda = 3$. We can take random draws of the exponential distribution and compute the average.
+
+```{r}
+set.seed(1231)
+expDraw <- rexp(10000, rate = 3)
+mean(expDraw)
+```
+
+## Motivation: Discrete Case
+
+If $X$ is a discrete random variable with mass function $m(x)$, the expected value would just be the average value, weighted by probability.
+
+$$
+E(X) = \sum_{x \in \Omega} x \cdot m(x)
+$$
+
+. . .
+
+Example: Flip 3 coins
+
+
+## Expected Value of a Continuous Random Variable
+
+Let $X$ be a continuous random variable with density function $f(x)$, and suppose that $\int_{-\infty}^\infty |x| f(x) \, dx$ is finite. Then the **expected value** of $X$ is
+$$
+\mu = E(X) = \int_{-\infty}^\infty x f(x) \, dx
+$$
+
+. . . 
+
+Example: Exponential with $\lambda = 3$. 
+
+## Linearity Properties
+
+Suppose that $X$ and $Y$ are random variables and $c$ is a constant. The following follow immediately from rules for integrals.
+
+- E(X + Y) = E(X) + E(Y)
+- E(cX) = c(E(X))
+
+# Joint Density Functions
+
+## Motivating example
+
+1. Consider drawing a point at random from the square region $[0,1] \times [0,1]$. Let $X$ and $Y$ be the coordinates of the point.
+2. Consider drawing a point at random from the region bounded by the triangle with vertices $(0,0)$, $(1,0)$, and $(0,1)$. Let $X$ and $Y$ be the coordinates of the point.
+
+In each case, does the distribution of $Y$ depend on the value of $X$ (and vice versa)?
+
+## Independence
+
+Two continuous random variables $X$ and $Y$ are **independent** if the conditional PDF for $X$ given $Y = y$ does not depend on $y$. That is, for any value of $y$,
+$$
+f_{X \mid Y}(x \mid Y = y) = f_X(x)
+$$
+is a function of $x$ only (and not $y$).
+
+## Double integrals
+
+- A (positive, continuous) function of two variables $z = f(x,y)$ defines a surface (above the $xy$-plane).
+- The *volume* between a region $E$ in the $xy$-plane and the surface is given by the **double integral**
+$$
+\iint_E f(x,y)\, dy \, dx
+$$
+
+## Joint density functions
+
+Suppose the sample space $\Omega$ is two-dimensional: $\Omega \subseteq \mathbb{R}^2$. In this case we can consider random variables $(X, Y)$ drawn from this sample space, and an event $E$ is a two-dimensional region in $\Omega$. A **joint density function** for $X$ and $Y$ is a function $f(x,y)$ such that
+$$
+P((X,Y)\in E) = \iint_E f(x,y) dy \, dx
+$$
+
+## Joint cumulative distribution functions
+
+Similarly, we can define the **joint cumulative distribution function** for $X$ and $Y$ as
+$$
+F(x,y) = P(X \leq x \text{ and } Y \leq y)
+$$
+
+Facts: $f$ and $F$ are related as follows.
+$$
+F(x,y) = \int_{-\infty}^x \int_{-\infty}^y f(s,t) \, dt \, ds
+$$
+and 
+$$
+f(x,y) = \frac{\partial^2F(x,y)}{\partial x \partial y}
+$$
+
+
+## Equivalent conditions for independence
+
+Suppose $X$ and $Y$ are continuous random variables with PDFs $f_X(x)$ and $f_Y(y)$ and CDFs $F_X(x)$ and $F_Y(y)$. Then either of the following conditions imply that $X$ and $Y$ are independent.
+
+- The joint density function $f(x,y) = f_X(x) f_Y(y)$.
+- The joint distribution function $F(x,y) = F_X(x)F_Y(y)$.
+
+For more details, see [ER], pp. 95-100.
+
+## Expected Value of a Product
+
+**Theorem 6.12.** Let $X$ and $Y$ be independent real-valued continuous random variables with finite expected values. Then $E(XY) = E(X)E(Y)$.
+
+# Variance
+
+## Expected Value of a Function of a Random Variable
+
+## Variance
+
+## Properties of Variance
+
+## Shortcut Formula
+
+## Application: Independent Trials
+
+## Group Activity
+
+
+
