@@ -18,7 +18,7 @@ Produce a PDF with solutions to the following problems, and submit the PDF on Ca
 
 3. Do Exercises 1 and 37 on pp. 219-244 of [GS]. These problems are direct applications of Theorem 5.1 and Corollary 5.1. For Problem 37, let $X$ be the standard normal (i.e., take $\mu = 0$ and $\sigma = 1$.)
 
-4. Do Exercise 27 on page 22 of [GS]. If $X$ represents the test scores, then $Z = (X - \mu)/\sigma$ is standard normal. Therefore you can compute the required probabilities using `pnorm`. (For example, $\mu + \sigma < X$ implies $[(\mu + \sigma) - \mu]/\sigma < (X - \mu)/\sigma$, so you can just compute $P(1 < Z)$ using `pnorm`.)
+4. Do Exercise 27 on page 222 of [GS]. If $X$ represents the test scores, then $Z = (X - \mu)/\sigma$ is standard normal. Therefore you can compute the required probabilities using `pnorm`. (For example, $\mu + \sigma < X$ implies $[(\mu + \sigma) - \mu]/\sigma < (X - \mu)/\sigma$, so you can just compute $P(1 < Z)$ using `pnorm`.)
 
 
 
