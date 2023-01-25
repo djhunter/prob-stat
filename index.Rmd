@@ -44,9 +44,9 @@ This site provides slides, assignments, and other resources for an upper-divisio
 2. [Continuous Probability Distributions](slides/02-continuous_prob.html)
 3. [Conditional Probability and Independence](slides/03-conditional_prob.html)
 4. [Important Distributions](slides/04-important_distros.html)
+5. [Expected Value and Variance](slides/05-mean_var.html)
 
 ---
-# 5. [Expected Value and Variance]()
 # 6. [Sums of Random Variables]()
 # 7. [The Law of Large Numbers]()
 # 8. [The Central Limit Theorem]()
@@ -70,6 +70,7 @@ This site provides slides, assignments, and other resources for an upper-divisio
 2. [Continuous Probability](assignments/02-continuous.html), due 1/19.
 3. [Conditional Probability](assignments/03-conditional.html), due 1/22.
 4. [Poisson, Binomial, and Normal Distributions](assignments/04-important.html), due 1/24.
+5. [Computing Expected Value and Variance](assignments/05-expected.html), due 1/29.
 
 # Other Resources
 

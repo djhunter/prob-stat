@@ -27,7 +27,9 @@ options(width = 100)
 # Overview
 
 - Expected Value
+- Joint Densities and Independence
 - Variance
+    - Expected value of $\phi(X)$
 - Important Identities
 
 For further reading, see [GS], pp. 268-275
@@ -156,15 +158,130 @@ For more details, see [ER], pp. 95-100.
 
 ## Expected Value of a Function of a Random Variable
 
+**Theorem 6.11.** Let $X$ be a continuous random variable with density function $f(x)$, and suppose $\phi$ is a real-valued function. Then
+$$
+E(\phi(X)) = \int_{-\infty}^\infty \phi(x) f(x) \, dx
+$$
+
+. . .
+
+The proof is technical. Some special cases are easy.
+
+## Exercise
+
+A stick of length 1 (on the interval $[0, 1]$) contains a knot a third of the way from one end (at $x = 1/3$). The stick is cut in two pieces at a point $X$ that is uniformly distributed on $[0,1]$. Find the expected length of the piece containing the knot. 
+
+. . .
+
+The length of this piece will be $\phi(U)$, where
+$$
+\phi(U) = \begin{cases}
+1 - U & \text{if } U < 1/3 \\
+U & \text{if } U > 1/3.
+\end{cases}
+$$
+
+Now apply Theorem 6.11.
+
+## Variance: motivation
+
+```{r, include=FALSE}
+library(tidyverse)
+set.seed(2341)
+bigsmall <- tibble(x1 = rnorm(50, mean = 5, sd= 0.5), x2 = rnorm(50, mean = 5, sd = 1.5))
+```
+
+We want to measure how spread out the distribution of a given random variable is.
+
+<div class = "column-left">
+Smaller variance
+
+```{r, message = FALSE, warning=FALSE, echo = FALSE, fig.width=5, fig.height=3}
+bigsmall %>%
+  ggplot(aes(x = x1)) +
+  geom_density(fill = "purple", alpha = 0.2) +
+  xlim(0,10) + ylim(0,0.75)
+```
+</div>
+
+<div class = "column-right">
+Larger variance
+
+```{r, message = FALSE, warning=FALSE, echo = FALSE, fig.width=5, fig.height=3}
+bigsmall %>%
+  ggplot(aes(x = x2)) +
+  geom_density(fill = "purple", alpha = 0.2) +
+  xlim(0,10) + ylim(0,0.75)
+```
+</div>
+
 ## Variance
+
+The **variance** $V(X) = \sigma^2$ of a random variable $X$ is the expected squared distance from the mean:
+$$
+V(X) = \sigma^2 = E((X-\mu)^2) = \int_{-\infty}^\infty (x - \mu)^2 f(x) \, dx
+$$
+
+In this formula, $\mu = E(X)$ and $\sigma$ is called the **standard deviation**.
+
+. . .
+
+Example: Variance of Standard Normal
+
 
 ## Properties of Variance
 
+**Theorem 6.14.** Let $X$ be a continuous random variable and $c$ a constant.
+
+- $V(cX) = c^2V(X)$
+- $V(X + c) = V(X)$
+
+. . .
+
+- Proof: Properties of integrals
+- Application: Mean and variance of Normal with parameters $\mu$ and $\sigma$.
+
 ## Shortcut Formula
+
+**Theorem 6.15.** $V(X) = E(X^2) - [E(X)]^2 = E(X^2) - \mu^2$.
+
+. . .
+
+$$
+{\small \begin{align} 
+V(X) &=  E(X - \mu)^2 \\
+&= E(X^2 - 2X\mu +\mu^2) \\
+&= E(X^2) -2\mu E(x) + \mu^2 \\
+&= E(X^2) -2\mu^2 + \mu^2 = E(X^2) - \mu^2
+\end{align}}
+$$
+
+## Addition Rule for Variance
+
+**Theorem 6.16.** If $X$ and $Y$ are *independent* random variables, then
+$$
+V(X + Y) = V(X) + V(Y)
+$$
+
+. . .
+
+$$
+\begin{align}
+V(X + Y) &= E((X+Y)^2) - [E(X+Y)]^2\\
+&= E(X^2 + 2XY + Y^2) - [E(X) + E(Y)]^2 \\
+&= E(X^2) + 2E(X)E(Y) + E(Y^2) - [(E(X))^2 + 2E(X)E(Y) + (E(Y))^2] \\
+&= E(X^2) - [E(X)]^2 + E(Y^2) - [E(Y)]^2 = V(X) + V(Y) 
+\end{align}
+$$
 
 ## Application: Independent Trials
 
-## Group Activity
+>- Random samples are important in statistical studies.
+>- **Theoretical Assumptions.** A random sample of $n$ observations corresponds to *independent, identically-distributed* (iid) random variables $X_1, X_2, \ldots X_n$. 
+>- Suppose $E(X_i) = \mu$ and $V(X_i) = \sigma^2$ for all $i$.
+>- The **sample mean** is then a random variable $\bar{X} = (X_1 + X_2 + \cdots + X_n)/n$.
+>    - $E(\bar{X}) = \mu$
+>    - $V(\bar{X}) = \sigma^2/n$
 
 
 

@@ -1,0 +1,23 @@
+---
+title: "Expected Value and Variance"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Produce a PDF with solutions to the following problems, and submit the PDF on Canvas; due 1/29, 11:59pm. 
+
+1. Do Exercises 1d, 2b, and 3 on page 278 of [GS]. These problems are all direct applications of the definitions of expected value and variance (or the shortcut formula for variance).
+
+2. Do Exercise 7 on page 279 of [GS]. Hint: You will be needing to take the derivative of $\phi(a)$ with respect to $a$. Now, $\phi(a)$ is defined as a certain integral with respect to $x$. So when you calculate $\frac{d}{da}\phi(a)$, you can move the $\frac{d}{da}$ inside the integral and treat all the $x$'s as constant.
+
+3. Do Exercise 9 on page 279 of [GS]. Hint: For part (c), the shortcut formula for variance might be helpful, since you will have already calculated $V(S)$ and $V(A)$ in parts (a) and (b) via other methods.
+
+4. Do Exercise 13 on page 280 of [GS].
+
+
