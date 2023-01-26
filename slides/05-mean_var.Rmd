@@ -87,10 +87,10 @@ Example: Exponential with $\lambda = 3$.
 
 ## Linearity Properties
 
-Suppose that $X$ and $Y$ are random variables and $c$ is a constant. The following follow immediately from rules for integrals.
+Suppose that $X$ and $Y$ are random variables and $c$ is a constant. The first of the following rules follows immediately from rules for integrals. The second rule, while intuitively plausible, requires some multivariable machinery to prove (see [ER], page 144.)
 
-- E(X + Y) = E(X) + E(Y)
 - E(cX) = c(E(X))
+- E(X + Y) = E(X) + E(Y)
 
 # Joint Density Functions
 
