@@ -1,0 +1,197 @@
+---
+title: "The Law of Large Numbers"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+```
+
+
+# Overview
+
+- Chebychev's Inequality
+- Law of Large Numbers
+- Simulations
+    - Illustrate the law of large numbers
+    - Improved Monte Carlo integrals
+
+For further reading, see [GS], pp. 316-320
+
+# Sample Mean as a Random Variable
+
+## Last Time
+
+- Mean and Variance of a Random Variable
+- $E(aX + bY) = aE(X) + bE(Y)$
+- $V(cX) = c^2V(X)$
+- $V(X + Y) = V(X) + V(Y)$ if $X$ and $Y$ are independent.
+
+## The Sample Mean
+
+>- A random sample of $n$ observations corresponds to *independent, identically-distributed* (iid) random variables $X_1, X_2, \ldots X_n$. 
+>- Suppose $E(X_i) = \mu$ and $V(X_i) = \sigma^2$ for all $i$.
+>- The **sample mean** is then a random variable $\bar{X} = (X_1 + X_2 + \cdots + X_n)/n$.
+>    - $E(\bar{X}) = \mu$
+>    - $V(\bar{X}) = \sigma^2/n$
+
+# Chebyshev's Inequality
+
+## Tail Probability and Variance
+
+Let $X$ be *any* continuous random variable. Let $\epsilon > 0$.
+
+- The **tail probability** beyond $\pm \epsilon$ is $P(|X - \mu| \geq \epsilon)$.
+
+. . .
+
+**Discuss.** Suppose $X$ and $Y$ are random variables with the same mean, and that
+$$
+P(|Y - \mu| \geq \epsilon) > P(|X - \mu| \geq \epsilon)
+$$
+
+1. Sketch two density functions $f_X$ and $f_Y$ having this property.
+2. How would you suppose $V(X)$ and $V(Y)$ would compare?
+
+
+## Chebyshev's Inequality
+
+**Theorem 8.3** (Chebyshev's inequality). Let $X$ be a continuous random variable with density function $f(x)$. Suppose that $\mu = E(X)$ and $\sigma^2 = V(X)$ are finite. Then for any positive $\epsilon > 0$,
+$$
+P(|X - \mu| \geq \epsilon) \leq \frac{\sigma^2}{\epsilon^2}
+$$
+
+. . .
+
+Proof: We construct a sequence of inequalities.
+
+- Write $V(X)$ as an integral.
+- Restrict to $|x-\mu|\geq \epsilon$.
+- Substitute in $\epsilon^2$.
+- Simplify.
+
+## Corollary: Number of Standard Deviations
+
+**Corollary.** The proportion of a distribution lying within $k$ standard deviations of the mean is at least $1 - 1/k^2$.
+
+. . .
+
+Proof: Set $\epsilon = k\sigma$ and use Chebyshev.
+
+# The Law of Large Numbers
+
+## Mean and Variance of Sample Mean
+
+Recall, if $\bar{X}$ is the mean of $n$ iid ($\mu, \sigma$) random variables,
+
+- $E(\bar{X}) = \mu$
+- $V(\bar{X}) = \sigma^2/n$
+
+## Law of Large Numbers
+
+**Theorem 8.4** (Law of Large Numbers). Let $X_1, X_2, \ldots, X_n$ be independent, identically distributed random variables with mean $\mu$ and variance $\sigma^2$. Then for any $\epsilon > 0$, 
+$$
+\lim_{n \rightarrow \infty} P\left(|\bar{X} - \mu| < \epsilon\right) = 1
+$$
+
+. . .
+
+Proof: Apply Chebyshev, given  $E(\bar{X}) = \mu$ and $V(\bar{X}) = \sigma^2/n$. Send $n \rightarrow \infty$.
+
+## Example: Random sample from uniform distribution
+
+Let $X_1, X_2, \ldots, X_n$ be a random sample from a uniform distribution on $[0,1]$ (i.e., iid with $\mu = 1/2$, $\sigma = 1/12$).
+
+>- $\bar{X}$ is an unbiased estimator of $\mu$.
+>- How large must $n$ be to be *95% confident* that $\bar{X}$ is within 0.01 of $\mu$?
+$$
+P\left(|\bar{X} - 1/2| < 0.01\right) = 1 - \frac{1}{12n(0.01)^2} = 0.95
+$$
+>- $n \approx 16667$
+>- Note, since Chebyshev is generally not very tight, this is probably much larger than needed. (check in R.)
+
+## Different sample sizes
+
+```{r, eval=FALSE}
+set.seed(5432)
+try100 <- replicate(10000, mean(runif(100)))
+hist(try100)
+try1000 <- replicate(10000, mean(runif(1000)))
+hist(try1000)
+try17000 <- replicate(10000, mean(runif(17000)))
+hist(try17000)
+```
+
+# Improved Monte Carlo Integration
+
+## Recall, Area as Probability
+
+- Let $g(x) : [0,1] \longrightarrow [0,1]$.
+- We estimated $\int_0^1 g(x) \, dx$ as the probability that a random dart in $[0,1]$ landed under the curve.
+
+## Alternative Monte Carlo Method
+
+- Choose uniform iid $X_1, X_2, \ldots, X_n$.
+- Set $Y_i = g(X_i)$.
+- Claim: $E(\bar{Y}) \approx \int_0^1 g(x) \, dx$. (Check in R.)
+
+. . . 
+
+$$
+E(Y_i) = \int_0^1 g(x)f_U(x) \, dx = \int_0^1 g(x) \, dx
+$$
+
+## Two Monte Carlo methods in R
+
+```{r, eval=FALSE}
+g <- function(x){exp(-x^2)}
+n <- 10000
+x <- runif(n)
+y <- runif(n)
+sum(x<g(y))/n
+X <- runif(2*n)
+mean(g(X))
+integrate(g, 0, 1) # Accurate numerical integral
+(pnorm(sqrt(2)) - pnorm(0))*sqrt(pi) # usub standard normal
+```
+
+
+## Estimate the error
+
+>- We can bound $V(Y_i)$:
+$$
+\sigma^2 = E((Y_i - \mu)^2) = \int_0^1 (g(x) - \mu)^2 \, dx \leq 1
+$$
+since $|g(x) - \mu| \leq 1$ for all $x$.
+>- Apply Chebyshev:
+$$
+P\left(|\bar{Y} - \mu| \geq \epsilon \right) \leq \frac{\sigma^2}{n\epsilon^2} \leq \frac{1}{n\epsilon^2}
+$$
+>- If we want to get within $\epsilon$ with probability $p$, we should choose $n$ so that $n \geq \frac{1}{\epsilon(1-p)}$.
+>- Try $p = 0.95$, $\epsilon = 0.01$ in R.
+
+## Check the tail probability
+
+```{r, eval=FALSE}
+n <- 1/(0.01*0.05)
+try2000 <- replicate(10000, mean(g(runif(n))))
+hist(try2000)
+abline(v = c(0.7468241-0.01, 0.7468241+0.01), col="red")
+```
+

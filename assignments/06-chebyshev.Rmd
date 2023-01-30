@@ -1,0 +1,21 @@
+---
+title: "Chebyshev and Large Numbers"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Produce a PDF with solutions to the following problems, and submit the PDF on Canvas; due 1/31, 11:59pm. 
+
+1. Do Exercises 1, 2 on pp. 320-321 of [GS] (they go together).
+
+2. Do Exercise 5 on page 321 of [GS]. Instead of using Appendix A, you can use `pnorm`. Recall that $P(a \leq Z \leq b)$ is given by `pnorm(b) - pnorm(a)`.
+
+3. Do Exercise 10 on page 322 of [GS]. Use Chebyshev's inequality.
+
+4. Do Exercise 17 on page 324 of [GS]. Hint: Use the result of Exercise 13 on page 280. This problem does not apply Chebyshev's inequality, but the proof involves bounding integrals, as we did in the proof of Chebyshev's inequality.
