@@ -116,7 +116,7 @@ Proof: Apply Chebyshev, given  $E(\bar{X}) = \mu$ and $V(\bar{X}) = \sigma^2/n$.
 
 ## Example: Random sample from uniform distribution
 
-Let $X_1, X_2, \ldots, X_n$ be a random sample from a uniform distribution on $[0,1]$ (i.e., iid with $\mu = 1/2$, $\sigma = 1/12$).
+Let $X_1, X_2, \ldots, X_n$ be a random sample from a uniform distribution on $[0,1]$ (i.e., iid with $\mu = 1/2$, $\sigma^2 = 1/12$).
 
 >- $\bar{X}$ is an unbiased estimator of $\mu$.
 >- How large must $n$ be to be *95% confident* that $\bar{X}$ is within 0.01 of $\mu$?
@@ -183,15 +183,15 @@ since $|g(x) - \mu| \leq 1$ for all $x$.
 $$
 P\left(|\bar{Y} - \mu| \geq \epsilon \right) \leq \frac{\sigma^2}{n\epsilon^2} \leq \frac{1}{n\epsilon^2}
 $$
->- If we want to get within $\epsilon$ with probability $p$, we should choose $n$ so that $n \geq \frac{1}{\epsilon(1-p)}$.
+>- If we want to get within $\epsilon$ with probability $p$, we should choose $n$ so that $n \geq \frac{1}{\epsilon^2(1-p)}$.
 >- Try $p = 0.95$, $\epsilon = 0.01$ in R.
 
 ## Check the tail probability
 
 ```{r, eval=FALSE}
-n <- 1/(0.01*0.05)
-try2000 <- replicate(10000, mean(g(runif(n))))
-hist(try2000)
-abline(v = c(0.7468241-0.01, 0.7468241+0.01), col="red")
+n <- 1/(0.01^2*0.05)
+try200000 <- replicate(10000, mean(g(runif(n))))
+hist(try200000)
 ```
 
+As before, tail probability is much smaller than requested.
