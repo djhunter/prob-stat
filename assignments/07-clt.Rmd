@@ -1,0 +1,19 @@
+---
+title: "The Central Limit Theorem"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Produce a PDF with solutions to the following problems, and submit the PDF on Canvas; due 2/5, 11:59pm. 
+
+1. Do Exercise 1 on page 361 of [GS]. "Verify directly" means start with the formula for $X^*$ and compute its expected value and variance (using what you know about the properties of expected value and variance).
+
+2. Do Exercise 4 on page 362 of [GS]. Where it says "[w]rite the normal densities", it means give the formulas for the probability density functions for each random variable.
+
+3. Do Exercises 10 and 14 on pages 363-364 of [GS].

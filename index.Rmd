@@ -46,9 +46,9 @@ This site provides slides, assignments, and other resources for an upper-divisio
 4. [Important Distributions](slides/04-important_distros.html)
 5. [Expected Value and Variance](slides/05-mean_var.html)
 6. [The Law of Large Numbers](slides/06-large_numbers.html)
+7. [The Central Limit Theorem](slides/07-central_limit_theorem.html)
 
 ---
-# 7. [The Central Limit Theorem]()
 # 8. [CLT: Applications]()
 # 10. [Hypothesis Testing and Confidence Intervals]()
 # 11. [Statistical Learning]()
@@ -71,6 +71,7 @@ This site provides slides, assignments, and other resources for an upper-divisio
 4. [Poisson, Binomial, and Normal Distributions](assignments/04-important.html), due 1/24.
 5. [Computing Expected Value and Variance](assignments/05-expected.html), due 1/29.
 6. [Chebyshev and Large Numbers](assignments/06-chebyshev.html), due 1/31.
+7. [The Central Limit Theorem](assignments/07-clt.html), due 2/5.
 
 # Other Resources
 

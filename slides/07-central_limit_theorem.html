@@ -2073,11 +2073,48 @@ average.</p>
 <h1>Practical Considerations</h1>
 
 </section>
-<section id="unknown-variance" class="slide level2">
-<h2>Unknown variance</h2>
+<section id="unknown-mean-and-variance" class="slide level2">
+<h2>Unknown mean and variance</h2>
+<ul>
+<li>Suppose we have some numeric data <span class="math inline">\(x_1,
+x_2, \ldots, x_n\)</span>, drawn at random from a population with
+unknown <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span>.</li>
+<li>Often we wish to estimate <span class="math inline">\(\mu\)</span>
+with <span class="math inline">\(\bar{x}\)</span>, the sample mean.</li>
+<li>In most applications, both <span class="math inline">\(\mu\)</span>
+and <span class="math inline">\(\sigma\)</span> are unknown.
+<ul>
+<li>We can estimate <span class="math inline">\(\sigma^2\)</span> with
+the <strong>sample variance</strong> <span class="math inline">\(s^2\)</span>. <span class="math display">\[
+s^2 = \frac{1}{n-1} \sum_{i = 1}^{n} (x_i - \mu)^2
+\]</span></li>
+<li>It turns out the <span class="math inline">\(s\)</span> is an
+<em>unbiased</em> estimator of <span class="math inline">\(\sigma\)</span>. (See [ER], p. 239.)</li>
+<li>If we further assume that the <span class="math inline">\(X_i\)</span> are all normal, it follows that <span class="math display">\[
+T = \frac{\bar{X} - \mu}{S/\sqrt{n}}
+\]</span> has a <strong>t-distribution</strong> with <span class="math inline">\(n-1\)</span> degrees of freedom. ([ER],
+pp. 330-1)</li>
+</ul></li>
+</ul>
 </section>
 <section id="the-t-distribution" class="slide level2">
 <h2>The t-Distribution</h2>
+<p>The <strong>t-distribution</strong> with <span class="math inline">\(n-1\)</span> degrees of freedom has the following
+density function.</p>
+<p><span class="math display">\[
+f(x) = \frac{\Gamma\left((n+1)/2 \right)}{\sqrt{\pi n} \cdot
+\Gamma(n/2)} \left( 1 + \frac{x^2}{n} \right)^{-(n+1)/2}
+\]</span></p>
+<p>Facts:</p>
+<ul>
+<li>As <span class="math inline">\(n \rightarrow \infty\)</span>, the
+t-distribution approaches the normal distribution.</li>
+<li>A <strong>t-confidence interval</strong> for <span class="math inline">\(\mu\)</span> is given by <span class="math display">\[
+\bar{x} \pm t^* \cdot s/\sqrt{n}
+\]</span> where <span class="math inline">\(t^*\)</span> is the value of
+<span class="math inline">\(T\)</span> with the appropriate tail area
+(use <code>qt</code>).</li>
+</ul>
 </section></section>
     </div>
   </div>
