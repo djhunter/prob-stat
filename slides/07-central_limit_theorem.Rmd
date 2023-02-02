@@ -169,7 +169,7 @@ Now suppose the class size $n = 100$. For what $\epsilon$ will $P(|\bar{X} - 70|
 
 $$
 \begin{align}
-P(|\bar{X} - 70| \leq \epsilon) &= P\left(\frac{|\bar{X} - 70|}{5/\sqrt{100}} \leq \frac{\epsilon}{5/\sqrt{30}}\right) = P\left(\bar{X}^* \leq \frac{\epsilon}{5/\sqrt{100}}\right)
+P(|\bar{X} - 70| \leq \epsilon) &= P\left(\frac{|\bar{X} - 70|}{5/\sqrt{100}} \leq \frac{\epsilon}{5/\sqrt{100}}\right) = P\left(|\bar{X}^*| \leq \frac{\epsilon}{5/\sqrt{100}}\right)
 \end{align}
 $$
 
