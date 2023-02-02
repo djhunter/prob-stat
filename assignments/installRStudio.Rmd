@@ -32,7 +32,7 @@ Once you have installed R, you can install RStudio Desktop using the installer t
 
 Again, choose the appropriate installer. 
 
-- Mac Users: Notice that the latest version of RStudio requires MacOS 10.15 or greater. If you have an older version of MacOS (e.g., 10.13), you will need to use an [older installer](https://www.rstudio.com/products/rstudio/older-versions/) (e.g., Version 1.3.1093 should work on MacOS 10.13). Also, make sure you complete the step of dragging the RStudio icon into the Applications folder.
+- Mac Users: Notice that the latest version of RStudio requires MacOS 11 or greater. If you have an older version of MacOS (e.g., 10.13), you will need to use an [older installer](https://www.rstudio.com/products/rstudio/older-versions/) (e.g., Version 1.3.1093 should work on MacOS 10.13 and 10.14). Also, make sure you complete the step of dragging the RStudio icon into the Applications folder.
 
 ## Step 3: Test the installation and install some packages
 
