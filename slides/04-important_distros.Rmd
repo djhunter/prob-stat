@@ -185,7 +185,7 @@ integrate(f, -Inf, 1.645)
 
 ## Functions of a random variable
 
-**Theorem 5.1.** Suppose $X$ is a continuous random variable, and $\phi(x)$ is a strictly increasing function of the range of $X$. Suppose that $X$ and $Y$ have CDFs $F_X$ and $F_Y$. Then
+**Theorem 5.1.** Suppose $X$ is a continuous random variable, and $\phi(x)$ is a strictly increasing function of the range of $X$. Let $Y = \phi(X)$. Suppose that $X$ and $Y$ have CDFs $F_X$ and $F_Y$. Then
 $$
 F_Y(y) = F_X(\phi^{-1}(y)).
 $$
