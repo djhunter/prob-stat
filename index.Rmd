@@ -47,17 +47,18 @@ This site provides slides, assignments, and other resources for an upper-divisio
 5. [Expected Value and Variance](slides/05-mean_var.html)
 6. [The Law of Large Numbers](slides/06-large_numbers.html)
 7. [The Central Limit Theorem](slides/07-central_limit_theorem.html)
+8. [Statistical Learning](slides/08-stat_learning.html)
 
 ---
-# 8. [CLT: Applications]()
+# 9. [Classification]()
+# 10. [Linear Regression]()
+# 11. [Multiple Linear Regression]()
+# 12. [Logistic Regression]()
+# 13. [Generative Models for Classification]()
+# 14. [Resampling Methods]()
+# 15. [Model Selection]()
+# test #2?
 # 10. [Hypothesis Testing and Confidence Intervals]()
-# 11. [Statistical Learning]()
-# 12. [Linear Regression]()
-# 13. [Multiple Linear Regression]()
-# 14. [Logistic Regression]()
-# 15. [Generative Models for Classification]()
-# 16. [Resampling Methods]()
-# 17. [Model Selection]()
 # 18. []()
 # 19. []()
 # 20. []()
@@ -72,11 +73,15 @@ This site provides slides, assignments, and other resources for an upper-divisio
 5. [Computing Expected Value and Variance](assignments/05-expected.html), due 1/29.
 6. [Chebyshev and Large Numbers](assignments/06-chebyshev.html), due 1/31.
 7. [The Central Limit Theorem](assignments/07-clt.html), due 2/5.
+8. [Bias-Variance and Tidyverse Practice](assignments/08-bias_var.html), due 2/14.
 
 # Other Resources
 
 - [Syllabus](syllabus/ma130hunterS23.pdf) (PDF)
 - [Installing R and RStudio](assignments/installRStudio.html)
+- R Cheatsheets
+    - [dplyr](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf)
+    - [ggplot](https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf)
 
 All of the pages and slides on this site were authored in RMarkdown. The source code is available on GitHub: https://github.com/djhunter/prob-stat
 

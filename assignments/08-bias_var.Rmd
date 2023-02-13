@@ -1,0 +1,34 @@
+---
+title: "Bias-Variance and Tidyverse Practice"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+For this (and future) assignments, you will need to submit multiple files. Your written work can be a PDF produced by your method of choice, or it could be a Word Document or Google Doc. In addition, *please also upload a separate R script* (`filename.R`) with the code that you used to answer the questions (code only, no output). In this case, R is only required for the last question. Upload these files to Canvas: due 2/14, 11:59pm. 
+
+1. On page 19 of [JWHT], it says that the following equality is "easy to show."
+$$
+E\left[\left(f(X) + \epsilon - \hat{f}(X)\right)^2\right] = \left(f(X) - \hat{f}(X)\right)^2 + V(\epsilon)
+$$
+Start with the left-hand side and apply probability rules that we have learned until you obtain the right-hand side. **Note:** The paragraph at the top of page 19 contains some important information. In particular, for this particular equation, the fit $\hat{f}$ and the predictor set $X$ are *fixed*, so you can treat them like constants, and not random variables. The function $f$ is also not random; it is the fixed unknown function that we are trying to estimate. So the only random variable in this equation is $\epsilon$, and recall that this random variable has mean zero.
+
+2. Do Exercise 3 on page 53 of [JWHT].
+
+3. Do Exercises 10 on page 57 of [JWHT]. Answer Questions (a)-(h) in your written document, but also submit the R script that you used. **Reproducibilty tip:** Your script should have enough comments in it so you will be able to look at it later and understand it. Some hints and clarifications:
+    a. Ignore the question "what do the rows and columns represent?" It isn't asking for a description of each column; just in general, a row corresponds to a census tract and a column corresponds to a variable measured on the tract.
+    b. Use `ggplot` with `geom_point`. Include two scatterplots in your document.
+    c. You can just use scatterplots or side-by-side boxplots to answer this question. (You don't need to include these plots.)
+    d. Answer this question by investigating the histograms. (You don't need to include the histograms, but use `geom_histogram` in your script.)
+    e. Use `sum`.
+    f. Use `median`. I think it means "tracts", not "towns".
+    g. You can use `which.min` to locate the minimum value of `medv`.  Or you could use `mutate` to create a column containing the row numbers, and then use `arrange`. For the overall ranges, you can make a summary using `summarize`.
+    h. You can use `filter` to show only the rows that satisfy a test on a variable. 
+    
+For quick reference using tidyverse to manipulate data, see this [dplyr cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf). For help with graphing, see this [ggplot cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf).
+

@@ -1,0 +1,169 @@
+---
+title: "Introduction to Statistical Learning"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+```
+
+
+# Overview
+
+- Motivating Example
+- Overview of Statistical Learning
+- Measuring Errors
+- Bias-Variance Trade-off
+- Practice using the tidyverse
+
+For further reading, see [JWHT], pp. 15-36.
+
+# Motivating Example
+
+## Example: Income data
+
+- We have a data set with three variables:
+    - Years of Education
+    - Seniority
+    - Income
+- Questions:
+    - Can we use the data to determine what characteristics high earners tend to have?
+    - Can we use this data to create a way of assigning a salary to an employee with certain characteristics?
+    
+. . .
+
+- These questions illustrate the two main purposes of statistical learning:
+    - **Inference:** How are the variables related?
+    - **Prediction:** Can I use the data to build a function that will predict a response variable based on given values of an explanatory variable?
+
+## Probability Model for Statistical Learning
+
+- We have a list $X$ of **predictor** variables $X = (X_1, X_2, \ldots, X_p)$.
+- We have a **response** variable $Y$ we would like to predict. Our general **model** is:
+$$
+Y = f(X) + \epsilon
+$$
+- Here, $X$, $Y$, and $\epsilon$ are random variables.
+    - The **error term** $\epsilon$ is independent of $X$ and has $E(\epsilon) = 0$.
+    - The error term represents the random variation in $Y$ that is not due to the predictor variables $X$.
+    
+. . . 
+
+**Statistical learning** is a set of approaches for "learning" the function $f$ from a data set (i.e., a sample of the random variables).
+
+## {data-background-image="images/income1.png" data-background-size="contain"}
+
+## {data-background-image="images/income2.png" data-background-size="contain"}
+
+## {data-background-image="images/income3.png" data-background-size="contain"}
+
+## {data-background-image="images/income4.png" data-background-size="contain"}
+
+## Estimating $f$
+
+>- In the model $Y = f(X) + \epsilon$, the function $f$ is unknown.
+>- We use data to *estimate* a function $\hat{f}$ which we hope approximates $f$ well.
+>- Our prediction for $Y$ is $\hat{Y} = \hat{f}(X)$.
+>- We can measure the **error** of this prediction as $E[(Y - \hat{Y})^2]$.
+
+. . .
+
+For a fixed $\hat{f}$ and $X$,
+
+$$
+\begin{align}
+E[(Y - \hat{Y})^2] &= E[(f(X) + \epsilon - \hat{f}(X))^2] \\
+&= (f(X) - \hat{f}(X))^2 + V(\epsilon)
+\end{align}
+$$
+
+- The first term is the **reducible error**, and the second is the **irreducible error.**
+- Without perfect information, you will always have irreducible error, but you can strive for methods that minimize reducible error.
+
+# Bias-Variance Trade-off
+
+## Measuring the Quality of Fit
+
+For models with a numeric response variable, the **mean squared error** (MSE) is a common measurement of error:
+
+$$
+MSE = \frac{1}{n} \sum_{i = 1}^n \left(y_i - \hat{f}(x_i)\right)^2
+$$
+
+- Here $x_i$ and $y_i$ come from data, where $i$ indexes the observations.
+- Possibly $x_i$ is multidimensional.
+
+## Training and Testing
+
+- We build $\hat{f}$ using training data.
+    - Usually the MSE is low on training data.
+- We want $\hat{f}$ to have a low MSE on future (unseen data).
+- Common practice: Set aside a **testing set**, randomly chosen from your data, and check the MSE on the testing set after it has been built using the training data.
+    - Alternative: Cross-validation (Ch 5)
+  
+## Model Flexibility
+
+A learning model is a way of estimating $f$.
+
+- Models differ in their **flexibility**.
+    - e.g., a regression line has low flexibility.
+    - an interpolating spline has high flexibility.
+- The amount of flexibility of a model affects its MSE.
+    - Goldilocks principle
+
+## {data-background-image="images/flex1.png" data-background-size="contain"}
+
+## {data-background-image="images/flex2.png" data-background-size="contain"}
+
+## {data-background-image="images/flex3.png" data-background-size="contain"}
+
+## {data-background-image="images/flex4.png" data-background-size="contain"}
+
+# The Bias-Variance Tradeoff
+
+## Bias and Variance
+
+Let $(x_0, y_0)$ be a fixed testing set observation, and consider $\hat{f}$ to be a *random variable* which varies as it is constructed from a randomly-sampled training set, possibly using randomness in its construction.
+
+>- The **bias** of $\hat{f}(x_0)$ is $\text{Bias}\left(\hat{f}(x_0)\right) = f(x_0) - E\left(\hat{f}(x_0)\right)$.
+>    - Bias measures systematic error caused by representing a complex reality with a simplified model. (e.g., linear regression for curved truth)
+>- The **variance** of $\hat{f}(x_0)$ is $\text{Var}(\hat{f}(x_0))= V(\hat{f}(x_0))$.
+>    - Variance measures the variability due to randomness in the sampling of our training data and the construction of $\hat{f}$.
+
+## Bias-Variance Tradeoff
+
+Generally speaking,
+
+- More flexible methods have less bias.
+- More flexible methods have more variance.
+
+. . .
+
+Mathematically, for fixed $(x_0,y_0)$, considering $\hat{f}$ as a random variable,
+
+$$
+\begin{align}
+E\left[\left(y_0 - \hat{f}(x_0)\right)^2\right] &= \text{Var}\left[\hat{f}(x_0) \right] + \left[\text{Bias}\left(\hat{f}(x_0)\right)\right]^2 + \text{Var}(\epsilon) \\
+\text{Ave test MSE} &= \text{Variance} + \text{Bias}^2 + \text{irreducible error}
+\end{align}
+$$
+
+
+# Practice using the tidyverse
+
