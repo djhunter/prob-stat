@@ -1,0 +1,146 @@
+---
+title: "Statistical Learning: Classification"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+```
+
+
+# Overview
+
+- Classification vs. Regression
+- The Bayes Classifier
+- $K$-Nearest Neigbors
+- Using R for classification
+
+For further reading, see [JWHT], pp. 37-42.
+
+# Classification vs. Regression
+
+## Recall: Statistical Learning
+
+Last time: 
+
+- We have a list $X$ of **predictor** variables $X = (X_1, X_2, \ldots, X_p)$.
+- We have a **response** variable $Y$ we would like to predict. Our general **model** is:
+$$
+Y = f(X) + \epsilon
+$$
+- Here, all the variables were **continuous** random variables.
+
+## Classification vs. Regression Models
+
+- When the response variable $Y$ is continuous, it's a **regression** model.
+    - Our fit $\hat{f}$ predicts a value of $Y$ given values for $X$.
+    - Testing set error: $\displaystyle{MSE = \frac{1}{n} \sum_{i = 1}^n \left(y_i - \hat{f}(x_i)\right)^2}$
+    
+. . .
+
+- When the response variable $Y$ is discrete, it's a **classification** model.
+    - Our fit $\hat{f}$ predicts a level of $Y$.
+    - MSE is replaced by the **error rate**.
+    
+$$
+\text{Error rate} = \frac{1}{n} \sum_{i = 1}^n I\left(y_i \neq \hat{f}(x_i)\right)
+$$
+
+Here, $I$ is an **indicator function**: $I(\text{true}) = 1$, $I(\text{false}) = 0$.
+
+# The Bayes Classifier
+
+- Suppose $Y$ is discrete and $X = (X_1, X_2, \ldots, X_p)$ are discrete/continuous predictors.
+- Also suppose we know $\text{Pr}(Y = y \mid X = x)$ for all values of $x$ and $y$.
+
+. . .
+
+The **Bayes Classifier** is given by the following function.
+
+$$
+\hat{f}(x_0) = \underset{j}{\operatorname{arg\,max}}\, \text{Pr}\left(Y = j \mid X = x_0\right)
+$$
+
+i.e., $\hat{f}(x_0)$ is (the) value of $j$ that maximizes $P(Y = j \mid X = x_0)$.
+
+. . .
+
+Common special case: $Y$ takes only values 0 and 1. Then 
+$$
+\hat{f}(x_0) = \begin{cases}
+1 & \text{if } \text{Pr }( Y = 1 \mid X = x_0) > 0.5 \\
+0 & \text{otherwise}
+\end{cases}
+$$
+
+## {data-background-image="images/bayes1.png" data-background-size="contain"}
+
+## Bayes Error Rate
+
+- Often (always?) the values of $X$ are not sufficient to predict $Y$ 100% of the time.
+    - There's no way to draw a boundary because cases overlap.
+    - Analogous to irreducible error.
+    
+. . .
+
+- Can prove that **the Bayes classifier is the classifier with the lowest expected error rate**:
+$$
+\text{Bayes error rate} = 1 - E\left(\max_j \text{Pr}(Y = y \mid X) \right)
+$$
+- The expected value is taken over all values of $X$.
+    - Usually there are points where this probability is not 100%. So the Bayes error rate is usually nonzero.
+- The Bayes error rate is a *lower bound* on the error rate of any classifier.
+
+# $K$-Nearest Neighbors
+
+## Predicting Probabilities
+
+>- In practice, $\text{Pr}(Y \mid X)$ is unknown, so there is no way to implement a Bayes classifier.
+>- We can *estimate* $\text{Pr}(Y \mid X)$ somehow, and then use that estimate to make a classification.
+>- $K$-Nearest Neighbors estimates this conditional probability by averaging in a *neighborhood* of each point.
+$$
+\text{Pr}(Y = j \mid X = x_0) = \frac{1}{K} \sum_{i \in \mathcal{N}_0} I(y_i = j)
+$$
+>    - Here $\mathcal{N}_0$ is the set of indexes of the $K$ points that are closest to $x_0$.
+
+## {data-background-image="images/knn1.png" data-background-size="contain"}
+
+## Exercise
+
+See Handout. Use KNN to do the following.
+
+1. Predict the probability that a point at $(5,5)$ is purple, using
+    a. $K = 1$
+    b. $K = 4$
+    c. $K = 5$
+2. Find as many points as you can that lie on the $K = 2$ decision boundary, i.e., for which $P(Y = \text{purple} \mid X = x_0) = 0.5$.
+
+## Flexibility of KNN
+
+- Typically, higher values of $K$ will make KNN *less* flexible.
+- i.e., flexibility varies with $1/K$.
+
+## {data-background-image="images/knn2.png" data-background-size="contain"}
+
+## {data-background-image="images/knn3.png" data-background-size="contain"}
+
+## {data-background-image="images/knn4.png" data-background-size="contain"}
+
+
+# Using R for classification
