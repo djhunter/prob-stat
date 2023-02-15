@@ -48,9 +48,9 @@ This site provides slides, assignments, and other resources for an upper-divisio
 6. [The Law of Large Numbers](slides/06-large_numbers.html)
 7. [The Central Limit Theorem](slides/07-central_limit_theorem.html)
 8. [Statistical Learning](slides/08-stat_learning.html)
+9. [Classification](slides/09-classification.html)
 
 ---
-# 9. [Classification]()
 # 10. [Linear Regression]()
 # 11. [Multiple Linear Regression]()
 # 12. [Logistic Regression]()
@@ -74,6 +74,7 @@ This site provides slides, assignments, and other resources for an upper-divisio
 6. [Chebyshev and Large Numbers](assignments/06-chebyshev.html), due 1/31.
 7. [The Central Limit Theorem](assignments/07-clt.html), due 2/5.
 8. [Bias-Variance and Tidyverse Practice](assignments/08-bias_var.html), due 2/14.
+9. [KNN Classification](assignments/09-knn.html), due 2/21.
 
 # Other Resources
 

@@ -76,5 +76,7 @@ Ptrain <- penComplete %>%
 Ptest <- penComplete %>%
   slice(-trainIndex)
 
-pPred <- knn(Ptrain[,c(3,4,5,6)], Ptest[,c(3,4,5,6)], Ptrain$species, k = 4)
-sum(pPred == Ptest$species)/nrow(Ptest)
+pPred <- knn(Ptrain[,c(3,4,5,6)], Ptest[,c(3,4,5,6)], Ptrain$species, k = 3)
+sum(pPred != Ptest$species)/nrow(Ptest)
+
+knn(Ptrain[,c(3,4,5,6)], penToPredict, Ptrain$species, k = 3)

@@ -1,0 +1,47 @@
+---
+title: "KNN Classification"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Please submit your written work as a PDF produced by your method of choice, or as a Word Document or Google Doc. Please also upload a separate R script (`filename.R`) with the code that you used to answer the questions (code only, no output): due 2/21, 11:59pm. 
+
+1. Do Exercises 2 and 7 on pages 52-54 of [JWHT].
+
+2. Install the `palmerpenguins` library:
+
+```{r, eval = FALSE}
+install.packages("palmerpenguins")
+```
+
+Load the library and inspect the `penguins` data frame.
+
+```{r, eval = FALSE}
+library(palmerpenguins)
+library(tidyverse)
+glimpse(penguins)
+```
+
+The goal is to predict the categorical variable `species` from the four numeric explanatory variables `bill_length_mm`, `bill_depth_mm`, `flipper_length_mm`, `body_mass_g`.
+
+- **Create a plot** that incorporates all five of these variables. Include this plot in your written document, along with a sentence or two speculating on which predictor you think is going to be most effective in predicting `species`.
+- **Train and test a KNN model** for predicting `species` from these four numeric variables. You will have to eliminate the rows in `penguins` with missing values (see `?drop_na`), because the `knn` command from the `class` library will not tolerate `NA`s. Choose an appropriately-sized train/test split, and experiment with some different values of `k` to find a model with minimal testing set error rate. 
+- **Use your model to predict** the species of the five penguins described in the following data frame. Try a few different values of `k`. Do different values of `k` cause the predicted species to change?
+
+```{r, eval = FALSE}
+penToPredict <- tibble(
+  bill_length_mm = c(49, 35, 43, 51, 33),
+  bill_depth_mm = c(18, 15, 17, 21, 14),
+  flipper_length_mm = c(210, 190, 201, 180, 229),
+  body_mass_g = c(4560, 3520, 4300, 2850, 6215)
+)
+```
+
+Summarize your findings in your written document, and also upload your R script as a `.R` file.
+

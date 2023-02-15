@@ -144,3 +144,9 @@ See Handout. Use KNN to do the following.
 
 
 # Using R for classification
+
+- Graphical representation for classification problems?
+- Making a train/test split.
+- Using `knn` from the `class` library.
+- Calculating the error rate.
+
