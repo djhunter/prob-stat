@@ -1,0 +1,24 @@
+---
+title: "Linear Regression"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Please submit your written work as a PDF produced by your method of choice, or as a Word Document or Google Doc. Please also upload a separate R script (`filename.R`) with the code that you used to answer the questions (code only, no output): due 2/26, 11:59pm. 
+
+1. In this exercise, you will show that $(\bar{x}, \bar{y})$ must lie on the least squares regression line. In simple linear regression ($p=1$), the formula for the residual sum of squares is:
+$$
+\text{RSS} = (y_1 -\hat{\beta}_0 -\hat{\beta}_1x_1)^2 + (y_2 -\hat{\beta}_0 -\hat{\beta}_1x_2)^2 + \cdots + (y_n -\hat{\beta}_0 -\hat{\beta}_1x_n)^2
+$$
+Take the derivative of $\text{RSS}$ with respect to $\hat{\beta}_0$ (i.e., treat $\hat{\beta}_0$ as a variable, and treat all the other symbols as constants). Set this expression equal to zero and solve it for $y_1 + y_2 + \cdots + y_n$. Then show that $\bar{y} = \hat{\beta}_0 + \hat{\beta}_1\bar{x}$.
+2. Take the derivative of $\text{RSS}$ with respect to $\hat{\beta}_1$. Set this expression equal to zero, and use your result in (1) to eliminate $\hat{\beta}_0$ from this equation. Solve for $\hat{\beta}_1$. (Your formula probably won't match the form of Equation 3.4, but that's OK.)
+3. Do Exercise 10 on pp. 124-125 of [JWHT]. For part (h), you can just use the `plot` command on your model and you will see some diagnostic plots.
+
+Summarize your findings in your written document, and also upload your R script as a `.R` file.
+

@@ -49,10 +49,10 @@ This site provides slides, assignments, and other resources for an upper-divisio
 7. [The Central Limit Theorem](slides/07-central_limit_theorem.html)
 8. [Statistical Learning](slides/08-stat_learning.html)
 9. [Classification](slides/09-classification.html)
+10. [Linear Regression](slides/10-linear_regression.html)
 
 ---
-# 10. [Linear Regression]()
-# 11. [Multiple Linear Regression]()
+# 11. [Extending the Linear Model]()
 # 12. [Logistic Regression]()
 # 13. [Generative Models for Classification]()
 # 14. [Resampling Methods]()
@@ -75,6 +75,7 @@ This site provides slides, assignments, and other resources for an upper-divisio
 7. [The Central Limit Theorem](assignments/07-clt.html), due 2/5.
 8. [Bias-Variance and Tidyverse Practice](assignments/08-bias_var.html), due 2/14.
 9. [KNN Classification](assignments/09-knn.html), due 2/21.
+10. [Linear Regression Models](assignments/10-linear_reg.html), due 2/26.
 
 # Other Resources
 

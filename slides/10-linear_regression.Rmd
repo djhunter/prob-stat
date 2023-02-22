@@ -1,0 +1,325 @@
+---
+title: "Linear Regression"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+```
+
+
+# Overview
+
+- The linear regression model
+- $p$-values and confidence intervals
+- Model accuracy
+- Multiple predictors
+- Categorical predictors
+
+For further reading, see [JWHT], pp. 59-87.
+
+# The Linear Regression Model
+
+## Recall: Statistical Learning
+
+- We have a list $X$ of **predictor** variables $X = (X_1, X_2, \ldots, X_p)$.
+- We have a continuous **response** variable $Y$ we would like to predict. Our general **model** is:
+$$
+Y = f(X) + \epsilon
+$$
+
+. . .
+
+In **Linear Regression**, we represent $f(X)$ with a *linear combination* of the predictor variables, plus an intercept $\beta_0$:
+
+$$
+Y = \beta_0 + \beta_1 X_1 +\beta_2 X_2 + \cdots + \beta_p X_p + \epsilon
+$$
+
+## Simple Linear Regression
+
+>- Model: $Y = \beta_0 + \beta_1X + \epsilon$
+>- Estimate: $\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x$
+>    - $\hat{\beta}_0$ and $\hat{\beta}_1$ are **statistics** (calculated from data), the **regression intercept** and **regresssion slope**.
+>- Given a set of observations $(x_1,y_1), (x_2,y_2), \ldots, (x_n,y_n)$, we calculate $\hat{\beta}_0$ and $\hat{\beta}_1$ so that the **residual sum of squares** $\text{RSS}$ is minimized:
+$$
+\begin{align}
+\text{RSS} &= \sum_{i=1}^n (y_i - \hat{y}_i)^2 \\
+&= (y_1 -\hat{\beta}_0 -\hat{\beta}_1x_1)^2 + (y_2 -\hat{\beta}_0 -\hat{\beta}_1x_2)^2 + \cdots + (y_n -\hat{\beta}_0 -\hat{\beta}_1x_n)^2
+\end{align}
+$$
+>- Calculus exercise.
+
+## {data-background-image="images/lr1.png" data-background-size="contain"}
+
+## {data-background-image="images/lr2.png" data-background-size="contain"}
+
+# Inference on the regression coefficients
+
+## Get the Advertising data set
+
+Some of the data sets are not included in the `ISLR2` package, but they [are posted online](https://www.statlearning.com/resources-first-edition).
+
+```{r message=FALSE}
+library(tidyverse)
+Advertising <- read_csv("https://www.statlearning.com/s/Advertising.csv")
+glimpse(Advertising)
+```
+
+## Simple Linear Regression in R
+
+```{r eval=FALSE, include=FALSE}
+##  Just in case website goes away:
+library(here)
+library(tidyverse)
+Advertising <- read_csv(here("slides", "data", "Advertising.csv"))
+```
+
+```{r}
+adMod1 <- lm(sales ~ TV, data = Advertising)
+summary(adMod1)
+```
+
+
+## The prediction equation
+
+```{r echo=FALSE}
+print(summary(adMod1)$coefficients, digits = 3)
+```
+
+- The `Estimate` column gives the least-squares estimates for the regression coefficients $\beta_i$.
+- In our case, $\hat{\beta}_0 \approx 7.03$ and $\hat{\beta}_1 \approx 0.048$.
+- The **prediction equation** is $\hat{y} = 7.03 + 0.048  x$.
+
+## The Standard Error of a Statistic
+
+```{r echo=FALSE}
+print(summary(adMod1)$coefficients, digits = 3)
+```
+
+- Statistics (like $\hat{\beta}_0$ and $\hat{\beta}_1$) can be regarded as *random variables*, because the data comes from a random sample.
+- These random variables have variances (and standard deviations).
+- The standard deviation of the random variable is the **standard error** of the statistic.
+
+. . .
+
+$$
+\text{SE}(\hat{\beta}_0)^2 = \sigma^2\left[\frac{1}{n} + \frac{\bar{x}^2}{\sum_{i=1}^n (x_i - \bar{x})^2}\right], \quad \text{SE}(\hat{\beta}_1)^2 = \frac{\sigma^2}{\sum_{i=1}^n (x_i - \bar{x})^2 }
+$$
+
+. . .
+
+Here $\sigma^2 = \text{Var}(\epsilon)$, which is generally unknown in most applications.
+
+## The $t$-statistic 
+
+```{r echo=FALSE}
+print(summary(adMod1)$coefficients, digits = 3)
+```
+
+- In practice, $\sigma$ must be estimated from data as $\text{RSE} =  \sqrt{\text{RSS}/(n-p-1)}$, where $p$ is the number of predictors.  
+- In this case, the coefficients are distributed according to the $t$-distribution.
+- The $t$-value is $(\text{estimate} - 0)/\text{SE}$.
+- The two-tail area `Pr(>|t|)` is the proportion of the $t$-distribution that is more extreme than the $t$-value.
+
+## P-values
+
+```{r echo=FALSE}
+print(summary(adMod1)$coefficients, digits = 3)
+```
+
+- The two-tail area `Pr(>|t|)` is called a **p-value**.
+- It is the probability, *assuming that $\beta_i = 0$*, of observing a sample with a $\hat{\beta}_i$ as extreme as the one you observed.
+    - If this probability is small, we have evidence that $\beta_i \neq 0$.
+
+. . .
+
+Formally, a small p-value is evidence against the **null hypothesis** $H_0$ in favor of the **alternative hypothesis** $H_A$.
+
+$$
+\begin{align}
+H_0: & \;\; \beta_i = 0 \\
+H_A: & \;\; \beta_i \neq 0 \\
+\end{align}
+$$
+
+## Confidence Intervals
+
+```{r echo=FALSE}
+print(summary(adMod1)$coefficients, digits = 3)
+```
+
+>- Like the normal distribution, approximately 95% of the $t$-distribution lies within 2 standard deviations of the mean.
+>- So a quick **95% confidence interval** for $\beta_i$ is $\hat{\beta}_i \pm 2 \cdot \text{SE}(\hat{\beta}_i)$.
+>    - Technically, "2" should be replaced by the appropriate quantile of the $t$-distribution with $n-2$ degrees of freedom.
+>- $0.0475 \pm 2 \cdot 0.00269 \approx (0.042, 0.053)$
+>- "We are 95% confident that the true value of $\beta_1$ is between 0.042 and 0.053."
+>    - This interval was constructed via a process that will capture the true $\beta_1$ value 95% of the time.
+    
+## Percentiles and quantiles of the $t$-distribution
+
+```{r, echo = FALSE}
+summary(adMod1)$coefficients
+```
+
+```{r}
+pt(-15.36028, df = 198) * 2
+qt(0.025, df = 198)
+```
+
+# Model Accuracy
+
+## {data-background-image="images/lr1.png" data-background-size="contain"}
+
+## Residuals
+
+```{r, echo = FALSE}
+summary(adMod1)
+```
+
+## Measures of accuracy or lack thereof
+
+```
+Residual standard error: 3.259 on 198 degrees of freedom
+```
+
+>- Residual standard error is an *unbiased estimate* of $\sigma = \sqrt{\text{Var}(\epsilon)}$.
+$$
+\text{RSE} = \sqrt{\frac{1}{n-p-1} \text{RSS}} = \sqrt{\frac{1}{n-p-1} \sum_{i=1}^n (y_i - \hat{y}_i)^2} 
+$$
+>- $\text{RSS}$ has a Chi-squared distribution with $n-p-1$ **degrees of freedom**.
+>    - We are estimating $p+1$ coefficients $\beta_0, \beta_1, \ldots, \beta_n$.
+>    - Intuitively: $n$ must greater than $p+1$, or there is no error.
+>    - Technically, A Chi-squared random variable is a sum of squares of *independent* normal random variables (df of them.)
+>    - The $\text{RSS} = \sum (y_i - \hat{y}_i)^2$ can be rewritten as $n-p-1$ *independent* terms. (algebra)
+
+## Proportion of variability explained
+
+```
+Multiple R-squared:  0.6119,	Adjusted R-squared:  0.6099 
+```
+
+>- Total sum of squares $\text{TSS} = \sum (y_i - \bar{y})^2$ measures total variability in $Y$.
+>- $\text{RSS} = \sum (y_i - \hat{y}_i)$ measures variability in $Y$ *after fitting the model*.
+>    - So $\text{RSS}/\text{TSS}$ is the proportion of variability the model cannot explain.
+>- "Multiple R-squared" is $R^2 = 1-\text{RSS}/\text{TSS}$
+>    - $R^2$ is the proportion of variability in $Y$ that is explained by $X$, using this model.
+>- "Adjusted R-squared" applies a penalty for the number of predictors $p$.
+$$
+\text{Adjusted } R^2 = 1- \frac{\text{RSS}/(n-p-1)}{\text{TSS}/(n-1)}
+$$
+
+## Omnibus association
+
+```
+F-statistic: 312.1 on 1 and 198 DF,  p-value: < 2.2e-16
+```
+
+>- Model: $Y = \beta_0 + \beta_1 X_1 +\beta_2 X_2 + \cdots + \beta_p X_p + \epsilon$
+>- $F$-statistic:
+$$
+F = \frac{(\text{TSS} - \text{RSS})/p}{\text{RSS}/(n-p-1)} \approx \frac{\text{explained variability}}{\text{leftover variability}}
+$$
+>- Under the null hypothesis $H_0: \beta_1 = \beta_2 = \cdots = \beta_p = 0$, $F$ has an $F$-distribution with $p$ and $n-p-1$ degrees of freedom.
+>    - An $F$-random variable is a ratio of chi-squareds.
+>- The p-value measures the strength of evidence for the alternative hypothesis that not all of the $\beta_i$s are zero. (large $F$)
+>- **Rule of thumb:** Look at the *omnibus* p-value first. If there is no overall association, it doesn't make sense to analyze associations between individual variables.
+
+# Multiple Predictors
+
+## Single variable models
+
+```{r}
+adMod2 <- lm(sales ~ radio, data = Advertising)
+adMod3 <- lm(sales ~ newspaper, data = Advertising)
+summary(adMod2)$coefficients
+summary(adMod3)$coefficients
+```
+
+## Multiple Regression
+
+In a multiple regression model, the p-values measure the effect of each variable, *holding the other predictors constant.*
+
+```{r}
+adMod4 <- lm(sales ~ TV + radio + newspaper, data = Advertising)
+summary(adMod4)
+```
+
+## Correlated predictors
+
+- The `cor` command gives pairwise correlations among columns in a data frame.
+- The correlation coefficients $r$ measure the strength and direction of the correlation: $-1 \leq r \leq 1$.
+- When $p = 1$, $r^2 = R^2$.
+
+```{r}
+cor(Advertising[,c(2,3,4)])
+```
+
+## Scatterplot matrix
+
+```{r fig.height=4, fig.width=6, fig.align='center', message=FALSE}
+library(GGally)
+ggpairs(Advertising[,c(5,2,3,4)])
+```
+
+
+
+# Categorical Predictors
+
+## Palmer Penguins
+
+```{r}
+library(palmerpenguins)
+glimpse(penguins)
+```
+
+## Predict body mass
+
+```{r}
+penMod1 <- lm(body_mass_g ~ bill_length_mm + bill_depth_mm + flipper_length_mm, data = penguins)
+summary(penMod1)
+```
+
+## Now include species as a predictor
+
+```{r}
+penMod2 <- lm(body_mass_g ~ bill_length_mm + bill_depth_mm + flipper_length_mm + species, data = penguins)
+summary(penMod2)
+```
+
+## Indicator variables
+
+```{r, echo=FALSE}
+signif(summary(penMod2)$coefficients, digits = 3)
+```
+
+- `speciesChinstrap` and `speciesGentoo` are **indicator variables**.
+    - Plug in 1 or 0 as appropriate.
+- Adelie must be the **baseline** level, because it has no indicator variable.
+
+## Compare the models
+
+```{r, echo=FALSE}
+signif(summary(penMod1)$coefficients, digits = 3)
+signif(summary(penMod2)$coefficients, digits = 3)
+```
+
+Discuss: Significance, conditioning, meaning of estimates, etc.
+
+
