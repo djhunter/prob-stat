@@ -1,0 +1,150 @@
+---
+title: "Extending the Linear Model"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+```
+
+
+# Overview
+
+- Nonlinear Terms
+- Potential Problems
+- $K$-Nearest Neighbors for continuous response variables
+- Some experiments in R
+
+For further reading, see [JWHT], pp. 87-121.
+
+## Last time: The Linear Regression Model
+
+In **Linear Regression**, we model $f(X)$ with:
+
+$$
+Y = \beta_0 + \beta_1 X_1 +\beta_2 X_2 + \cdots + \beta_p X_p + \epsilon
+$$
+
+. . .
+
+Easy to predict using $f$, but also to **infer**. 
+
+- Confidence intervals and p-values for the $\beta_i$s.
+    - Interpreting multiple variables; conditioning.
+- Model fit using $R^2$.
+- $F$-test for omnibus association
+
+
+# Nonlinear Terms
+
+## Assumptions of the Linear Model
+
+The model $Y = \beta_0 + \beta_1 X_1 +\beta_2 X_2 + \cdots + \beta_p X_p + \epsilon$ requires some assumptions.
+
+>- **Additivity:** The effect of changing $X_i$ is completely determined by its coefficient $\beta_i$, and has no effect on the other coefficients $\beta_j$, $j\neq i$.
+>- **Linearity:** The effect of changing $X_i$ by one unit is always the same, regardless of the value of $X_i$.
+
+## Relaxing the additive assumption
+
+>- Consider the model `sales ~ TV + radio`.
+>    - What if increasing `radio` actually makes `TV` advertising more effective?
+>    - The `TV` slope should be greater for higher values of `radio`.
+>- Replace the model $Y = \beta_0 + \beta_1 X_1 +\beta_2 X_2 + \epsilon$ with $Y = \beta_0 + \beta_1 X_1 +\tilde{\beta}_2 X_2 + \epsilon$, where $\tilde{\beta}_2 = \beta_1 + \beta_3X_2$.
+>- This is equivalent to adding an **interaction term** $\beta_3X_1X_2$:
+$$
+Y = \beta_0 + \beta_1 X_1 +\beta_2 X_2 + \beta_3 X_1X_2 + \epsilon
+$$
+
+## Coding Interactions in R
+
+```{r message=FALSE}
+library(tidyverse)
+Advertising <- read_csv("https://www.statlearning.com/s/Advertising.csv")
+
+## Original model:
+adMod1 <- lm(sales ~ TV + radio, data = Advertising)
+## Model with interaction term:
+adMod2 <- lm(sales ~ TV + radio + TV:radio, data = Advertising)
+## Equivalent syntax using *:
+adMod2a <- lm(sales ~ TV * radio, data = Advertising)
+```
+
+## Original Model
+
+```{r}
+summary(adMod1)
+```
+
+## Model with TV:radio interaction
+
+```{r}
+summary(adMod2) ## adMod2a is exactly the same
+```
+
+## The Heirarchical Principle
+
+- The coefficients for `TV` and `radio` model the **main effects**.
+- The coefficient for `TV:radio` models the **interaction**.
+-  **Hierarchical principle:** If we include an interaction in a model, we should also *include the main effects*, even if the p-values associated with their coefficients are not significant.
+    - Reason: the interaction term models a variable slope (see above).
+
+## Example: Quantitative:Categorical interaction
+
+RStudio carpentry exercise.
+
+```{r eval=FALSE, include=FALSE}
+library(tidyverse)
+library(ISLR2)
+glimpse(Credit)
+## predict Balance from Income
+credMod1 <- lm(Balance ~ Income, data = Credit)
+summary(credMod1)
+## predict Balance from Income and Student
+credMod2 <- lm(Balance ~ Income + Student, data = Credit)
+summary(credMod2)
+## predict Balance from Income and Student, with an interaction term.
+credMod3 <- lm(Balance ~ Income * Student, data = Credit)
+summary(credMod3)
+credMod4 <- lm(Balance ~ Income, data = filter(Credit, Student == "Yes"))
+summary(credMod4)
+Credit %>%
+  filter(Student == "Yes") %>%
+  lm(Balance ~ Income, data = .) ->
+  credMod4
+summary(credMod4)
+Credit %>%
+  filter(Student == "No") %>%
+  lm(Balance ~ Income, data = .) ->
+  credMod5
+summary(credMod5)
+Credit %>%
+  ggplot(aes(x = Income, y = Balance, color = Student)) +
+  geom_smooth(method = lm) +
+  geom_point()
+## Note: interaction term is not significant, so this 
+# isn't a great example.
+```
+
+
+
+# Potential Problems
+
+# KNN for continuous response variables 
+
+# Some experiments in R
