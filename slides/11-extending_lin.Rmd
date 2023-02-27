@@ -26,10 +26,11 @@ options(width = 100)
 
 # Overview
 
+- Interactions
 - Nonlinear Terms
+- Some experiments in R
 - Potential Problems
 - $K$-Nearest Neighbors for continuous response variables
-- Some experiments in R
 
 For further reading, see [JWHT], pp. 87-121.
 
@@ -51,7 +52,7 @@ Easy to predict using $f$, but also to **infer**.
 - $F$-test for omnibus association
 
 
-# Nonlinear Terms
+# Interactions and Nonlinear Terms
 
 ## Assumptions of the Linear Model
 
@@ -139,12 +140,167 @@ Credit %>%
   geom_point()
 ## Note: interaction term is not significant, so this 
 # isn't a great example.
+
+
+library(tidyverse)
+library(palmerpenguins)
+glimpse(penguins)
+#pen_complete <- penguins %>%
+  #select(body_mass_g, flipper_length_mm, species) %>%
+#  drop_na()
+#alternatively, to demonstrate filter
+pen_complete <- penguins %>%
+  filter(!is.na(body_mass_g))
+ggplot(pen_complete, aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE)
+# Challenge: Investigate the penguins example
+#predict body mass from flipper length and species
+#try with and without interactions
+#try body mass from flipper length for each species separately
+penMod1 <- lm(body_mass_g ~ flipper_length_mm + species, data = pen_complete)
+summary(penMod1)
+penMod2 <- lm(body_mass_g ~ flipper_length_mm * species, data = pen_complete)
+summary(penMod2)
+pen_complete %>%
+  filter(species == "Adelie") %>%
+  lm(body_mass_g ~ flipper_length_mm, data = .) ->
+  penMod3
+summary(penMod3)
+```
+
+
+## Dealing with nonlinearity
+
+```{r, fig.align='center', fig.width=6, fig.height=4}
+library(ISLR2)
+ggplot(Auto, aes(x = mpg, y = horsepower)) + geom_point()
+```
+
+## Polynomial Regression
+
+- If the association appears non-linear, you can add higher-power terms.
+- Linear model: $Y = \beta_0 + \beta_1 X + \epsilon$
+- Quadratic model: $Y = \beta_0 + \beta_1 X + \beta_2 X^2 + \epsilon$
+
+```{r}
+carLin <- lm(mpg ~ horsepower, data = Auto)
+carQuad <- lm(mpg ~ horsepower + I(horsepower^2), data = Auto)
+```
+
+## Linear model summary
+
+```{r}
+summary(carLin)
+```
+
+## Quadratic model summary
+
+```{r}
+summary(carQuad)
+```
+
+## Plot the models
+
+```{r, fig.align='center', fig.width=6, fig.height=4}
+ggplot(Auto, aes(x = horsepower, y = mpg)) +
+  geom_point() +
+  geom_smooth(method = lm, formula = y ~ x, color = "green") +
+  geom_smooth(method = lm, formula = y ~ x + I(x^2), color = "purple")
+```
+
+# Potential Problems
+
+## Model Assumptions
+
+$$
+Y = \beta_0 + \beta_1 X_1 +\beta_2 X_2 + \cdots + \beta_p X_p + \epsilon
+$$
+
+- $\epsilon$ is a normal random variable with $E(\epsilon) = 0$, $\text{Var}(\epsilon) = \sigma^2$ (a constant).
+- The $\epsilon$ term is **independent** of the $X_i$'s.
+- **Homoscedasticity:** The variability residuals should not change for different values of $X$.
+- Likewise, the residuals should not change for different fitted values of $Y$. (plot residuals vs. fit)
+
+## Residuals vs. Fit: Patterns are bad
+
+```{r, fig.align='center', fig.width=7, fig.height=4.5}
+plot(carLin, which = 1)
+```
+
+## Residuals vs. Fit: Heteroscedasticity is bad
+
+```{r, fig.align='center', fig.width=7, fig.height=4.5}
+plot(carQuad, which = 1)
+```
+
+## Residuals should be normally distributed
+
+```{r, fig.align='center', fig.width=7, fig.height=4.5}
+hist(carLin$residuals)
+```
+
+
+## Normal iff Normal-QQ plot is a straight line
+
+```{r, fig.align='center', fig.width=7, fig.height=4.5}
+plot(carLin, which = 2)
 ```
 
 
 
-# Potential Problems
+## {data-background-image="images/hsced.png" data-background-size="contain"}
+
+## {data-background-image="images/tsresids.png" data-background-size="contain"}
+
+## Outliers
+
+- Points that fall well off the regression line are (bivariate) outliers.
+- You can see these in the residual plots.
+- Rule of thumb: standardized residuales $>3$ are outliers.
+
+## {data-background-image="images/lev1.png" data-background-size="contain"}
+
+## Leverage
+
+- Points at the extremes of the $X$ range are more **influential** on the regression coefficients.
+- This extremity can be quantified by the **leverage statistic:**
+$$
+h_i  = \frac{1}{n} + \frac{(x_i - \bar{x})^2}{\sum_{j=1}^n (x_j - \bar{x})^2}
+$$
+- There's a generalization of this formula for multiple predictors.
+
+
+
+## {data-background-image="images/lev2.png" data-background-size="contain"}
+
+## Correlated predictors: Collinearity
+
+- If some of the predictors are correlated, the are called **collinear**.
+- This is a problem because it can be hard to discern which predictor is having the effect.
+    - The minimum RSS may be (close to) non-unique.
+- Credit example
+   - Predict balance from age and limit
+   - Predict balance from rating and limit
+   
+## {data-background-image="images/collin1.png" data-background-size="contain"}
+
+
+## {data-background-image="images/collin2.png" data-background-size="contain"}
 
 # KNN for continuous response variables 
 
-# Some experiments in R
+## {data-background-image="images/knnreg1.png" data-background-size="contain"}
+
+
+## {data-background-image="images/knnreg2.png" data-background-size="contain"}
+
+
+## {data-background-image="images/knnreg3.png" data-background-size="contain"}
+
+
+## {data-background-image="images/knnreg4.png" data-background-size="contain"}
+
+
+
+
