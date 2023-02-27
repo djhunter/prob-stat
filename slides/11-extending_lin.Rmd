@@ -290,6 +290,30 @@ $$
 
 # KNN for continuous response variables 
 
+## K-Nearest Neighbors
+
+Recall: You can predict the *probability* that a *categorical* response $Y$ will be $j$ based on a value $x_0$ of the explanatory variable:
+$$
+\text{Pr}(Y = j \mid X = x_0) = \frac{1}{K} \sum_{i \in \mathcal{N}_0} I(y_i = j)
+$$
+
+- The sum is taken over a "neighborhood" of nearby points.
+
+. . .
+
+Similarly, you can predict the *value* of a *continuous* response $Y$:
+
+$$
+\hat{f}(x_0) = \frac{1}{K} \sum_{x_i \in \mathcal{N}_0} y_i
+$$
+
+- The predicted $y$-value at $x_0$ is simply the average of the $K$-nearest $y$-values.
+
+## Flexibility
+
+- Recall, *larger* values of $K$ make KNN *less* flexible.
+- Generally, KNN is more flexible than linear regression.
+
 ## {data-background-image="images/knnreg1.png" data-background-size="contain"}
 
 

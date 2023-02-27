@@ -1,0 +1,26 @@
+---
+title: "Linear Regression, continued"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Please submit your written work as a PDF produced by your method of choice, or as a Word Document or Google Doc. Please also upload a separate R script (`filename.R`) with the code that you used to answer the questions (code only, no output): due 2/28, 11:59pm. 
+
+1. Do Exercises 3 and 4 on pp. 121-121 of [JWHT]. 
+
+2. Do Exercise 9 on pp. 123-124 of [JWHT]. Hints and suggestions:
+    a. Install the `GGally` package and use `ggpairs`. Include the plot in your written document.
+    b. You get this for free if you use `ggpairs` for part (a).
+    c. This and the following parts are somewhat open-ended. Where it says, "Comment on ...," aim for a level of detail and scope that will help you review the concepts from this chapter.
+    d. Check for the following: patterns in the residuals, heteroscedasticity, non-normality of residuals, outliers, and high-leverage points. (These observations are often a little subjective).
+    e. You don't have to do *all* possible interactions. Just try a few that make sense to you and see if you can find something significant.
+    f. Just try two or three different transformations. See if you can improve the $R^2$ of the model.
+
+Summarize your findings in your written document, and also upload your R script as a `.R` file.
+

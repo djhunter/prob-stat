@@ -50,9 +50,9 @@ This site provides slides, assignments, and other resources for an upper-divisio
 8. [Statistical Learning](slides/08-stat_learning.html)
 9. [Classification](slides/09-classification.html)
 10. [Linear Regression](slides/10-linear_regression.html)
+11. [Extending the Linear Model](slides/11-extending_lin.html)
 
 ---
-# 11. [Extending the Linear Model]()
 # 12. [Logistic Regression]()
 # 13. [Generative Models for Classification]()
 # 14. [Resampling Methods]()
@@ -76,6 +76,7 @@ This site provides slides, assignments, and other resources for an upper-divisio
 8. [Bias-Variance and Tidyverse Practice](assignments/08-bias_var.html), due 2/14.
 9. [KNN Classification](assignments/09-knn.html), due 2/21.
 10. [Linear Regression Models](assignments/10-linear_reg.html), due 2/26.
+11. [Linear Regression, continued](assignments/11-linear_reg2.html), due 2/28.
 
 # Other Resources
 
