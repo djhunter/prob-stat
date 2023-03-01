@@ -259,8 +259,7 @@ library(palmerpenguins)
 set.seed(321)
 penCoin <- penguins %>%
   drop_na() %>%
-  mutate(coins = round(exp(bill_length_mm*0.05 + bill_depth_mm * 0.02)) + rpois(n(), 1),
-         coins2 = round(exp(bill_length_mm*0.05 + bill_depth_mm * 0.02) + rpois(n(), 1)),
+  mutate(coins = round(exp(bill_length_mm*0.05 + bill_depth_mm * 0.02)) + rpois(n(), 1) - 1,
          coinsNR = round(exp(bill_length_mm*0.05 + bill_depth_mm * 0.02)))
 ggplot(penCoin, aes(x = coins)) + geom_histogram()
 ## Challenge: Fit a linear model and a Poisson model for predicting coins from 
@@ -270,11 +269,11 @@ coinMod1 <- lm(coins ~ bill_length_mm + bill_depth_mm, data = penCoin)
 summary(coinMod1)
 coinMod2 <- glm(coins ~ bill_length_mm + bill_depth_mm, data = penCoin, family = poisson)
 summary(coinMod2)
-testDF <- data.frame(bill_length_mm = c(35, 40, 45, 50),
-                     bill_depth_mm = c(15, 17, 19, 21))
+testDF <- data.frame(bill_length_mm = c(30, 35, 45, 50),
+                     bill_depth_mm = c(13, 15, 19, 21))
 predict(coinMod1, testDF)
 predict(coinMod2, testDF, type = "response")
-exp(testDF$bill_length_mm * 0.05 + testDF$bill_depth_mm * 0.02) + 1
+exp(testDF$bill_length_mm * 0.05 + testDF$bill_depth_mm * 0.02)
 ```
 
 
