@@ -51,6 +51,7 @@ This site provides slides, assignments, and other resources for an upper-divisio
 9. [Classification](slides/09-classification.html)
 10. [Linear Regression](slides/10-linear_regression.html)
 11. [Extending the Linear Model](slides/11-extending_lin.html)
+12. [Generalized Linear Models](slides/12-glm.html)
 
 ---
 # 12. [Logistic Regression]()
@@ -58,7 +59,6 @@ This site provides slides, assignments, and other resources for an upper-divisio
 # 14. [Resampling Methods]()
 # 15. [Model Selection]()
 # test #2?
-# 10. [Hypothesis Testing and Confidence Intervals]()
 # 18. []()
 # 19. []()
 # 20. []()
@@ -77,6 +77,7 @@ This site provides slides, assignments, and other resources for an upper-divisio
 9. [KNN Classification](assignments/09-knn.html), due 2/21.
 10. [Linear Regression Models](assignments/10-linear_reg.html), due 2/26.
 11. [Linear Regression, continued](assignments/11-linear_reg2.html), due 2/28.
+12. [Logistic and Poisson Regression Models](assignments/12-genlinmods.html), due 3/5.
 
 # Other Resources
 

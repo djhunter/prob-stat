@@ -1,0 +1,22 @@
+---
+title: "Logistic and Poisson Regression Models"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Please submit your written work as a PDF produced by your method of choice, or as a Word Document or Google Doc. Please also upload a separate R script (`filename.R`) with the code that you used to answer the questions (code only, no output): due 5/5, 11:59pm. 
+
+1. Do Exercises 1 and 6 on pp. 189-191 of [JWHT]. 
+
+2. Do Exercise 14, parts a,b,c,f on p. 194 of [JWHT]. Hints and suggestions: (a) Use `mutate` with `ifelse`. (b) Try `ggpairs`. (c) We made train/test splits in an earlier class exercise. (f) The choice of explanatory variables is somewhat open ended.
+
+3. Look at (i.e., `glimpse`) the `Hitters` data frame in the `ISLR2` package. Most of the variables are counts. Choose a response variable (one of the `<int>`s) and three or four explanatory variables, and fit two models: One using `lm` for linear regression, and one using `glm` for Poisson regression. Make some predictions using each model and compare the results. (Hopefully the Poisson model is "better".)
+
+Summarize your findings in your written document, and also upload your R script as a `.R` file.
+

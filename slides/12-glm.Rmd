@@ -1,0 +1,263 @@
+---
+title: "Generalized Linear Models"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+```
+
+
+# Overview
+
+- Generalizing the Linear Model
+- Logistic Regression
+- Poisson Regression
+- R investigation
+
+For further reading, see [JWHT], pp. 129-141, 164-170.
+
+# Generalizing the Linear Model
+
+## Limitations of the Linear Regression Model
+
+In **Linear Regression**, we model $f(X)$ with:
+
+$$
+Y = \beta_0 + \beta_1 X_1 +\beta_2 X_2 + \cdots + \beta_p X_p + \epsilon
+$$
+
+- $Y$ is assumed to be a continuous random variable.
+    - What if we have a discrete response (e.g., classification)
+- $\epsilon$ is assumed to be Gaussian (e.g., normally distributed) with mean zero.
+    - Doesn't make sense if $Y$ is discrete, or bounded below.
+
+## Regression and Conditional Expectation
+
+>- Linear regression: $E(Y \mid X_1, X_2, \ldots, X_p) = \beta_1 + \beta_1X_1 + \cdots + \beta_pX^p$
+>    - Assumes that the conditional mean is *linear* in the predictors.
+>- Generalized linear regression: The conditional mean *can be transformed to be* a linear function of the predictors.
+>    - $\eta\left(E(Y \mid X_1, X_2, \ldots, X_p) \right) = \beta_0 + \beta_1X_1 + \cdots + \beta_pX_p$
+>    - $\eta$ is called a **link function**.
+>- The distribution of $Y \mid X$ may not be Gaussian (or even continuous).
+>    - In **logistic regression**, it is Bernoulli (i.e., binomial, $n = 1$)
+>    - In **Poisson regression**, it is Poisson.
+>- The coefficients can be found by maximizing a **likelihood function**.
+$$
+\ell(\beta_0, \beta_1, \ldots, \beta_p \mid \text{the training data})
+$$
+>    - This function assumes the observations are **independent**.
+
+# Logistic Regression
+
+## Binary Response Variable
+
+Suppose we want to predict $Y$ from a single variable $X$, and $Y$ is **binary** (i.e., 0/1).
+
+```{r, message=FALSE}
+library(ISLR2)
+library(tidyverse)
+glimpse(Default)
+```
+
+## Factors not allowed in linear regression
+
+```{r, eval=FALSE}
+defMod1 <- lm(default ~ balance, data = Default)
+summary(defMod1)
+```
+
+```
+Call:
+lm(formula = default ~ balance, data = Default)
+
+Residuals:
+Error in quantile.default(resid) : (unordered) factors are not allowed
+In addition: Warning message:
+In Ops.factor(r, 2) : ‘^’ not meaningful for factors
+```
+
+## Kludge: Make a 0/1 variable
+
+```{r}
+DefaultK <- Default %>%
+  mutate(defBin = ifelse(default == "No", 0, 1))
+defMod1 <- lm(defBin ~ balance, data = DefaultK)
+summary(defMod1)
+```
+
+## What is happening?
+
+```{r, fig.align='center', fig.height=4, fig.width=6}
+ggplot(DefaultK, aes(x = balance, y = defBin)) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(method = lm, formula = y ~ x, se = FALSE)
+```
+
+## Logistic Regression Link Function
+
+>- In **logistic regression**, the link function is the **logit:** 
+$$
+\eta(u) = \log \left(\frac{u}{1-u} \right) = \text{logit}(u)
+$$
+>    - Henceforth $\log$ means natural log.
+>    - $\eta: (0,1) \longrightarrow \mathbb{R}$.
+>    - $\eta$ is invertible (Exercise):
+$$
+y = \log\left(\frac{u}{1-u}\right) \,\, \Leftrightarrow \,\, u = \frac{e^y}{1 + e^y}
+$$
+
+## Logistic Regression Distribution
+
+- In logistic regression, we assume the response $Y$ is binary.
+- So for a given $X$, $Y \mid X$ is distributed as a **Bernoulli** random variable:
+$$
+\begin{align}
+\text{Pr}(Y = 1 \mid X) &= p \\
+\text{Pr}(Y = 0 \mid X) &= 1-p 
+\end{align}
+$$
+- Bernoulli is the same as Binomial with $n-1$.
+
+## Logistic Regression Equation
+
+Let $p(X)$ be the **predicted probability** $p(X) = \text{Pr}(Y = 1 \mid X)$. The logistic regression model predicts the logit of the predicted probability:
+
+$$
+\log\left(\frac{p(X)}{1-p(X)} \right) = \beta_0 + \beta_1X_1 + \cdots + \beta_pX_p
+$$
+
+## Logistic Regression in R
+
+```{r}
+defMod2 <- glm(default ~ balance, data = Default, family = binomial)
+summary(defMod2)
+```
+
+## Exercise (Pairs)
+
+```{r, echo = FALSE}
+summary(defMod2)$coefficients
+```
+
+
+1. Write down the logistic regression prediction equation.
+2. Compute the *predicted logit* for someone with a balance of 2400.
+3. Compute the *predicted probability* of defaulting for someone with a balance of 2400.
+4. Predict $Y$ when $X = 2400$.
+
+## Plotting the model
+
+```{r, fig.align='center', fig.height=3.5, fig.width=7}
+ggplot(DefaultK, aes(x = balance, y = defBin)) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(method = glm, 
+              method.args=list(family = binomial),
+              formula = y ~ x, se = FALSE)
+```
+
+# Poisson Regression
+
+## Example: Bikeshare data
+
+```{r}
+glimpse(Bikeshare)
+```
+
+## First, try linear regression
+
+```{r}
+bikeMod1 <- lm(bikers ~ factor(workingday) + temp + weathersit, data = Bikeshare)
+summary(bikeMod1)
+```
+
+## Predict using `predict`
+
+```{r}
+predict(bikeMod1, data.frame(workingday = c(0, 1), 
+                             temp = c(0.7, 0), # normalized to [0,1]
+                             weathersit = c("cloudy/misty", "heavy rain/snow")))
+```
+
+It doesn't make sense to have negative bikers.
+
+## Predicting counts
+
+- The variable bikers is actually discrete, because it is a **count** of all the bikers.
+- It is reasonable to assume that it has a Poisson distribution, for a fixed $X$.
+
+```{r, fig.align='center', fig.height=2.5, fig.width=4, message = FALSE}
+ggplot(Bikeshare, aes(x = bikers)) + geom_histogram()
+```
+
+## Poisson Regression Distribution
+
+>- Use **Poisson regression** when the response $Y$ is a count.
+>- So for a given $X$, $Y \mid X$ is distributed as a **Poisson** random variable:
+$$
+\text{Pr}(Y = k \mid X) = \frac{e^{-\lambda} \lambda^k}{k!}, \text{where } k = 0,1,2,\ldots
+$$
+>- The corresponding link function is $\eta(u) = \log(u)$. (Why?)
+>- The regression equation gives the log of the predicted count.
+$$
+\log(X) = \beta_0 + \beta_1X_1 + \cdots + \beta_pX_p
+$$
+
+## Poisson Regression in R
+
+```{r}
+bikeMod2 <- glm(bikers ~ factor(workingday) + temp + weathersit, 
+                data = Bikeshare, family = poisson)
+summary(bikeMod2)
+```
+
+## Predict using `predict`
+
+```{r}
+predict(bikeMod2, data.frame(workingday = c(0, 1), 
+                             temp = c(0.7, 0), # normalized to [0,1]
+                             weathersit = c("cloudy/misty", "heavy rain/snow")))
+```
+
+## Predict using `predict` on the response scale
+
+```{r}
+predict(bikeMod2, data.frame(workingday = c(0, 1), 
+                             temp = c(0.7, 0), # normalized to [0,1]
+                             weathersit = c("cloudy/misty", "heavy rain/snow")),
+        type = "response")
+```
+
+Check:
+
+```{r}
+exp(c(5.333129, 3.115127))
+```
+
+
+# R investigation
+
+```{r eval=FALSE, include=FALSE}
+glimpse(Smarket)
+
+```
+
+
+
+
