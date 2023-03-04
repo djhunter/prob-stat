@@ -70,5 +70,47 @@ linear_reg() %>%
       resamples = folds) %>%
   collect_metrics()
 
+### Challenge/HW?
 
+library(tidyverse)
+library(tidymodels)
+library(palmerpenguins)
 
+glimpse(penguins)
+penguinsAT <- penguins %>%
+  filter(species != "Gentoo") %>%
+  drop_na() %>%
+  droplevels()
+set.seed(6475)
+pen_split <- initial_split(penguinsAT)
+pen_train <- training(pen_split)
+pen_test <- testing(pen_split)
+logistic_reg() %>%
+  set_engine("glm", family = binomial) %>%
+  fit(species ~ body_mass_g + flipper_length_mm, 
+      data = pen_train) ->
+  pATfit
+tidy(pATfit)
+
+predict(pATfit, pen_test) %>%
+  bind_cols(predict(pATfit, pen_test, type = "prob")) %>%
+  bind_cols(pen_test) ->
+  penAT_pred
+
+penAT_pred %>%
+  accuracy(truth = species, estimate = .pred_class)
+penAT_pred %>%
+  roc_auc(truth = species, estimate = .pred_Adelie)
+penAT_pred %>%
+  roc_curve(truth = species, .pred_Adelie) %>%
+  ggplot(aes(x = 1-specificity, y = sensitivity)) +
+  geom_point(aes(color = .threshold)) +
+  geom_smooth(method = loess, se = FALSE, formula = y~x)
+
+set.seed(822)
+folds <- vfold_cv(penguinsAT, v = 10)
+logistic_reg() %>%
+  set_engine("glm", family = binomial) %>%
+  fit_resamples(species ~ body_mass_g + flipper_length_mm,
+      resamples = folds) %>%
+  collect_metrics()
