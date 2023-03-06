@@ -21,7 +21,7 @@ Please submit your written work as a PDF produced by your method of choice, or a
 2. Do Exercise 8 on pp. 222-223 of [JWHT]. 
     a. Make a data frame using `data.frame(x, y)`.
     b. Use `ggplot()` with `geom_point()`.
-    c. Use `linear_reg()` with the `lm` engine. For LOOCV, try using `vfold_cv()` with 100 folds. Also try using `loo_cv()`. Use `fit_resamples()` and `collect_metrics()`. Are the results the same?
+    c. Use `linear_reg()` with the `lm` engine. For LOOCV, try using `vfold_cv()` with 100 folds. Also try using `loo_cv()`. [Warning: Tidymodels is not a fan of LOOCV.](https://www.tmwr.org/resampling.html#leave-one-out-cross-validation)
     d. Summarize your findings in your written document.
     e. Summarize your findings in your written document.
     f. Summarize your findings in your written document.

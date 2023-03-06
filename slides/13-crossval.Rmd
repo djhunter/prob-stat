@@ -133,9 +133,10 @@ Note: if $k=n$, this is LOOCV.
 
 Advantages:
     - Less variability than train/test splits.
-    - Usually $k=5$ or $k=10$ works well, so number of training reps is bounded, even for large $n$.
-Disadvantage:
-    - Still some randomness.
+    - Computationally much better than LOOCV. Usually $k=5$ or $k=10$ works well, so number of training reps is bounded, even for large $n$.
+    - Less bias than LOOCV in some cases. Not much variability.
+Disadvantages:
+    - ?
 
 ## {data-background-image="images/cvvar.png" data-background-size="contain"}
     
