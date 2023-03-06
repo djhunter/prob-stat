@@ -1,0 +1,211 @@
+---
+title: "Cross-Validation"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+```
+
+
+# Overview
+
+- Training and Testing Sets
+- Leave-one-out Cross-Validation
+- K-fold Cross-Validation 
+- Classification
+    - The ROC curve
+- Introduction to `tidymodels`
+
+For further reading, see [JWHT], pp. 197-208, 150-152.
+
+# Training and Testing Sets
+
+## Probability Model for Statistical Learning
+
+- We have a list $X$ of **predictor** variables $X = (X_1, X_2, \ldots, X_p)$.
+- We have a **response** variable $Y$ we would like to predict. Our general **model** is:
+$$
+Y = f(X) + \epsilon
+$$
+- Here, $X$, $Y$, and $\epsilon$ are random variables.
+    - The **error term** $\epsilon$ is independent of $X$ and has $E(\epsilon) = 0$.
+    - The error term represents the random variation in $Y$ that is not due to the predictor variables $X$.
+    
+. . . 
+
+**Statistical learning** is a set of approaches for "learning" the function $f$ from a data set (i.e., a sample of the random variables).
+
+## Training and Testing
+
+- We build $\hat{f}$ using training data.
+    - Usually the MSE is low on training data.
+- We want $\hat{f}$ to have a low MSE on future (unseen data).
+- Common practice: Set aside a **testing set**, randomly chosen from your data, and check the MSE (for a regression model) on the testing set after it has been built using the training data.
+    - a.k.a, "Validation set"
+
+## {data-background-image="images/traintest.png" data-background-size="contain"}
+
+## Example: Predict `mpg` from `horsepower`
+
+```{r, fig.align='center', fig.width=6, fig.height=4}
+library(ISLR2)
+ggplot(Auto, aes(x = mpg, y = horsepower)) + geom_point()
+```
+
+## Tuning a polynomial regression model
+
+>- We can try to predict `mpg` from `horsepower` using polynomial regression:
+>    - $Y = \beta_0 + \beta_1 X + \cdots + \beta_k X^k + \epsilon$
+>- How do we know which value of $k$ makes the best predictive model?
+>    - In linear regression, software gives us P-values, so we can use these to decide.
+>    - *Problems:*
+>        - For other types of regression models, there is no theory for getting P-values.
+>        - Sometimes P-values for linear regression models will be wrong (e.g., bad residuals)
+>    - So we can evaluate the model using a train/test split to see which value of $k$ has the lowest test MSE.
+
+
+## Two limitations of train/test splits
+
+- Training set is smaller, so error is overestimated.
+- Error is sensitive to the random choice of testing set.
+
+Both of these problems are worse for small values of $n$ (small samples).
+
+## {data-background-image="images/ttvar.png" data-background-size="contain"}
+
+# Cross-Validation
+
+## Leave-one-out Cross-Validation
+
+- Data set has $n$ observations.
+- Train the model $n$ times, each time *leaving one observation out*.
+    - Training set: size $n-1$
+    - Testing set: size $1$
+- LOOCV error is the average of these testing errors.
+$$
+\text{CV}_{(n)} = \frac{1}{n} \sum_{i=1}^{n} \text{MSE}_i
+$$
+
+## {data-background-image="images/loocv.png" data-background-size="contain"}
+
+## LOOCV Pros and Cons
+
+- Advantages over train/test splits:
+    - Large training set, so errors are not overestimated as much.
+    - No randomness, so variability introduced by train/test splits is eliminated.
+- Disadvantage:
+    - Computationally expensive, especially for large $n$.
+    
+## K-fold Cross-Validation 
+
+- Randomly divide the data into $k$ **folds**, roughly the same size.
+- Train $k$ times, each time holding out a different fold.
+    - Use the held-out fold to compute MSE
+$$
+\text{CV}_{(k)} = \frac{1}{k} \sum_{i=1}^{k} \text{MSE}_i
+$$
+
+. . .
+
+Note: if $k=n$, this is LOOCV.
+
+## {data-background-image="images/kfoldcv.png" data-background-size="contain"}
+
+## Pros/Cons of k-fold CV
+
+Advantages:
+    - Less variability than train/test splits.
+    - Usually $k=5$ or $k=10$ works well, so number of training reps is bounded, even for large $n$.
+Disadvantage:
+    - Still some randomness.
+
+## {data-background-image="images/cvvar.png" data-background-size="contain"}
+    
+# Classification
+
+## Categorical Response Variables
+
+- When the variable $Y$ we are trying to predict is categorical, we can't use MSE.
+- We instead compute the CV **error rate:**
+$$
+\text{CV}_{(k)} = \frac{1}{k} \sum_{i=1}^{k} \text{Err}_i
+$$
+    - $\text{Err}_i = \sum I(y_i \neq \hat{y}_i)$ is the error rate on the $i$th fold.
+- Examples: Polynomial logistic regression, KNN.
+
+## {data-background-image="images/polylogit.png" data-background-size="contain"}
+
+## {data-background-image="images/errpolylogit.png" data-background-size="contain"}
+
+## The ROC curve
+
+- Many classification models (e.g., logistic regression, KNN) predict *probabilities*, not classes.
+- In this case, we can decide on a **threshold**, above which we predict "success" over "failure" (usually 0.5)
+- Trade-off:
+    - High thresholds: Lower false positive rate, higher false negative rate.
+    - Low thresholds: Higher false positive rate, lower false negative rate.
+
+## Jargon
+
+| Name | Definition | Synonyms | 
+| ----- | --- | ---------- |
+| False positive rate | FPos/Neg | Type 1 error rate, 1 - specificity |
+| True positive rate | TPos/Pos | 1 - Type 2 error rate, power, sensitivity, recall |
+
+. . .
+
+<br>
+
+- The **ROC curve** is a plot of the true positive rate versus the false positive rate, for different threshold values.
+    - i.e., sensitivity vs. 1 - specificity
+    - ROC stands for "receiver operating characteristic" (military)
+
+## Exercise
+
+Plot the ROC curve for the following testing data. Use thresholds of  $0.3$, $0.6$, $0.8$. Here $\hat{p}$ is the predicted probability of "Red".
+
+| True value | $\hat{p}$ | 0.3 FP | 0.3 TP  | 0.6 FP | 0.6 TP | 0.8 FP | 0.8 TP |
+| ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+| Red | 0.75 | | | | | | |
+| Green | 0.4 | | | | | | |
+| Red | 0.9 | | | | | | |
+| Red | 0.75 | | | | | | |
+| Green | 0.65 | | | | | | |
+| Red | 0.5 | | | | | | |
+| Red | 0.65 | | | | | | |
+| Green | 0.1 | | | | | | |
+
+
+## Area under the ROC curve
+
+- We would like high true positives and low false positives.
+- Concave down is better.
+- The **area under the ROC curve** (AUC) is a good metric for evaluating a classification model.
+
+## {data-background-image="images/roc.png" data-background-size="contain"}
+
+# Introduction to `tidymodels`
+
+
+    
+    
+    
+    

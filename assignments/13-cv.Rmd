@@ -1,0 +1,30 @@
+---
+title: "Cross-Validation"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Please submit your written work as a PDF produced by your method of choice, or as a Word Document or Google Doc. **This written document should contain all the relevant output and plots, as well as written answers to all the questions.** Please also upload a separate R script (`filename.R`) with the code that you used to answer the questions (code only, no output): due 5/7, 11:59pm. Use `tidyverse` and `tidymodels` to do these problems.
+
+1. Do Exercise 5 on pp. 220-221 of [JWHT]. In the `tidymodels` framework:
+    a. Use `logistic_reg()` with the `glm` engine. Include the `tidy()` summary of the model in your written document.
+    b. For (i), use `initial_split()` and `training()` and `testing()`, (iii) use `predict()` with `bind_cols()`, (iv) use `accuracy()`. In addition to the error rate, also compute the AUC using `auc_roc()` and plot the ROC curve using `roc_curve()` and `ggplot()`. Include the ROC curve in your written document.
+    c. Summarize your findings in your written document.
+    d. Summarize your findings in your written document.
+
+2. Do Exercise 8 on pp. 222-223 of [JWHT]. 
+    a. Make a data frame using `data.frame(x, y)`.
+    b. Use `ggplot()` with `geom_point()`.
+    c. Use `linear_reg()` with the `lm` engine. For LOOCV, try using `vfold_cv()` with 100 folds. Also try using `loo_cv()`. Use `fit_resamples()` and `collect_metrics()`. Are the results the same?
+    d. Summarize your findings in your written document.
+    e. Summarize your findings in your written document.
+    f. Summarize your findings in your written document.
+    
+Summarize your findings in your written document, and also upload your R script as a `.R` file.
+
