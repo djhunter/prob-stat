@@ -152,7 +152,7 @@ where $\sigma_X^2 = \text{Var}(X)$, $\sigma_Y^2 = \text{Var}(Y)$, $\sigma_{XY} =
 $$
 \hat{\alpha} = \frac{\hat{\sigma}_Y^2 - \hat{\sigma}_{XY}}{\hat{\sigma}^2_X + \hat{\sigma}^2_Y - 2\hat{\sigma}_{XY}}
 $$
-- There is no theory-based method for estimating the standard error, or for constructing confidence intervals for $\alpha$.
+- There is no theory-based method for estimating the standard error $\text{SE}(\hat{\alpha})$, or for constructing confidence intervals for $\alpha$.
 
 # Overview of Bootstrapping
 

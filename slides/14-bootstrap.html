@@ -2089,8 +2089,9 @@ money in <span class="math inline">\(X\)</span> and <span class="math inline">\(
 \hat{\sigma}_{XY}}{\hat{\sigma}^2_X + \hat{\sigma}^2_Y -
 2\hat{\sigma}_{XY}}
 \]</span></li>
-<li>There is no theory-based method for estimating the standard error,
-or for constructing confidence intervals for <span class="math inline">\(\alpha\)</span>.</li>
+<li>There is no theory-based method for estimating the standard error
+<span class="math inline">\(\text{SE}(\hat{\alpha})\)</span>, or for
+constructing confidence intervals for <span class="math inline">\(\alpha\)</span>.</li>
 </ul>
 </section></section>
 <section>
@@ -2175,10 +2176,10 @@ mean of x
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="fu">nrow</span>(smallData), </span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">replace =</span> <span class="cn">TRUE</span>)))</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(smallBoot) <span class="do">## bootstrap SE of sample mean</span></span></code></pre></div>
-<pre><code>[1] 4.530675</code></pre>
+<pre><code>[1] 4.473037</code></pre>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(smallBoot, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="do">## bootstrap 95% CI for mean</span></span></code></pre></div>
 <pre><code>    2.5%    97.5% 
-26.00000 43.83333 </code></pre>
+26.16667 43.66667 </code></pre>
 </section></section>
 <section id="bootstrapping-with-tidymodels" class="title-slide slide level1">
 <h1>Bootstrapping with <code>tidymodels</code></h1>
