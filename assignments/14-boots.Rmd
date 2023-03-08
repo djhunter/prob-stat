@@ -1,0 +1,24 @@
+---
+title: "Bootstrapping"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Please submit your written work as a PDF produced by your method of choice, or as a Word Document or Google Doc. **This written document should contain all the relevant output and plots, as well as written answers to all the questions.** Please also upload a separate R script (`filename.R`) with the code that you used to answer the questions (code only, no output): due 3/19, 11:59pm. 
+
+1. Do Exercise 1 on page 219 of [JWHT]. Using "single-variable calculus" means that you will be taking the derivative with respect to $\alpha$, setting it equal to zero, then solving for $\alpha$. You can't pull the derivative inside a $\text{Var}$, so before you take the derivative you will need to use the formulas for variance and covariance that we discussed in class to get all those $\alpha$'s outside the $\text{Var}$s and $\text{Cov}$s. (Note that $X$ and $Y$ are definitely *not* independent in this application.)
+
+2. Do Exercise 6 on pp. 221 of [JWHT], with the following modifications/additions:
+    a. Do it using `glm()` and `summary()` as directed. Also try `confint()` on your model.
+    b. Ignore their directions, and use the `tidymodels` framework: As we did in class, your `fit_glm_on_boot` function will consume a split (an `rsplit` object) and return a `glm` fit.
+    c. Ignore their directions, and use `bootstraps` from the `tidymodels` package, along with `map`, `mutate`, etc., as we did in class. In addition, use `int_pctl` to compute bootstrap confidence intervals.
+    d. Summarize your findings in your written document.
+    
+Summarize your findings in your written document, and also upload your R script as a `.R` file.
+

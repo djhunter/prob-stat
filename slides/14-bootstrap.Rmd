@@ -1,0 +1,215 @@
+---
+title: "The Bootstrap"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+```
+
+
+# Overview
+
+- Review: p-values and confidence intervals
+- Example: A Custom Statistic
+    - Covariance
+- Overview of Bootstrapping
+- Bootstrapping with `tidymodels`
+
+For further reading, see [JWHT], pp. 209-212. [ER], pp. 153-155.
+
+# Review: p-values and confidence intervals
+
+## Example: predict sales from TV ad buys
+
+```{r message=FALSE}
+Advertising <- read_csv("https://www.statlearning.com/s/Advertising.csv")
+adMod1 <- lm(sales ~ TV, data = Advertising)
+summary(adMod1)
+```
+
+## Standard Error
+
+```{r echo=FALSE}
+print(summary(adMod1)$coefficients, digits = 3)
+```
+
+- Any *statistic* computed from a random sample (e.g., the regression coefficients) can be viewed as a *random variable* $U$.
+    - The statistic will vary if a different random sample is taken.
+- The **standard error** of a statistic is the standard deviation of this random variable: $\sqrt{\text{Var}(U)}$.
+
+## P-values
+
+```{r echo=FALSE, message=FALSE}
+print(summary(adMod1)$coefficients, digits = 3)
+```
+
+- The two-tail area `Pr(>|t|)` is called a **p-value**.
+- It is the probability, *assuming that $\beta_i = 0$*, of observing a sample with a $\hat{\beta}_i$ as extreme as the one you observed.
+    - If this probability is small, we have evidence that $\beta_i \neq 0$.
+
+. . .
+
+Formally, a small p-value is evidence against the **null hypothesis** $H_0$ in favor of the **alternative hypothesis** $H_A$.
+
+$$
+\begin{align}
+H_0: & \;\; \beta_i = 0 \\
+H_A: & \;\; \beta_i \neq 0 \\
+\end{align}
+$$
+
+## Confidence Intervals
+
+```{r echo=FALSE}
+print(summary(adMod1)$coefficients, digits = 3)
+```
+
+>- Like the normal distribution, approximately 95% of the $t$-distribution lies within 2 standard deviations of the mean.
+>- So a quick **95% confidence interval** for $\beta_i$ is $\hat{\beta}_i \pm 2 \cdot \text{SE}(\hat{\beta}_i)$.
+>    - Technically, "2" should be replaced by the appropriate quantile of the $t$-distribution with $n-2$ degrees of freedom.
+>- $0.0475 \pm 2 \cdot 0.00269 \approx (0.042, 0.053)$
+>- "We are 95% confident that the true value of $\beta_1$ is between 0.042 and 0.053."
+>    - This interval was constructed via a process that will capture the true $\beta_1$ value 95% of the time.
+
+## Using `confint`
+
+```{r}
+confint(adMod1)
+```
+
+## Problem: Limitations of Theory
+
+>- All of the p-values, standard errors, and confidence intervals produced by `lm`, `glm`, `t.test`, etc., are **theory-based**.
+>    - Assumptions must hold (e.g., independence of observations, distribution of residuals)
+>    - If these assumptions don't hold, the p-values and confidence intervals will be wrong.
+>- There are theory-based methods for means, standard deviations, regression coefficients, etc.
+>- However, there are many statistics that lack good theory-based estimation methods (e.g., median).
+>- **Bootstrapping** is a general method for estimating statistics of any kind, without any assumptions on the distribution.    
+
+# Example: A Custom Statistic
+
+## Recall: Variance
+
+- The **expected value** of a random variable $X$ is $\mu_X = E(X) = \int_{-\infty}^{\infty} xf(x) \, dx$.
+    - Here $f(x)$ is the probability density function of $X$.
+- The **variance** of a random variable $X$ is $\text{Var}(X) = E\left( (X - \mu_X)^2 \right)$.
+- **Shortcut formula:** $\text{Var}(X) = E(X^2) - [E(X)]^2$
+- **Constant multiples:**  $\text{Var}(aX) = a^2\text{Var}(X)$
+- **If $X$ and $Y$ are independent**, then $\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y)$
+
+## Covariance
+
+What if $X$ and $Y$ are not independent?
+
+>- The **covariance** of $X$ and $Y$ is $\text{Cov}(X,Y) = E\left((X - \mu_X)(Y - \mu_Y) \right)$
+>- Properties of covariance:
+>    - **Linearity:** $\text{Cov}(aX + bY, Z) = a\text{Cov}(X, Z) + b\text{Cov}(Y, Z)$
+>    - **Shortcut:** $\text{Cov}(X,Y) = E(XY) - E(X)E(Y)$
+>    - **If $X$ and $Y$ are independent**, then $\text{Cov}(X,Y) = 0$.
+> - **General addition rule for variance:**
+>    - $\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y) + 2\text{Cov(X, Y)}$
+
+. . . 
+
+See [ER] pp. 153-155 for proofs.
+
+## Example: Minimizing risk
+
+- We wish to invest in two securities that yield returns of $X$ and $Y$.
+- We'll invest $\alpha$ of our money in $X$ and $1-\alpha$ in $Y$.
+- We wish to minimize $\text{Var}\left(\alpha X + (1-\alpha)Y\right)$.
+
+. . .
+
+**Exercise:** The value of $\alpha$ that minimizes $\text{Var}\left(\alpha X + (1-\alpha)Y\right)$ is
+$$
+\alpha = \frac{\sigma_Y^2 - \sigma_{XY}}{\sigma^2_X + \sigma^2_Y - 2\sigma_{XY}}
+$$
+where $\sigma_X^2 = \text{Var}(X)$, $\sigma_Y^2 = \text{Var}(Y)$, $\sigma_{XY} = \text{Cov}(X, Y)$.
+
+## Estimating a custom statistic
+
+- In practice, $\sigma_X$, $\sigma_Y$, and $\sigma_{XY}$ are unknown.
+- Given sample data, we can predict 
+$$
+\hat{\alpha} = \frac{\hat{\sigma}_Y^2 - \hat{\sigma}_{XY}}{\hat{\sigma}^2_X + \hat{\sigma}^2_Y - 2\hat{\sigma}_{XY}}
+$$
+- There is no theory-based method for estimating the standard error, or for constructing confidence intervals for $\alpha$.
+
+# Overview of Bootstrapping
+
+## Idea: Take repeated samples, and see what happens.
+
+- We need to understand the *variability of the statistic* $\hat{\alpha}$.
+- If we had access to the population, and we could take repeated samples, we could just compute $\hat{\alpha}_1, \hat{\alpha}_2, \ldots, \hat{\alpha}_{1000}$ from 1000 different random samples.
+    - The standard deviation of these would be a good estimate for the standard error of $\hat{\alpha}$.
+    - The 2.5th percentile and the 97.5th percentile would be a 95% confidence interval.
+
+. . .
+
+In practice, we don't usually have the ability to resample from the population.
+
+## Bootstrap: Sample the data with replacement
+
+- Since we can't repeatedly sample from the population, we take samples from our original data set **with replacement**.
+    - Idea: Instead of using the actual population, we are creating a pretend population by making infinitely many copies of the original data set.
+- Compute $\hat{\alpha}_1, \hat{\alpha}_2, \ldots, \hat{\alpha}_{1000}$ from 1000 **bootstrap samples**.
+    - The standard deviation of these is a bootstrap estimate of $\text{SE}(\hat{\alpha})$ the standard error of $\hat{\alpha}$.
+    - The 2.5th percentile and the 97.5th percentile give a **bootstrap 95% confidence interval**.
+    
+## {data-background-image="images/bootstrap.png" data-background-size="contain"}
+
+## Example: One-Sample $t$-interval
+
+```{r}
+smallData <- data.frame(x = c(23, 51, 22, 37, 46, 29))
+t.test(smallData$x)
+```
+
+## Equivalently: Intercept model
+
+```{r}
+smallIntMod <- lm(x ~ 1, data = smallData)
+summary(smallIntMod)$coefficients
+confint(smallIntMod)
+```
+
+## Bootstrapping
+
+```{r}
+smallBoot <- replicate(10000,
+                       mean(sample(smallData$x, 
+                                   nrow(smallData), 
+                                   replace = TRUE)))
+sd(smallBoot) ## bootstrap SE of sample mean
+quantile(smallBoot, c(0.025, 0.975)) ## bootstrap 95% CI for mean
+```
+
+
+# Bootstrapping with `tidymodels`
+
+
+
+
+    
+    
+    
+    
