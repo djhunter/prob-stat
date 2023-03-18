@@ -1,0 +1,69 @@
+---
+title: "Model Selection"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+```
+
+
+# Overview
+
+- Review: Linear Regression
+- Criteria for model selection
+- Methods of selecting variables
+- Stepwise selection in R
+
+For further reading, see [JWHT], pp. 225-236
+
+# Review: Linear Regression
+
+## The Linear Regression Model
+
+In **Linear Regression**, we represent $f(X)$ with a *linear combination* of the predictor variables, plus an intercept $\beta_0$:
+
+$$
+Y = \beta_0 + \beta_1 X_1 +\beta_2 X_2 + \cdots + \beta_p X_p + \epsilon
+$$
+
+Here $\epsilon$ is independent of $X$ and has $E(\epsilon) = 0$.
+
+# Criteria for model selection
+
+## Adjusted $R^2$
+
+>- Total sum of squares $\text{TSS} = \sum (y_i - \bar{y})^2$ measures total variability in $Y$.
+>- $\text{RSS} = \sum (y_i - \hat{y}_i)$ measures variability in $Y$ *after fitting the model*.
+>    - So $\text{RSS}/\text{TSS}$ is the proportion of variability the model cannot explain.
+>- "Multiple R-squared" is $R^2 = 1-\text{RSS}/\text{TSS}$
+>    - $R^2$ is the proportion of variability in $Y$ that is explained by $X$, using this model.
+>- **Adjusted R-squared** applies a penalty for the number of predictors $p$.
+$$
+\text{Adjusted } R^2 = 1- \frac{\text{RSS}/(n-p-1)}{\text{TSS}/(n-1)}
+$$
+
+## Akaike information criterion (AIC)
+
+## Bayesian information criterion (BIC)
+
+# Methods of selecting variables
+
+# Stepwise selection in R
