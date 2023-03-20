@@ -216,7 +216,7 @@ Multiple R-squared:  0.6119,	Adjusted R-squared:  0.6099
 ```
 
 >- Total sum of squares $\text{TSS} = \sum (y_i - \bar{y})^2$ measures total variability in $Y$.
->- $\text{RSS} = \sum (y_i - \hat{y}_i)$ measures variability in $Y$ *after fitting the model*.
+>- $\text{RSS} = \sum (y_i - \hat{y}_i)^2$ measures variability in $Y$ *after fitting the model*.
 >    - So $\text{RSS}/\text{TSS}$ is the proportion of variability the model cannot explain.
 >- "Multiple R-squared" is $R^2 = 1-\text{RSS}/\text{TSS}$
 >    - $R^2$ is the proportion of variability in $Y$ that is explained by $X$, using this model.

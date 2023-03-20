@@ -1,0 +1,26 @@
+---
+title: "Stepwise Model Selection"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Please submit your written work as a PDF produced by your method of choice, or as a Word Document or Google Doc. **This written document should contain all the relevant output, as well as written answers to all the questions.** Please also upload a separate R script (`filename.R`) with the code that you used to answer the questions (code only, no output): due 3/21, 11:59pm. 
+
+1. Do Exercise 1 on page 282-283 of [JWHT]. 
+
+2. Consider the `Boston` data set. The goal is to build a model that predicts the crime rate`crim` from a subset of the other variables.
+    a. If we were going to consider **all** possible subsets of the predictor variables, how many models would we have to consider?
+    b. Use backward stepwise selection, starting with the full model, to select a model. Record all your results, including the model formula, coefficient summary, $R^2$, and AIC of the "best" model.
+    c. Use forward stepwise selection, starting with the null model, to select a model. Record all your results, including the model formula, coefficient summary, $R^2$, and AIC of the "best" model.
+    d. Were the results of parts (b) and (c) the same?
+    e. Take 10 different bootstrap resamples of the `Boston` data set, and perform backward selection on each. Do the selected variables change for different resamples? Explain.
+    
+    
+Summarize **all of** your findings in your written document, and also upload your R script as a `.R` file.
+

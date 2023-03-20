@@ -46,12 +46,37 @@ $$
 
 Here $\epsilon$ is independent of $X$ and has $E(\epsilon) = 0$.
 
+## Prediction and Inference
+
+We "train" a regression model on data to obtain the **least squares** estimates for the model coefficients:
+
+$$
+\hat{y} = \hat\beta_0 + \hat\beta_1 x_1 +\hat\beta_2 x_2 + \cdots + \hat\beta_p x_p
+$$
+
+- $\hat{y}$ is a **predicted** value of $Y$ given particular values of $X$.
+    - This estimate minimizes the residual sum of squares (RSS) on the training data.
+    - Can evaluate error on a testing set using RMSE, MSE, MAE.
+- We can also interpret the model using **inference**.
+    - p-values (which coefficients are significantly nonzero?)
+    - Confidence intervals (ranges of plausible values for the $\beta_i$s.)
+
+## Model Selection
+
+We have $p$ predictor variables and $n$ observations.
+
+>- Some of the predictor variables might not improve the model.
+>    - Overfitting
+>    - Hard to interpret
+>- **Model selection** involves finding a subset of predictors to optimize both *prediction* and *inference* using the model.
+
+
 # Criteria for model selection
 
 ## Adjusted $R^2$
 
 >- Total sum of squares $\text{TSS} = \sum (y_i - \bar{y})^2$ measures total variability in $Y$.
->- $\text{RSS} = \sum (y_i - \hat{y}_i)$ measures variability in $Y$ *after fitting the model*.
+>- $\text{RSS} = \sum (y_i - \hat{y}_i)^2$ measures variability in $Y$ *after fitting the model*.
 >    - So $\text{RSS}/\text{TSS}$ is the proportion of variability the model cannot explain.
 >- "Multiple R-squared" is $R^2 = 1-\text{RSS}/\text{TSS}$
 >    - $R^2$ is the proportion of variability in $Y$ that is explained by $X$, using this model.
@@ -59,11 +84,84 @@ Here $\epsilon$ is independent of $X$ and has $E(\epsilon) = 0$.
 $$
 \text{Adjusted } R^2 = 1- \frac{\text{RSS}/(n-p-1)}{\text{TSS}/(n-1)}
 $$
+>    - Intuition: Adding a predictor variable to a model should cause a *big* increase in $R^2$. If not, it is best to leave it out.
 
 ## Akaike information criterion (AIC)
 
+>- A large family of models (including `lm` and `glm`) are estimated using **maximum likelihood:** Find the maximum value $\hat\ell$ of a likelihood function $\ell(\beta_0, \beta_1, \ldots, \beta_p \mid \text{the training data})$.
+>- $\text{AIC} = 2k - 2 \log \hat\ell$, where $k$ is the number of parameters estimated.
+>    - *Smaller AIC is better:* Fewer parameters, larger $\hat\ell$.
+>    - Theory: AIC measures the *information lost* by representing a random process with a model.
+>- For least-squares regression, $\text{AIC} = \frac{1}{n}\left(\text{RSS} + 2d\hat\sigma^2 \right)$, where $d$ is the number of predictors and $\hat\sigma^2$ is an estimate of $\text{Var}(\epsilon)$.
+>- **Note:** Unlike $R^2$, AIC is **not** an absolute measure of the quality of a model. Only useful for comparing different subsets of variables.
+
 ## Bayesian information criterion (BIC)
 
+>- $\text{BIC} = k \log n - 2 \log\hat\ell$ (Similar to AIC)
+>- For least-squares regression, $\text{AIC} = \frac{1}{n}\left(\text{RSS} + d\hat\sigma^2\log n \right)$.
+>- Comparison with AIC:
+>    - Both apply to a large family of models (unlike $R^2$)
+>    - Both are not absolute measures (unlike $R^2$)
+>    - Smaller is better (like AIC)
+>    - BIC applies a larger penalty for the number of predictors $d$ (uses $\log n$ instead of 2), so it tends to favor smaller models.
+
 # Methods of selecting variables
+
+## Best Subset Selection
+
+- For $k$ in $\{1,2,\ldots,p}$,
+    - Fit all $\binom{p}{k}$ models containing $k$ predictors.
+    - Let $\mathcal{M}_k$ be the best of these, using RSS (or $R^2$).
+- Use Adjusted-$R^2$, AIC, or BIC to pick the best from $\mathcal{M}_0, \mathcal{M}_1, \ldots, \mathcal{M}_p$
+
+. . .
+
+- Advantage: Hard to argue with this choice.
+- Disadvantage: Computationally intractable for even moderately large $p$.
+    - There are $2^p$ subsets to consider.
+
+## Forward Selection (the R way)
+
+- Start with the null model (no predictors)
+- Repeat until no improvement is found:
+    - Try adding each unused predictor and compute AIC.
+    - Add the predictor that improves AIC the most.
+    
+## Backward Selection
+
+- Start with the full model (all predictors)
+- Repeat until no improvement is found:
+    - Try removing each included predictor and compute AIC.
+    - Remove the predictor that improves AIC the most.
+    
+## Forward/Backward Hybrid
+
+- Start with some given model
+- Repeat until no improvement is found.
+    - Try adding each unused predictor and compute AIC.
+    - Try removing each included predictor and compute AIC.
+    - Add/Remove the predictor that improves AIC the most.
+    
+## Problem: Stepwise selection is sensitive
+
+- Small changes in the data can change the results of stepwise selection.
+- Better practice: Try it on several bootstrap resamples and compare.
+
+# Ptolemy
+
+## {data-background-image="images/ptolemy.png" data-background-size="contain"}
+
+## The Ptolemaic Curriculum
+
+> We could still teach the $t$-test, but it would appear almost as an afterthought: "This
+is what people had to do in the old days, as an approximate method, before computers made
+it possible to solve the problem directly." For the time being, we could also add, "Lots of
+people still use this old approximation, but its days are numbered, just like the rotary phone
+and the 8-track tape player." [Cobb, The Introductory Statistics Course: A Ptolemaic
+Curriculum]
+
+## Cross-validation better?
+
+> In the past, performing cross-validation was computationally prohibitive for many problems with large $p$ and/or large $n$, and so AIC, BIC, and adjusted $R^2$ were more attractive approaches for choosing among a set of models. However, nowadays with fast computers, the computations required to perform cross-validation are hardly ever an issue. Thus, cross-validation is a very attractive approach for selecting from among a number of models under consideration. ([JWHT] p. 235)
 
 # Stepwise selection in R

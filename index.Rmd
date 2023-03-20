@@ -54,9 +54,11 @@ This site provides slides, assignments, and other resources for an upper-divisio
 12. [Generalized Linear Models](slides/12-glm.html)
 13. [Cross Validation](slides/13-crossval.html)
 14. [The Bootstrap](slides/14-bootstrap.html)
+15. [Model Selection](slides/15-model_selection.html)
 
 ---
 # 15. [Model Selection]()
+# 16 [Shrinkage]
 # test #2?
 # 18. []()
 # 19. []()
@@ -79,6 +81,7 @@ This site provides slides, assignments, and other resources for an upper-divisio
 12. [Logistic and Poisson Regression Models](assignments/12-genlinmods.html), due 3/5.
 13. [Cross Validation](assignments/13-cv.html), due 3/7.
 14. [Bootstrapping](assignments/14-boots.html), due 3/19.
+15. [Stepwise Model Selection](assignments/15-stepwise_select.html), due 3/21.
 
 # Other Resources
 
