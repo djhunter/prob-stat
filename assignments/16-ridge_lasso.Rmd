@@ -1,0 +1,25 @@
+---
+title: "Ridge and Lasso Regression"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Please submit your written work as a PDF produced by your method of choice, or as a Word Document or Google Doc. **This written document should contain all the relevant output and graphics, as well as written answers to all the questions.** Please also upload a separate R script (`filename.R`) with the code that you used to answer the questions (code only, no output): due 3/26, 11:59pm. 
+
+1. Do Exercises 2ab, 3, 4 on page 283-284 of [JWHT]. 
+
+2. Consider the `Boston` data set. Again, the goal is to build a model that predicts the crime rate `crim` from the other variables. Use the `glmnet` engine to fit a lasso regression model for predicting `crim` from the rest of the variables. Tune your model using repeated 10-fold cross validation. Include the following results:
+    a. Graphs of RMSE and $R^2$ for a suitable range of values of $\lambda$.
+    b. The tuned value of $\lambda$.
+    c. The coefficient table for the lasso model. Were any variables eliminated? Which ones?
+    d. A list of the three most important variables in the lasso model. Does it make sense that these are the important variables?
+    e. A comparison with the least-squares model obtained using backwards stepwise selection (last assignment). Use cross validation to compare the RMSE and $R^2$ for these two models. Which is "better"?
+    
+Summarize **all of** your findings in your written document, and also upload your R script as a `.R` file.
+

@@ -55,6 +55,7 @@ This site provides slides, assignments, and other resources for an upper-divisio
 13. [Cross Validation](slides/13-crossval.html)
 14. [The Bootstrap](slides/14-bootstrap.html)
 15. [Model Selection](slides/15-model_selection.html)
+16. [Regularization](slides/16-regularization.html)
 
 ---
 # 15. [Model Selection]()
@@ -82,6 +83,7 @@ This site provides slides, assignments, and other resources for an upper-divisio
 13. [Cross Validation](assignments/13-cv.html), due 3/7.
 14. [Bootstrapping](assignments/14-boots.html), due 3/19.
 15. [Stepwise Model Selection](assignments/15-stepwise_select.html), due 3/21.
+16. [Ridge and Lasso Regression](assignments/16-ridge_lasso.html), due 3/26.
 
 # Other Resources
 

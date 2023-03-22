@@ -1,0 +1,155 @@
+---
+title: "Regularization"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+```
+
+
+# Overview
+
+- Review: Bias-Variance Trade-off
+- Ridge Regression
+- The Lasso
+- Tuning 
+- Comparison
+- Shrinkage methods in tidymodels
+
+For further reading, see [JWHT], pp. 227-251
+
+# Review: Bias-Variance Trade-off
+
+## Bias and Variance
+
+In any model $f(X) = Y + \epsilon$, for a fixed $x_0$, over repeated fits $\hat{f}$,
+
+\begin{align}
+E\left[\left(y_0 - \hat{f}(x_0)\right)^2\right] &= \text{Var}\left[\hat{f}(x_0) \right] + \left[f(x_0) - E\left(\hat{f}(x_0)\right)\right]^2 + \text{Var}(\epsilon) \\
+\text{Ave test MSE} &= \text{Variance} \quad + \quad\quad \text{Bias}^2 \quad\quad + \text{irreducible error}
+\end{align}
+
+>- Increasing variance decreases bias, and vice versa.
+>- When the truth is close to linear, linear regression will have *low bias* and *high variance*.
+>- Can we improve things by increasing bias a little, and reducing variance a lot?
+
+# Ridge Regression
+
+## Idea: Apply a penalty when minimizing
+
+Recall: least squares regression computes the $\hat\beta_i$s by minimizing RSS:
+
+$$
+\text{RSS} = \sum_{i=1}^n \left[y_i - \left(\beta_0 + \sum_{j=1}^p \beta_j x_{ij} \right) \right]^2
+$$
+
+. . .
+
+In **ridge regression**, the coefficients are computed by minimizing the following:
+
+$$
+\text{RSS} + \lambda \sum_{j=1}^p \beta_j^2 = \sum_{i=1}^n \left[y_i - \left(\beta_0 + \sum_{j=1}^p \beta_j x_{ij} \right) \right]^2+ \lambda \sum_{j=1}^p \beta_j^2
+$$
+
+Here, $\lambda$ is an adjustable parameter that **penalizes** large coefficients.
+
+## {data-background-image="images/ridgeshrink.png" data-background-size="contain"}
+
+## {data-background-image="images/ridgebv.png" data-background-size="contain"}
+
+## Warning: Need to standardize predictors
+
+- The penalty $\lambda \sum \beta_j^2$ is more severe for predictors that take larger values.
+    - i.e., predictors with small units (e.g., mm instead of km)
+- Since the units affect the minimization process, it is best to **standardize** the predictors.
+    - i.e., scale them so they have variance 1
+    - Often we also shift them so they have mean zero.
+
+# The Lasso
+
+## Same idea, different norm
+
+In **lasso regression**, the coefficients are computed by minimizing the following:
+
+$$
+\text{RSS} + \lambda \sum_{j=1}^p |\beta_j| = \sum_{i=1}^n \left[y_i - \left(\beta_0 + \sum_{j=1}^p \beta_j x_{ij} \right) \right]^2+ \lambda \sum_{j=1}^p |\beta_j|
+$$
+
+- The lasso penalty uses absolute value instead of squaring. 
+- "Lasso" stands for "Least Absolute Shrinkage and Selection Operator."
+- Also need to standardize predictors.
+
+## {data-background-image="images/lassoshrink.png" data-background-size="contain"}
+
+## {data-background-image="images/lassobv.png" data-background-size="contain"}
+
+# Tuning 
+
+## Grid search
+
+- Create a (one-dimensional) grid of candidate values for $\lambda$.
+- For lasso and ridge, space the grid evenly on a **log scale**.
+- Try each value in the $\lambda$-grid. Measure error (RMSE) using CV.
+
+## {data-background-image="images/lassotune.png" data-background-size="contain"}
+
+# Comparison
+
+## Equivalent formulations: Minimize with constraints
+
+>- Idea: replace a penalty $\lambda$ with a **budget** $s$.
+>- Ridge regression minimizes RSS subject to the **constraint** that $\displaystyle{\sum_{j = 1}^p \beta^2 \leq s}$
+>    - Constraint region is a Euclidean hypersphere (i.e., circular)
+>- The lasso minimizes RSS subject to the constraint that $\displaystyle{\sum_{j = 1}^p |\beta| \leq s}$
+>    - Constraint region is a Taxicab hypersphere (diamond-shaped)
+
+## {data-background-image="images/rlconstraints.png" data-background-size="contain"}
+
+## Ridge vs. Lasso
+
+>- **Ridge shrinks asymptotically to zero; Lasso shrinks to zero.**
+>    - Use ridge if (you think that) all predictors are associated with the response; Use lasso to eliminate "noise" predictors.
+>    - Lasso performs **model selection**. As $\lambda$ increases, variables are eliminated.
+>        - Lasso is preferred over stepwise selection methods; less sensitive.
+>    - Lasso models have fewer variables, so are easier to interpret.
+>    - If two predictors are highly correlated, the lasso might zero one of them out, while ridge will just shrink both of them.
+
+
+## Lasso and Ridge Similarities
+
+>    - Both increase bias and (hopefully) reduce variance more.
+>    - Both require **standardizing** the predictors and **tuning** the penalty $\lambda$.
+>    - Both give measures of **variable importance**.
+>        - More important variables have larger coefficients (in absolute value).
+>    - Both can be applied to generalized linear models as well.
+
+## Compromise: Elastic-Net
+
+- Add a **mixture** parameter $\alpha$, $0\leq \alpha \leq 1$
+- Minimize $\displaystyle{\text{RSS} + \alpha\lambda \sum_{j=1}^p |\beta_j| + (1-\alpha)\lambda \sum_{j=1}^p \beta_j^2 }$
+    - $\alpha = 0$ gives ridge regression.
+    - $\alpha = 1$ gives the lasso.
+
+# Shrinkage methods in tidymodels
+
+
+
+

@@ -5,20 +5,7 @@ library(ISLR2)
 
 glimpse(Hitters)
 
-## Challenge: Train a full model predicting salary
-# from all the other variables. Use backward selection
-# to arrive at a simpler model. Summarize it.
-
-## Solution
-hit_complete <- Hitters %>%
-  drop_na()
-fullMod <- lm(Salary ~ ., data = hit_complete)
-stats::step(fullMod)
-bsMod <- lm(formula = Salary ~ AtBat + Hits + Walks + CAtBat + CRuns + 
-              CRBI + CWalks + Division + PutOuts + Assists, data = hit_complete)
-summary(bsMod)
-
-## Alternative: Penalized least squares (Lasso)
+## Penalized least squares (Lasso)
 
 lasso_model <- linear_reg(penalty = tune(), mixture = 1) %>% # mixture = 1 is lasso
   set_engine("glmnet")
@@ -87,6 +74,7 @@ tuning_results %>%
   collect_metrics %>%
   view()
 
+## Introduce this incrementally
 tuning_results %>%
   collect_metrics %>%
   ggplot(aes(x = penalty, y = mean, color = .metric)) +
@@ -101,6 +89,7 @@ tuning_results %>%
 ## Challenge: ?penalty. Change the range so you get a discernible minimum
 ## Solution:
 lambda_grid <- grid_regular(penalty(range = c(-4, 2)), levels = 100)
+# And redo the tuning above
 
 ## Finalize workflow with tuned value of lambda
 tuned_lasso <- finalize_workflow(lasso_workflow, best_lambda_rmse)
@@ -114,8 +103,8 @@ plot(final_fit_glmnet)
 plot(final_fit_glmnet, xvar = "lambda", label = TRUE)
 abline(v = log10(best_lambda_rmse$penalty))
 
-## Challenge: Compare to linear models.
 ## Challenge: Repeat for ridge regression (mixture = 0)
+## Challenge: Compare to linear models.
 
 ## Solutions:
 ## Cross validation:
@@ -164,9 +153,6 @@ tuning_results %>%
 tuning_results %>%
   select_best("rmse") ->
   best_lambda_rmse
-## Challenge: ?penalty. Change the range so you get a discernible minimum
-## Solution:
-
 ## Finalize workflow with tuned value of lambda
 tuned_ridge <- finalize_workflow(ridge_workflow, best_lambda_rmse)
 
