@@ -40,7 +40,7 @@ For further reading, see [JWHT], pp. 227-251
 
 ## Bias and Variance
 
-In any model $f(X) = Y + \epsilon$, for a fixed $x_0$, over repeated fits $\hat{f}$,
+In any model $Y = f(X) + \epsilon$, for a fixed $x_0$, over repeated fits $\hat{f}$,
 
 \begin{align}
 E\left[\left(y_0 - \hat{f}(x_0)\right)^2\right] &= \text{Var}\left[\hat{f}(x_0) \right] + \left[f(x_0) - E\left(\hat{f}(x_0)\right)\right]^2 + \text{Var}(\epsilon) \\
