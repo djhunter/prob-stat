@@ -1839,8 +1839,8 @@ E\left(\hat{f}(x_0)\right)\right]^2 + \text{Var}(\epsilon) \\
 \text{Bias}^2 \quad\quad + \text{irreducible error}
 \end{align}\]</span></p>
 <ul>
-<li class="fragment">Increasing variance decreases bias, and vice
-versa.</li>
+<li class="fragment">In general, increasing variance decreases bias, and
+vice versa.</li>
 <li class="fragment">When the truth is close to linear, linear
 regression will have <em>low bias</em> and <em>high variance</em>.</li>
 <li class="fragment">Can we improve things by increasing bias a little,
@@ -1929,7 +1929,10 @@ Operator.”</li>
 <section id="grid-search" class="slide level2">
 <h2>Grid search</h2>
 <ul>
-<li>Create a (one-dimensional) grid of candidate values for <span class="math inline">\(\lambda\)</span>.</li>
+<li>Create a (one-dimensional) grid of candidate values for <span class="math inline">\(\lambda\)</span>.
+<ul>
+<li>For multiple parameters, use a multi-dimensional grid.</li>
+</ul></li>
 <li>For lasso and ridge, space the grid evenly on a <strong>log
 scale</strong>.</li>
 <li>Try each value in the <span class="math inline">\(\lambda\)</span>-grid. Measure error (RMSE) using

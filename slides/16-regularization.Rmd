@@ -47,7 +47,7 @@ E\left[\left(y_0 - \hat{f}(x_0)\right)^2\right] &= \text{Var}\left[\hat{f}(x_0) 
 \text{Ave test MSE} &= \text{Variance} \quad + \quad\quad \text{Bias}^2 \quad\quad + \text{irreducible error}
 \end{align}
 
->- Increasing variance decreases bias, and vice versa.
+>- In general, increasing variance decreases bias, and vice versa.
 >- When the truth is close to linear, linear regression will have *low bias* and *high variance*.
 >- Can we improve things by increasing bias a little, and reducing variance a lot?
 
@@ -106,6 +106,7 @@ $$
 ## Grid search
 
 - Create a (one-dimensional) grid of candidate values for $\lambda$.
+    - For multiple parameters, use a multi-dimensional grid.
 - For lasso and ridge, space the grid evenly on a **log scale**.
 - Try each value in the $\lambda$-grid. Measure error (RMSE) using CV.
 
