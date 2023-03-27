@@ -43,7 +43,7 @@ Compare with Exercises 1 and 2 on Problem Set #10.
 
 ---
 
-3. Let $X$ and $Y$ be continuous random variables. Prove that $\text{Var}(X) + \text{Var}(Y) - \text{Cov(X, Y)} \geq 0$. State the properties of variance and covariance that you use in your derivation. (Start by listing all the properties.)
+3. Let $X$ and $Y$ be continuous random variables. Prove that $\text{Var}(X) + \text{Var}(Y) - 2\text{Cov(X, Y)} \geq 0$. State the properties of variance and covariance that you use in your derivation. (Start by listing all the properties.)
 
 --- 
 
