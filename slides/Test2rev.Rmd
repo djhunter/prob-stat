@@ -1,0 +1,87 @@
+---
+title: "Review for Test #2"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+```
+
+
+# Selected Review Problems
+
+Please see the study guide for a more comprehensive list of what Exam #2 will cover.
+
+---
+
+1. Draw a graph illustrating the *bias-variance trade-off*. Label the following curves: bias, variance, irreducible error, testing error, training error. The $x$-axis represents the flexibility of the model; give examples of several models showing where they reside on the continuum of the $x$-axis.
+
+---
+
+2. Use calculus to compute formulas for $\hat\beta_0$ and $\hat\beta_1$ in single-variable ridge regression. That is, minimize the following expression when $p = 1$.
+$$
+\text{RSS} + \lambda \sum_{j=1}^p \beta_j^2 = \sum_{i=1}^n \left[y_i - \left(\beta_0 + \sum_{j=1}^p \beta_j x_{ij} \right) \right]^2+ \lambda \sum_{j=1}^p \beta_j^2
+$$
+Compare with Exercises 1 and 2 on Problem Set #10.
+
+---
+
+3. Let $X$ and $Y$ be continuous random variables. Prove that $\text{Var}(X) + \text{Var}(Y) - \text{Cov(X, Y)} \geq 0$. State the properties of variance and covariance that you use in your derivation. (Start by listing all the properties.)
+
+--- 
+
+4. Find the $K$-nearest neighbors predicted value of $Z$ at $(x,y) = (1,1)$ for the following training data. (a) Use $K=1$, (b) Use $K=3$.
+$$
+\begin{array}{c||c|c|c|c|c|c}
+x & 0 & 2 & 1 & 2 & 3 & 3 \\ \hline
+y & 1 & 0 & 3 & 2 & 2 & 3 \\ \hline
+z & 10 & 20 & 30 & 40 &50 & 60 
+\end{array}
+$$
+
+---
+
+5. Make up an example to illustrate a data set with a significant interaction effect between a quantitative and categorical predictor. Include (pretend) `lm` code and output, as well as a sketch of a graph showing the interaction, and `ggplot` code that could have produced your graph. Think of a context (i.e., real-world scenario) where your example makes sense. 
+
+---
+
+6. Consider a data set with 8 observations of a binary variable (4 successes and 4 failures). Make up predicted $\hat{p}$ values and find thresholds such that the ROC curve contains the points $(0.25, 0.25)$, $(0.5, 0.5)$, and $(0.75, 0.75)$.
+
+---
+
+7. A logistic regression model predicts the probability of car theft, given the `make` of the car and the mileage (in thousands). Give the logistic regression equation for the following coefficient table, and compute the predicted probability for a Honda with 20 `Kmiles` on it.
+
+```
+              Estimate Std. Error z value Pr(>|z|)    
+(Intercept)         -2       0.75 -26.5    < 2e-16 ***
+Kmiles            -0.1      0.024  -4.1   2.99e-05 ***
+makeHonda          1.2      0.048  24.8    < 2e-16 ***
+```
+
+---
+
+8. Explain, with diagrams, how to estimate the RMSE of a regression model using 10-fold cross-validation.
+
+9. Suppose you have a data set with 25 observations of a numerical variable $X$, along with 100 bootstrap resamples. Explain how to obtain a 95% confidence interval for the median of $X$. Also, how do you obtain the standard error of the median?
+
+---
+
+10. Suppose your data set has five predictor variables, $A, B, C, D, E$, but only $A$ and $B$ are truly associated with the response variable, even though a linear regression model returns nonzero values for all coefficient estimates. Sketch graphs of the coefficient estimates versus $\lambda$ for both ridge and lasso regression, and label a plausible optimal value for $\lambda$.
+
