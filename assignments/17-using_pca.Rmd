@@ -1,0 +1,43 @@
+---
+title: "Using PCA"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Please submit your written work as a PDF produced by your method of choice, or as a Word Document or Google Doc. **This written document should contain all the relevant output and graphics, as well as written answers to all the questions.** Please also upload a separate R script (`filename.R`) with the code that you used to answer the questions (code only, no output): due 4/4, 11:59pm. 
+
+1. Suppose that principal components analysis is performed on a data set with $p = 3$ variables, resulting in the following rotation matrix:
+$$
+\Phi = \begin{bmatrix}
+0.53 & -0.80 & -0.27 \\
+0.58 &  0.58 & -0.58 \\
+0.62 &  0.15 &  0.77
+\end{bmatrix}
+$$
+Compute the scores for the first two principal components of the following four observations. Show how you get your answers. Sketch a plot of PC2 versus PC1, in which you label these four points. 
+
+| $X_1$ | $X_2$ | $X_3$ |
+|:--- |:--- |:--- |
+| -0.67 | 0.98  | 0.45 | 
+| -0.32 | 0.15  | 0.03 |
+|  1.56 | 0.19  | 0.64 |
+|  0.00 |-0.09 | -0.13 |
+ 
+2. Consider the `Boston` data set. 
+    a. Eliminate the variables `chas` and `rad` from this data set (make a new data frame) because even though R thinks these columns are numeric, they are not really quantitative predictors.
+    b. Use `prcomp` to do a principal components analysis on the data frame you made in part (a). Make sure you center and scale the data, because the units vary.
+    c. Give the cumulative PVE values for the first five components.
+    d. Make a scree plot using `plot`. (Include the plot in your document.)
+    e. Make a biplot using `biplot`. (Include this plot in your document.)
+    f. Include the loading vectors for the first two components in your document.
+    g. What are the three most important variables in PC1? See `?Boston` for a description of their meanings. Based on these three variables, what sort of information is PC1 capturing?
+    h. Repeat part (g) for PC2.
+    
+Give answers to these questions in your written document, and also upload your R script as a `.R` file.
+

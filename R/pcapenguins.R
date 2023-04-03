@@ -1,44 +1,37 @@
 library(tidyverse)
 library(palmerpenguins)
 glimpse(penguins)
-penguins %>%
-  select(where(is.numeric)) %>%
+
+pen_num <- penguins %>%
   drop_na() %>%
-#  prcomp() ->
-  prcomp(scale. = TRUE) ->
-  pen.pca
+  select(where(is.numeric))
+# pen.pca <- prcomp(pen_num) # Do first; what's wrong?
+pen.pca <- prcomp(pen_num, scale. = TRUE)
 summary(pen.pca)
 pen.pca
+## Challenge: Examine each of the first 3 components. What are they
+## telling us?
 
-penguins %>%
-  filter(species == "Gentoo") %>%
-  select(where(is.numeric)) %>%
-  select(-year) %>%
-  drop_na() %>%
-  prcomp(scale. = TRUE) ->
-  gentoo.pca
-summary(gentoo.pca)
-gentoo.pca
+## Note: center and scale manually
+pen_num_scaled <- scale(pen_num)
+pen.pca2 <- prcomp(pen_num_scaled, center = FALSE)
+pen.pca2 ## Same result
 
-penguins %>%
-  filter(species != "Gentoo") %>%
-  select(where(is.numeric)) %>%
-  select(-year) %>%
-  drop_na() %>%
-  prcomp(scale. = TRUE) ->
-  small.pca
-summary(small.pca)
-small.pca
-biplot(small.pca)
+## Challenge: Locate the rotation matrix. Can you multiply it by the 
+## data to get the scores?
 
-penguins %>%
-  select(where(is.numeric)) %>%
-  select(-year) %>%
-  drop_na() ->
-  pen.numeric
+plot(pen.pca)
+plot(pen.pca, type = "line")
+biplot(pen.pca)
 
-pen.pca <- prcomp(pen.numeric, scale. = TRUE) 
-summary(pen.pca)
+## Challenge: There seem to be three (maybe six) groupings in the biplot. 
+## Can you figure out what they are?
+## Hint: attach data to scores
+pen_complete <- penguins %>%
+  drop_na()
+library(broom)
+pen_scores <- augment(pen.pca, pen_complete) 
+view(pen_scores)
 
-pen.pca$x * pen.pca$scale + pen.pca$center
-as.matrix(pen.numeric) %*% pen.pca$rotation
+## Challenge: Take away year and redo. Now what groupings are found?
+
