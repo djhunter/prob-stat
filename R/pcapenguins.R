@@ -3,11 +3,12 @@ library(palmerpenguins)
 glimpse(penguins)
 penguins %>%
   select(where(is.numeric)) %>%
-  select(-year) %>%
   drop_na() %>%
+#  prcomp() ->
   prcomp(scale. = TRUE) ->
   pen.pca
 summary(pen.pca)
+pen.pca
 
 penguins %>%
   filter(species == "Gentoo") %>%

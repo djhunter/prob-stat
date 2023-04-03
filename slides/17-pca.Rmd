@@ -10,6 +10,7 @@ output:
     css: slidesdjh.css
     center: false
     transition: slide
+    incremental: true
     reveal_options:
       controls: true
       progress: false
@@ -27,130 +28,116 @@ library(tidyverse)
 
 # Overview
 
-- Review: Bias-Variance Trade-off
-- Ridge Regression
-- The Lasso
-- Tuning 
-- Comparison
-- Shrinkage methods in tidymodels
+- Supervised vs. Unsupervised Learning
+- Warm-up: Matrix multiplication
+- Principal Components
+- PCA in (base) R
 
 For further reading, see [JWHT], pp. 496-510
 
-# Review: Bias-Variance Trade-off
+# Supervised vs. Unsupervised Learning
 
-## Bias and Variance
+## Too many variables?
 
-In any model $Y = f(X) + \epsilon$, for a fixed $x_0$, over repeated fits $\hat{f}$,
+- So far, all of our models  have the form $Y = f(X) + \epsilon$, where $Y$ is a variable we would like to predict, and $X$ represents the predictor variables.
+- We "learn" and estimate $\hat{f}$ from a data set.
+    - $p =$ the number of predictor variables.
+    - $n = $ the number of cases (observations) in our data set.
+- **Problem:** What happens if $p$ is close to $n$, or if $p > n$.
+    - If $p > n$, the linear regression fit is undefined.
 
-\begin{align}
-E\left[\left(y_0 - \hat{f}(x_0)\right)^2\right] &= \text{Var}\left[\hat{f}(x_0) \right] + \left[f(x_0) - E\left(\hat{f}(x_0)\right)\right]^2 + \text{Var}(\epsilon) \\
-\text{Ave test MSE} &= \text{Variance} \quad + \quad\quad \text{Bias}^2 \quad\quad + \text{irreducible error}
-\end{align}
+## Supervised vs. Unsupervised Learning
 
->- In general, increasing variance decreases bias, and vice versa.
->- When the truth is close to linear, linear regression will have *low bias* and *high variance*.
->- Can we improve things by increasing bias a little, and reducing variance a lot?
+- So far, we have been doing **supervised** learning: 
+    - We are trying to learn a prediction function $\hat{f}$.
+    - We can test our model quality by using testing values of $(x,y)$.
+- In **unsupervised** learning, you only consider the predictor variables $X$, and not $Y$ (or there is no $Y$ to consider.) 
+    - Instead of trying to find a prediction function, you are just looking for patterns in the $X$s.
+- Two types of unsupervised learning
+    - Clustering
+    - Dimension reduction (e.g., PCA)
 
-# Ridge Regression
+# Warm-up: Matrix multiplication
 
-## Idea: Apply a penalty when minimizing
-
-Recall: least squares regression computes the $\hat\beta_i$s by minimizing RSS:
-
-$$
-\text{RSS} = \sum_{i=1}^n \left[y_i - \left(\beta_0 + \sum_{j=1}^p \beta_j x_{ij} \right) \right]^2
-$$
-
-. . .
-
-In **ridge regression**, the coefficients are computed by minimizing the following:
+## Warm-up problem 1: Multiply
 
 $$
-\text{RSS} + \lambda \sum_{j=1}^p \beta_j^2 = \sum_{i=1}^n \left[y_i - \left(\beta_0 + \sum_{j=1}^p \beta_j x_{ij} \right) \right]^2+ \lambda \sum_{j=1}^p \beta_j^2
+\begin{bmatrix}
+3 & 1 \\
+4 & 2
+\end{bmatrix}
+\begin{bmatrix}
+10 & 1 & 2 \\
+5  & 3 & 10   
+\end{bmatrix}
 $$
 
-Here, $\lambda$ is an adjustable parameter that **penalizes** large coefficients.
 
-## {data-background-image="images/ridgeshrink.png" data-background-size="contain"}
+## Warm-up problem 2: Covariance
 
-## {data-background-image="images/ridgebv.png" data-background-size="contain"}
+Find a formula for $\text{Cov}(X, Y)$ when $E(X) = 0 = E(Y)$.
 
-## Warning: Need to standardize predictors
+# Principal Components
 
-- The penalty $\lambda \sum \beta_j^2$ is more severe for predictors that take larger values.
-    - i.e., predictors with small units (e.g., mm instead of km)
-- Since the units affect the minimization process, it is best to **standardize** the predictors.
-    - i.e., scale them so they have variance 1
-    - Often we also shift them so they have mean zero.
+## Principal Components Analysis, informally
 
-# The Lasso
+- Our data consists of tuples $(x_1, x_2, \ldots, x_p)$.
+    - Geometrically, these are points in $p$-dimensional space.
+    - WLOG, we can assume each variable $X_i$ has $E(X_i) = 0$.
+        - "mean-center" the data.
+        - The center of the "data cloud" is at the origin.
+    - Can we find a linear subspace (e.g., line, plane, hyperplane) that is "close" to our data cloud.
+        - This subspace can have dimension $s < p$.
+        - We can project the data cloud onto this subspace.
+        
+## {data-background-image="images/pca4.png" data-background-size="contain"}
 
-## Same idea, different norm
+## PCA: Theory 
 
-In **lasso regression**, the coefficients are computed by minimizing the following:
+- Let $\mathbf{X} = \left[X_1 \; X_2 \; \cdots X_p\right]$ be the **data matrix**.
+- Since the data is mean-centered, $\text{Cov}(X_i, X_j) = E(X_iX_j)$.
+- The pairwise **covariance matrix**, up to a constant, is $\mathbf{X}^T\mathbf{X}$.
+    - Since $\mathbf{X}^T\mathbf{X}$ is symmetric, its eigenvectors are *orthogonal*.
+    - The *eigenvalues* of $\mathbf{X}^T\mathbf{X}$ are proportional to the variance of the cloud along the corresponding eigenvector.
+- **Upshot:** PCA gives us a new coordinate system, with fewer dimensions, such that the variance of the data cloud along the axes is maximized. Thus the data cloud is "close" to this linear subspace.
+- If interested, [more details here](https://arxiv.org/pdf/1404.1100.pdf).
+    
+## {data-background-image="images/pca1.png" data-background-size="contain"}
 
+## {data-background-image="images/pca2.png" data-background-size="contain"}
+
+## PCA: How to use
+
+Given an $n \times p$ data matrix $\mathbf{X}$, PCA returns **loadings** and **scores**. We have $n$ observations of $p$ variables: $i = 1, 2, \ldots, n$, $j = 1, 2, \ldots p$.
+
+- The **loadings** of the $j$th principal component are $\phi_{1j}, \phi_{2j}, \ldots, \phi_{pj}$. 
+    - Fact: this is the $j$th eigenvector, as a unit vector.
+    - These form the *columns* of a $p \times p$ **rotation matrix** $\Phi$.
+        - If you want $k < p$ dimensions, just use the first $k$ columns $\Phi_{(k)}$.
+        - $\mathbf{X}\Phi_{(k)}$ gives the projected values onto the $k$-dimensional subspace.
+- The $i$th PCA **score** of the $j$th component is $z_{ij} = \phi_{1j}x_{i1} + \phi_{2j}x_{i2} + \cdots + \phi_{pj}x_{ip}$.
+    - These form an $n \times p$ matrix $Z = \mathbf{X}\Phi$, whose rows are the principal component scores for each observation.
+- Crime example: $p = 4$ (Rape, Assault, Murder, UrbanPop), $k = 2$
+
+## {data-background-image="images/pca3.png" data-background-size="contain"}
+
+## Proportion of Variance Explained (PVE)
+
+- TSS is the total sum of squares of $\mathbf{X}$ (note: mean centered)
+- RSS is the residual sum of squares for the $k$-dimensional projection.
+- So the **proportion of variance explained** by the first $k$ principal components is:
 $$
-\text{RSS} + \lambda \sum_{j=1}^p |\beta_j| = \sum_{i=1}^n \left[y_i - \left(\beta_0 + \sum_{j=1}^p \beta_j x_{ij} \right) \right]^2+ \lambda \sum_{j=1}^p |\beta_j|
+\text{PVE} = 1 - \frac{\text{RSS}}{\text{TSS}}
 $$
+- A **scree plot** shows PVE versus $k$ (number of components used).
 
-- The lasso penalty uses absolute value instead of squaring. 
-- "Lasso" stands for "Least Absolute Shrinkage and Selection Operator."
-- Also need to standardize predictors.
+## {data-background-image="images/pca5.png" data-background-size="contain"}
 
-## {data-background-image="images/lassoshrink.png" data-background-size="contain"}
+## Another Example: Umpire Characteristics
 
-## {data-background-image="images/lassobv.png" data-background-size="contain"}
+[New metrics for evaluating home plate umpire consistency and accuracy
+](https://doi.org/10.1515/jqas-2018-0061)
 
-# Tuning 
+See Sections 4.1-4.2: Figure 13, Table 3 and Figure 15. 
 
-## Grid search
-
-- Create a (one-dimensional) grid of candidate values for $\lambda$.
-    - For multiple parameters, use a multi-dimensional grid.
-- For lasso and ridge, space the grid evenly on a **log scale**.
-- Try each value in the $\lambda$-grid. Measure error (RMSE) using CV.
-
-## {data-background-image="images/lassotune.png" data-background-size="contain"}
-
-# Comparison
-
-## Equivalent formulations: Minimize with constraints
-
->- Idea: replace a penalty $\lambda$ with a **budget** $s$.
->- Ridge regression minimizes RSS subject to the **constraint** that $\displaystyle{\sum_{j = 1}^p \beta^2 \leq s}$
->    - Constraint region is a Euclidean hypersphere (i.e., circular)
->- The lasso minimizes RSS subject to the constraint that $\displaystyle{\sum_{j = 1}^p |\beta| \leq s}$
->    - Constraint region is a Taxicab hypersphere (diamond-shaped)
-
-## {data-background-image="images/rlconstraints.png" data-background-size="contain"}
-
-## Ridge vs. Lasso
-
->- **Ridge shrinks asymptotically to zero; Lasso shrinks to zero.**
->    - Use ridge if (you think that) all predictors are associated with the response; Use lasso to eliminate "noise" predictors.
->    - Lasso performs **model selection**. As $\lambda$ increases, variables are eliminated.
->        - Lasso is preferred over stepwise selection methods; less sensitive.
->    - Lasso models have fewer variables, so are easier to interpret.
->    - If two predictors are highly correlated, the lasso might zero one of them out, while ridge will just shrink both of them.
-
-
-## Lasso and Ridge Similarities
-
->    - Both increase bias and (hopefully) reduce variance more.
->    - Both require **standardizing** the predictors and **tuning** the penalty $\lambda$.
->    - Both give measures of **variable importance**.
->        - More important variables have larger coefficients (in absolute value).
->    - Both can be applied to generalized linear models as well.
-
-## Compromise: Elastic-Net
-
-- Add a **mixture** parameter $\alpha$, $0\leq \alpha \leq 1$
-- Minimize $\displaystyle{\text{RSS} + \alpha\lambda \sum_{j=1}^p |\beta_j| + (1-\alpha)\lambda \sum_{j=1}^p \beta_j^2 }$
-    - $\alpha = 0$ gives ridge regression.
-    - $\alpha = 1$ gives the lasso.
-
-# Shrinkage methods in tidymodels
-
-
-
-
+# PCA in (base) R
