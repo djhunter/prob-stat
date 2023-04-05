@@ -1,0 +1,92 @@
+---
+title: "Principal Components Regression"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    incremental: false
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+```
+
+
+# Overview
+
+- Recap: Principal Components
+- Principal Components Regression
+    - Comparison with Ridge, Lasso
+- PCA and PCR in tidymodels
+
+For further reading, see [JWHT], pp. 251-259
+
+# Recap: Principal Components
+
+## Principal Components Analysis, informally
+
+- Our predictor data $X$ consists of $n$ $p$-tuples $(x_1, x_2, \ldots, x_p)$.
+    - Geometrically, these are $n$ points in $p$-dimensional space.
+    - WLOG, we can assume each variable $X_i$ has $E(X_i) = 0$.
+        - The center of the "data cloud" is at the origin.
+    - Can we find a linear subspace (e.g., line, plane, hyperplane) that is "close" to our data cloud?
+        - This subspace can have dimension $s < p$.
+        - We can project the data cloud onto this subspace.
+        
+## {data-background-image="images/pca4.png" data-background-size="contain"}
+
+## Notes on PCA
+
+- The components are ordered by how much variability they account for (PVE). The point is to use fewer than $p$ components.
+- The components are **orthongonal** (uncorrelated).
+- The **loadings** of the $j$th principal component are $\phi_{1j}, \phi_{2j}, \ldots, \phi_{pj}$. 
+    - These form the *columns* of a $p \times p$ **rotation matrix** $\Phi$.
+- The $i$th PCA **score** of the $j$th component is $z_{ij} = \phi_{1j}x_{i1} + \phi_{2j}x_{i2} + \cdots + \phi_{pj}x_{ip}$.
+    - These form an $n \times p$ matrix $Z = \mathbf{X}\Phi$, whose rows are the principal component scores for each observation.
+- Need to center and (usually) scale the data.
+
+## {data-background-image="images/pca1.png" data-background-size="contain"}
+
+## {data-background-image="images/pca2.png" data-background-size="contain"}
+
+## {data-background-image="images/pca5.png" data-background-size="contain"}
+
+# Principal Components Regression
+
+## Idea: First do PCA, then do linear regression
+
+>- Goal: Predict $Y$ from $X_1, X_2, \ldots, X_p$.
+>- Problem: the predictors $X_i$ may be correlated and/or redundant.
+>    - Linear regression models are hard to interpret when you have correlated predictors.
+>    - Linear models can have high variance with too many predictors.
+>- Solution: Do PCA on $X_1, X_2, \ldots, X_p$, then predict $Y$ from $\text{PC}_1, \text{PC}_2, \ldots, \text{PC}_k$, where $k<p$.
+>     - Also: Remember to *standardize the predictors* (or at least center them).
+
+## Choosing the number of components
+
+>- The number $k$ of components used in the regression is a tunable parameter.
+>- Try using $k = 1, 2, \ldots, p$ and use cross-validation to find the best value of $k$.
+>    - Note: $k = p$ is equivalent to using all the predictors $X_1, X_2, \ldots, X_p$.
+>- Fewer predictors makes the model *less* flexible, so hopefully the reduction in variance will be more than the increase in squared bias.
+
+## {data-background-image="images/pcr1.png" data-background-size="contain"}
+
+## {data-background-image="images/pcr3.png" data-background-size="contain"}
+
+## {data-background-image="images/pcr4.png" data-background-size="contain"}
+
+# PCA and PCR in tidymodels
