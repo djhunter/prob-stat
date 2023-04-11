@@ -1,0 +1,96 @@
+---
+title: "Decision Trees"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    incremental: false
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+```
+
+
+# Overview
+
+- Motivation: Finite codomain
+- Decision trees for regression
+    - Pruning
+- Decision trees for classification
+- Decision trees using `rpart`.
+
+For further reading, see [JWHT], pp. 327-340
+
+# Motivation: Regression with finitely-many outputs
+
+## Recall: Regression models
+
+- We have numeric predictor variables $X = (X_1, X_2, \ldots, X_p)$.
+- We have a numeric response variable $Y$.
+- General model: $Y = f(X) + \epsilon$.
+- Goal: Given $n$ rows of training data, "learn" a function $\hat{f}$ such that $\text{MSE} = \frac{1}{n}\sum_{i=1}^n (\hat{y}_i - y_i)^2$ is minimized.
+
+. . .
+
+**Special Case:** Consider functions $f$ with *finite codomain*. That is, the predictor function $f$ can only take finitely-many different values.
+
+## Exercise: One possible value
+
+Suppose we have a single predictor variable $X$ and the following data.
+
+$$
+\begin{array}{c||c|c|c|c|c}
+x & 0 & 2 & 1 & 2 & 3  \\ \hline
+y & 10 & 30 & 20 & 35 & 45   
+\end{array}
+$$
+
+Find a predictor function of the form $\hat{f}(x) = A$, where $A$ is constant, such that the $\text{MSE}$ on the training set is minimized. Justify your answer.
+
+## Two possible values?
+
+$$
+\begin{array}{c||c|c|c|c|c}
+x & 0 & 2 & 1 & 2 & 3  \\ \hline
+y & 10 & 30 & 20 & 35 & 45   
+\end{array}
+$$
+
+Find a predictor function of the form
+$$
+\hat{f}(x) = \begin{cases}
+A & \text{if } x<k \\
+B & \text{if } x\geq k 
+\end{cases}
+$$
+where $A, B, k$ are constant. Your choice should minimize the $\text{MSE}$.
+
+## Recursive Partitioning
+
+Start with the whole data set (a single partition).
+
+- For each partition, try every possible splitting point for each variable. Keep track of the split that decreases MSE the most.
+- Split the partition containing the best split, and repeat.
+
+Keep partitioning until some stopping criterion is reached.
+
+## Tree Pruning
+
+## Classification Trees
+
+# Lab: Decision trees using `rpart`
