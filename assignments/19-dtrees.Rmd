@@ -1,0 +1,20 @@
+---
+title: "Decision Trees"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Please submit your written work as a PDF produced by your method of choice, or as a Word Document or Google Doc. **This written document should contain all the relevant output and graphics, as well as written answers to all the questions.** Please also upload a separate R script (`filename.R`) with the code that you used to answer the questions (code only, no output): due 4/16, 11:59pm. 
+
+1. Write up solutions to exercises 1, 4, and 5 on pp. 361-362 of [JWHT].
+
+2. Do Exercise 9 on pp. 363-364 of [JWHT]. You will have to install the `tree` package. Read through the lab on pp. 353-356 to see how to use the `tree` package.
+
+
+

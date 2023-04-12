@@ -58,13 +58,9 @@ This site provides slides, assignments, and other resources for an upper-divisio
 16. [Regularization](slides/16-regularization.html)
 17. [Principal Components Analysis](slides/17-pca.html)
 18. [Principal Components Regression](slides/18-pcr.html)
+19. [Decision Trees](slides/19-decision_trees.html)
 
 ---
-# 15. [Model Selection]()
-# 16 [Shrinkage]
-# test #2?
-# 18. []()
-# 19. []()
 # 20. []()
 ---
 
@@ -88,6 +84,7 @@ This site provides slides, assignments, and other resources for an upper-divisio
 16. [Ridge and Lasso Regression](assignments/16-ridge_lasso.html), due 3/26.
 17. [Using PCA](assignments/17-using_pca.html), due 4/4.
 18. [PCR, Lasso, and Ridge Bake-Off](assignments/18-pcrbakeoff.html), due 4/11.
+19. [Decision Trees](assignments/19-dtrees.html), due 4/16.
 
 # Other Resources
 
