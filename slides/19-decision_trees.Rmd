@@ -87,10 +87,66 @@ Start with the whole data set (a single partition).
 - For each partition, try every possible splitting point for each variable. Keep track of the split that decreases MSE the most.
 - Split the partition containing the best split, and repeat.
 
-Keep partitioning until some stopping criterion is reached.
+Keep partitioning until some stopping criterion is reached. See `?rpart.control` for some example default settings.
+
+>- Note: Splitting works similarly for categorical predictors.
+
+## {data-background-image="images/dt1.png" data-background-size="contain"}
+
+## {data-background-image="images/dt2.png" data-background-size="contain"}
+
+## {data-background-image="images/dt3.png" data-background-size="contain"}
 
 ## Tree Pruning
 
+>- Construct an unpruned tree $T_0$.
+>- Choose a grid for $\alpha \geq 0$.
+>- For each $\alpha$, find the subtree $T_\alpha$ that minimizes $\sum (y_i - \hat{y}_i)^2 + \alpha |T|$.
+>    - *Fact:* $\alpha_1 < \alpha_2$ implies $T_{\alpha_1} \supseteq T_{\alpha_2}$.
+>    - So you get a sequence $T_0 \supseteq T_{\alpha_1} \supseteq T_{\alpha_2} \supseteq T_{\alpha_3} \cdots$.
+>- Use cross-validation to choose the best value of $\alpha$.
+
+## {data-background-image="images/dt4.png" data-background-size="contain"}
+
+## {data-background-image="images/dt5.png" data-background-size="contain"}
+
 ## Classification Trees
+
+The tree growing procedure is the same for classification problems, except:
+
+- The prediction for each leaf is the majority class in each leaf.
+    - Note: Easy to handle multiple levels of $Y$.
+    - Note: Easy to report predicted probabilities for each level.
+- Error rate can be used instead of $\text{MSE}$.
+
+## Measures of node purity
+
+Let $\hat{p}_{mk}$ be the proportion of training observations in the $m$th leaf that are from the $k$th class.
+
+>- **Gini Index:** $\displaystyle{G = \sum_{k=1}^K \hat{p}_{mk}(1 - \hat{p}_{mk})}$
+>    - Smaller is better: small $G$ indicates the $\hat{p}_{mk}$s are close to zero or 1. (*purity*)
+>- **Entropy:** $\displaystyle{D = -\sum_{k=1}^K \hat{p}_{mk}\log \hat{p}_{mk}}$
+>    - Smaller is better: $\hat{p}_{mk}$s are close to zero or 1.
+>- To evaluate the best split, $G$ and $D$ are better criteria than error rate, because they are more sensitive to node purity.
+>- CV error rate can be used during pruning.
+
+## {data-background-image="images/dt6.png" data-background-size="contain"}
+
+## {data-background-image="images/dt7.png" data-background-size="contain"}
+
+## Advantages/Disadvantages of Trees
+
+- Easy to explain and interpret.
+- Nice for mixture of categorical and numeric data.
+- Flexible, but high variance. (Not robust.)
+- Not great testing RMSE.
+
+. . .
+
+Next time: **Ensemble methods**
+
+## {data-background-image="images/dt8.png" data-background-size="contain"}
+
+
 
 # Lab: Decision trees using `rpart`
