@@ -24,7 +24,7 @@ Please submit your written work as a PDF produced by your method of choice, or a
 
 6. Compare the results of 4 and 5. Which model is better? To compare the RMSEs, take into account the transformation on $Y$ that was performed. 
 
-7. Create a 75/25 train-test split of both data frames. (Use the same split on each.) Compare testing set RMSE of the predicted salary (for the log-transformed model, you will have to untransform it.) Also compute a testing set RMSE for a linear regression model on each.
+7. Create a 75/25 train-test split of both data frames. (Use the same split on each.) Compare testing set RMSE of the predicted salary (for the log-transformed model, you will have to untransform the prediction and compare it to the untransformed true salary.) Also compute a testing set RMSE for a linear regression model on each.
 
 8. Find the five most important variables for the random forest models on `hit_complete` and `hitlog_complete`.
 
