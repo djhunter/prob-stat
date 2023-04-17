@@ -1,0 +1,96 @@
+---
+title: "Random Forest"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    incremental: false
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+```
+
+
+# Overview
+
+- Bagging
+- Variance and Correlation
+- Random Forest
+- Random Forest in R
+
+For further reading, see [JWHT], pp. 340-345
+
+# Last Time: Decision Trees
+
+## {data-background-image="images/dt4.png" data-background-size="contain"}
+
+## {data-background-image="images/dt6.png" data-background-size="contain"}
+
+## Advantages/Disadvantages of Trees
+
+- Easy to explain and interpret.
+- Nice for mixture of categorical and numeric data.
+- Flexible, but high variance. (Not robust.)
+- Not great testing RMSE/Error rate.
+
+# Bagging
+
+## Idea: Build trees using bootstrap resamples
+
+- Built a large number of trees $B$ from $B$ different bootstrap resamples.
+- Each tree has a prediction function $\hat{f}$.
+    - For *regression* problems, make a prediction by taking the average prediction over all $\hat{f}$s.
+    - For *classification* problems, make a prediction by majority vote.
+- Pros: Less variability, better predictions.
+- Cons: Less interpretable (not one tree any more)
+
+## Out-of-Bag Error
+
+- Each bootstrap resample leaves out several observations.
+- So each observation has a collection of trees that trained without it.
+    - Can make an **out-of-bag** (OOB) prediction using this subforest.
+- The OOB-predictions then can be comprared with the true $Y$ values for each observation.
+    - Classification: Compute OOB error rate.
+    - Regression: Compute OOB RMSE.
+- Don't need testing sets or CV!
+
+## Variable Importance
+
+- Each time a variable is used in a split, keep track of the reduction in error.
+    - Regression: Reduction in RMSE.
+    - Classification: Reduction in Gini or Entropy.
+- Average this reduction over all trees.
+
+## Exercise: Variance of averages
+
+1. Suppose $\text{Var}(X_1) = 16$, $\text{Var}(X_1) = 20$, and $X_1$ and $X_2$ are independent. Compute $\text{Var}[(X_1 + X_2)/2]$. 
+
+2. How will the answer to 1 change if $\text{Cov}(X_1, X_2) >0$?
+
+# Random Forest
+
+## Decorrelate the Trees in the Forest
+
+- The most important variables tend to form the first split, so the bagged trees will give correlated predictions.
+- In a **random forest**, a random selection of $m$ variables is allowed at each split.
+    - Usually $m = \sqrt{p}$.
+- Reduces correlation among the trees; decreases variance.
+
+# Lab: Random Forests in R
+
+

@@ -59,6 +59,7 @@ This site provides slides, assignments, and other resources for an upper-divisio
 17. [Principal Components Analysis](slides/17-pca.html)
 18. [Principal Components Regression](slides/18-pcr.html)
 19. [Decision Trees](slides/19-decision_trees.html)
+20. [Random Forests](slides/20-random_forest.html)
 
 ---
 # 20. []()
@@ -85,6 +86,7 @@ This site provides slides, assignments, and other resources for an upper-divisio
 17. [Using PCA](assignments/17-using_pca.html), due 4/4.
 18. [PCR, Lasso, and Ridge Bake-Off](assignments/18-pcrbakeoff.html), due 4/11.
 19. [Decision Trees](assignments/19-dtrees.html), due 4/16.
+20. [Random Forests](assignments/20-rand-forest.html), due 4/18.
 
 # Other Resources
 
