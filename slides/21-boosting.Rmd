@@ -1,0 +1,46 @@
+---
+title: "Boosting"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    incremental: false
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+```
+
+
+# Overview
+
+- Boosting
+- Exercise/Experiment
+- Extreme Gradient Boosting
+- xgboost in R
+
+For further reading, see [JWHT], pp. 345-348.
+
+# Boosting
+
+## Recall: Residuals
+
+>- Regression: Predict $Y$ from $X_1, X_2, \ldots, X_p$.
+>- Data: $n$ rows of the form $(y_i, x_{i1}, x_{i2}, \ldots, x_{ip})$, for $i = 1, 2, \ldots,n$.
+>- Use the data to train a model fit: $\hat{f}$.
+>- Residuals: $r_i = y_i - \hat{f}(x_{i1}, x_{i2}, \ldots, x_{ip})$. (You get $n$ residuals, one for each observation.)
+
