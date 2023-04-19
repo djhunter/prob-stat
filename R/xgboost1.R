@@ -3,7 +3,6 @@ wine <- read_csv("https://djhunter.github.io/prob-stat/data/wine.csv")
 
 library(xgboost)
 
-wine <- read_csv(here("data", "wine.csv"))
 redwine <- wine %>% dplyr::slice(1:1599) 
 trainSize <- round(0.80 * nrow(redwine))
 set.seed(1234) 
