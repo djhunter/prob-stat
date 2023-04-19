@@ -1,0 +1,23 @@
+---
+title: "Extreme Gradient Boosting"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Please submit your written work as a PDF produced by your method of choice, or as a Word Document or Google Doc. **This written document should contain all the relevant output and graphics, as well as written answers to all the questions.** Please also upload a separate R script (`filename.R`) with the code that you used to answer the questions (code only, no output): due 4/18, 11:59pm. 
+
+1. Write up a solution to Exercise 2 on page 361 of [JWHT]. Notice that it says "explain", so your solution will consist of a combination of prose and equations.
+
+2. Investigate how correlated predictors affect random forest models vs. gradient boosted tree models. In particular, consider the `Credit` data set from the `ISLR2` package.
+    a. Make a new data frame called `cred_num` containing only the numeric variables.
+    b. Investigate the results of `cor(cred_num)`. Which pair of variables are the most highly correlated?
+    c. Train a random forest model for predicting `Balance` from the other variables in `cred_num`. Report the variable importance of the predictors. In particular, did the correlated predictors in (b) receive similar importance scores?
+    d. Train an `xgboost` model for predicting `Balance` from the other variables in `cred_num`. Report the variable importance of the predictors. Compare to the results in (c). Is there a difference between random forests and `xgboost` in how correlated predictors are handled?
+    
+3. In the [previous assignment](20-rand-forest.html), you created random forest models for predicting `Salary` from the other variables in the `Hitters` data frame, both with and without log transforming the `Salary` variable. Repeat this comparison (i.e., question 7) for an `xgboost` model. (You will have to eliminate the categorical predictors from `Hitters`.) Does log transforming improve or worsen the testing RMSE?

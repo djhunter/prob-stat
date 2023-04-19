@@ -35,6 +35,8 @@ library(tidyverse)
 
 For further reading, see [JWHT], pp. 345-348.
 
+# Questions?
+
 # Boosting
 
 ## Recall: Residuals
@@ -43,4 +45,53 @@ For further reading, see [JWHT], pp. 345-348.
 >- Data: $n$ rows of the form $(y_i, x_{i1}, x_{i2}, \ldots, x_{ip})$, for $i = 1, 2, \ldots,n$.
 >- Use the data to train a model fit: $\hat{f}$.
 >- Residuals: $r_i = y_i - \hat{f}(x_{i1}, x_{i2}, \ldots, x_{ip})$. (You get $n$ residuals, one for each observation.)
+>    - Note: Residual = Actual - Predicted
 
+. . .
+
+*Thought Experiment:* What if you had a way of predicting the residuals? How could you improve the fit $\hat{f}$?
+
+## Boosting: Predict the residuals
+
+Start with $\hat{f} = 0$ and $r_i = y_i$ for all $i = 1, 2, \ldots,n$. Choose a *shrinkage parameter* $\lambda > 0$.
+
+. . .
+
+For $b = 1, 2, \ldots, \text{number of trees}$:
+
+>- Fit (a tree) $\hat{f}^b$ to the data set $\left\{(r_i, x_{i1}, x_{i2}, \ldots, x_{ip})\right\}_{i = 1, 2, \ldots,n}$
+>- Update fit and residuals: 
+>    - $\hat{f} \leftarrow \hat{f} + \lambda\hat{f}^b$.
+>    - $r_i \leftarrow r_i - \lambda\hat{f}^b(x_{i1}, x_{i2}, \ldots, x_{ip})$.
+
+. . . 
+
+The final boosted model is:
+$$
+\hat{f} = \sum_{b=1}^B \lambda \hat{f}^b
+$$
+
+
+## Exercise/Experiment
+
+$$
+\begin{array}{c||c|c|c}
+x_1 & 5 & 10 & 20  \\ \hline
+x_2 & 6 & 8 & 16    \\ \hline
+y & 10 & 20 & 26
+\end{array}
+$$
+
+1. Fit a decision tree with one split (i.e., a stump) to the above data. Split on $x_1$. (Find the minimum RSS.)
+2. Now replace $y$ with the residuals from your fit in (1), and fit a decision stump. Split on $x_2$.
+3. Let $\hat{f}$ be the final boosted model. Compute $\hat{f}(x_1, x_2)$ for all the observations in the original data.
+
+## Extreme Gradient Boosting
+
+- `xgboost`: a framework for boosted decision trees
+    - Uses the *gradient* of the loss function to speed up each boosting step.
+    - Open source, implemented on a wide range of platforms.
+    - Highly scalable (can use for very large data sets).
+    - More details: https://arxiv.org/abs/1603.02754
+    
+# Lab: Using `xgboost` in R

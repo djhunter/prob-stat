@@ -60,6 +60,7 @@ This site provides slides, assignments, and other resources for an upper-divisio
 18. [Principal Components Regression](slides/18-pcr.html)
 19. [Decision Trees](slides/19-decision_trees.html)
 20. [Random Forests](slides/20-random_forest.html)
+21. [Boosting](slides/21-boosting.html)
 
 ---
 # 20. []()
@@ -87,6 +88,7 @@ This site provides slides, assignments, and other resources for an upper-divisio
 18. [PCR, Lasso, and Ridge Bake-Off](assignments/18-pcrbakeoff.html), due 4/11.
 19. [Decision Trees](assignments/19-dtrees.html), due 4/16.
 20. [Random Forests](assignments/20-rand-forest.html), due 4/18.
+21. [Extreme Gradient Boosting](assignments/21-xgboost.html), due 4/23.
 
 # Other Resources
 
@@ -98,6 +100,8 @@ This site provides slides, assignments, and other resources for an upper-divisio
 - Tidymodels resources:
     - [Official Tutorials](https://www.tidymodels.org/learn/)
     - [Book: Kuhn and Silge](https://www.tmwr.org/)
+- [Machine Learning for Tabular Data in R](https://carpentries-incubator.github.io/r-ml-tabular-data/)
+
 
 All of the pages and slides on this site were authored in RMarkdown. The source code is available on GitHub: https://github.com/djhunter/prob-stat
 
