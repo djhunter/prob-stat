@@ -10,7 +10,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Please submit your written work as a PDF produced by your method of choice, or as a Word Document or Google Doc. **This written document should contain all the relevant output and graphics, as well as written answers to all the questions.** Please also upload a separate R script (`filename.R`) with the code that you used to answer the questions (code only, no output): due 4/18, 11:59pm. 
+Please submit your written work as a PDF produced by your method of choice, or as a Word Document or Google Doc. **This written document should contain all the relevant output and graphics, as well as written answers to all the questions.** Please also upload a separate R script (`filename.R`) with the code that you used to answer the questions (code only, no output): due 4/23, 11:59pm. 
 
 1. Write up a solution to Exercise 2 on page 361 of [JWHT]. Notice that it says "explain", so your solution will consist of a combination of prose and equations.
 

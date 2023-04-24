@@ -1,5 +1,5 @@
 ---
-title: "Learning: General Concepts"
+title: "Learning: General Considerations"
 output: 
   revealjs::revealjs_presentation:
     fig_width: 14 
@@ -86,4 +86,28 @@ Here $\rho > 0$ is the **learning rate**.
 
 ## Hyperparameters and Tuning
 
+- A numerical setting that controls the behavior of the training process is called a **hyperparameter**.
+- Unlike model parameters, hyperparameters are *not directly estimated from the data*.
+-    However, adjusting hyperparameters can improve the fit of a model.
+-    Standard procedure: Assess hyperparameter tuning using CV, then test the tuned model on a held-out testing set (that was not used in the tuning process).
+
+## Some XGBoost Hyperparameters
+
+For a complete list, see the [XGBoost documentation](https://xgboost.readthedocs.io/en/stable/parameter.html).
+
+- `eta` (learning rate). Not really something you tune. Generally, smaller is better, given reasonable time considerations.
+- `gamma` (minimum loss required to make a split on a tree). Larger $\Rightarrow$ less flexible.
+- `max_depth` (maximum depth of a tree). Larger $\Rightarrow$ more flexible.
+- `max_leaves` (maximum number of leaves). Larger $\Rightarrow$ more flexible.
+- `subsample` (percentage of rows to randomly sample for each iteration). Must be $\leq 1$, usually greater than 0.5. Can prevent overfitting.
+- `colsample_bytree` (percentage of columns to randomly sample). Can deal with correlated or noisy predictors.
+
+---
+
+A warning from the [XGBoost Documentation](https://xgboost.readthedocs.io/en/stable/parameter.html):
+
+> Parameter tuning is a dark art in machine learning, the optimal parameters of a model can depend on many scenarios. So it is impossible to create a comprehensive guide for doing so. 
+
+
 # Lab: Tuning an `xgboost` model
+

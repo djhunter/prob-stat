@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <title>Learning: General Concepts</title>
+  <title>Learning: General Considerations</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -1805,7 +1805,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
     <div class="slides">
 
 <section>
-    <h1 class="title">Learning: General Concepts</h1>
+    <h1 class="title">Learning: General Considerations</h1>
 </section>
 
 <section id="overview" class="title-slide slide level1">
@@ -1913,6 +1913,46 @@ generally find more accurate minima.</li>
 </section>
 <section id="hyperparameters-and-tuning" class="slide level2">
 <h2>Hyperparameters and Tuning</h2>
+<ul>
+<li>A numerical setting that controls the behavior of the training
+process is called a <strong>hyperparameter</strong>.</li>
+<li>Unlike model parameters, hyperparameters are <em>not directly
+estimated from the data</em>.</li>
+<li>However, adjusting hyperparameters can improve the fit of a
+model.</li>
+<li>Standard procedure: Assess hyperparameter tuning using CV, then test
+the tuned model on a held-out testing set (that was not used in the
+tuning process).</li>
+</ul>
+</section>
+<section id="some-xgboost-hyperparameters" class="slide level2">
+<h2>Some XGBoost Hyperparameters</h2>
+<p>For a complete list, see the <a href="https://xgboost.readthedocs.io/en/stable/parameter.html">XGBoost
+documentation</a>.</p>
+<ul>
+<li><code>eta</code> (learning rate). Not really something you tune.
+Generally, smaller is better, given reasonable time considerations.</li>
+<li><code>gamma</code> (minimum loss required to make a split on a
+tree). Larger <span class="math inline">\(\Rightarrow\)</span> less
+flexible.</li>
+<li><code>max_depth</code> (maximum depth of a tree). Larger <span class="math inline">\(\Rightarrow\)</span> more flexible.</li>
+<li><code>max_leaves</code> (maximum number of leaves). Larger <span class="math inline">\(\Rightarrow\)</span> more flexible.</li>
+<li><code>subsample</code> (percentage of rows to randomly sample for
+each iteration). Must be <span class="math inline">\(\leq 1\)</span>,
+usually greater than 0.5. Can prevent overfitting.</li>
+<li><code>colsample_bytree</code> (percentage of columns to randomly
+sample). Can deal with correlated or noisy predictors.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p>A warning from the <a href="https://xgboost.readthedocs.io/en/stable/parameter.html">XGBoost
+Documentation</a>:</p>
+<blockquote>
+<p>Parameter tuning is a dark art in machine learning, the optimal
+parameters of a model can depend on many scenarios. So it is impossible
+to create a comprehensive guide for doing so.</p>
+</blockquote>
 </section></section>
 <section id="lab-tuning-an-xgboost-model" class="title-slide slide level1">
 <h1>Lab: Tuning an <code>xgboost</code> model</h1>

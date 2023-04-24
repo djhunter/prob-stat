@@ -61,6 +61,7 @@ This site provides slides, assignments, and other resources for an upper-divisio
 19. [Decision Trees](slides/19-decision_trees.html)
 20. [Random Forests](slides/20-random_forest.html)
 21. [Boosting](slides/21-boosting.html)
+22. [Learning: General Considerations](slides/22-learning.html)
 
 ---
 # 20. []()
@@ -89,6 +90,7 @@ This site provides slides, assignments, and other resources for an upper-divisio
 19. [Decision Trees](assignments/19-dtrees.html), due 4/16.
 20. [Random Forests](assignments/20-rand-forest.html), due 4/18.
 21. [Extreme Gradient Boosting](assignments/21-xgboost.html), due 4/23.
+22. [Random Forest vs. XGBoost](assignments/22-ww_for_v_xgb.html), due 4/25.
 
 # Other Resources
 

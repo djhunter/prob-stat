@@ -1,0 +1,33 @@
+---
+title: "Random Forest vs. XGBoost"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Please submit your written work as a PDF produced by your method of choice, or as a Word Document or Google Doc. **This written document should contain all the relevant output and graphics, as well as written answers to all the questions.** Please also upload a separate R script (`filename.R`) with the code that you used to answer the questions (code only, no output): due 4/25, 11:59pm. 
+
+For the following problems, use the white wine part of the wine data set, and use the following train/test split:
+
+```{r, eval=FALSE}
+wine <- read_csv("https://djhunter.github.io/prob-stat/data/wine.csv")
+whitewine <- wine %>% dplyr::slice(1600:6497) 
+trainSize <- round(0.80 * nrow(whitewine))
+set.seed(1234) 
+trainIndex <- sample(nrow(whitewine), trainSize)
+trainDF <- whitewine %>% dplyr::slice(trainIndex)
+testDF <- whitewine %>% dplyr::slice(-trainIndex)
+```
+
+The goal is to predict `quality` from the other variables in the data frame.
+
+1. Train a random forest model on the training set and test it on the testing set. Compute the testing set RMSE.
+
+2. Make an XGBoost model and tune it using cross validation on the training set. The choice of XGBoost parameters to tune is up to you. Train your tuned model on the training set, and test it using the testing set. Compare the testing set RMSE to the one you got in part (1).
+
+If you get stuck, there are sample solutions in the [Data Carpentry workshop curriculum](https://carpentries-incubator.github.io/r-ml-tabular-data/). 
