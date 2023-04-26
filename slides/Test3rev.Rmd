@@ -39,7 +39,15 @@ Please see the study guide for a more comprehensive list of what the final exam 
 
 ---
 
-3. Explain, with diagrams, how the out-of-bag error (OOB) for a random forest is calculated.
+3. Suppose that a principal components analysis was done on a sample of breakfast cereals. The first component was dominated by the variables $X_1=$ `sugar`, $X_2=$ `calories` and $X_3=$ `fiber`, and the second component was dominated by the variables $X_4=$ `price` and $X_5=$ `popularity`, and to a lesser extent, `fiber` and `sugar`. Make up plausible loadings for the first two components, and construct a corresponding biplot.
+
+---
+
+4. Make up a data set of four observations with distinct $Y$ values and two predictors $X_1, X_2$ and a decision tree $\hat{f}$ such that all of the residuals are zero (i.e., the decision tree fits the data exactly). Represent the tree as a subdivided rectangle and as a tree.
+
+---
+
+5. Explain, with diagrams, how the out-of-bag error (OOB) for a random forest is calculated.
 
 ---
 

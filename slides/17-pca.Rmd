@@ -134,6 +134,7 @@ $$
 ## Center and Scale
 
 **Note:** Generally, you need to *center and scale* your data before using PCA.
+
 - All the formulas assume $E(X_i) = 0$, so the data better be mean-centered.
 - If different $X_i$s have different units, the PCA loadings will be affected. So you should scale (i.e., standardize) to give each variable variance 1.
     - If all the variables are in the same units, you might elect not to scale.

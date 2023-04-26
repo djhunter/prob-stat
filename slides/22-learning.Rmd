@@ -52,7 +52,7 @@ The function $\hat{f}$ can take many different forms, e.g., a linear function, a
 
 The **parameters** of a model are the collection of constants $\theta$ necessary to express $\hat{f}$ (as a formula or algorithm). For example,
 
->- Linear regression: $\hat{f}(x) = \hat\beta_1x_1 + \hat\beta_2x_2 + \cdots + \hat\beta_px_p$. Parameters are the model coefficients: $\theta = (\beta_1, \beta_2, \ldots, \beta_p)$.
+>- Linear regression: $\hat{f}(x) = \beta_0 + \hat\beta_1x_1 + \hat\beta_2x_2 + \cdots + \hat\beta_px_p$. Parameters are the model coefficients: $\theta = (\beta_0, \beta_1, \beta_2, \ldots, \beta_p)$.
 >- Decision tree: parameters are the split points (basically).
 >- Ensembles (random forests and boosted trees): parameters are the split points of all the trees.
 >    - The number of parameters $N$ can be very large.
