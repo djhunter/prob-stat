@@ -1,0 +1,46 @@
+---
+title: "Review for Final Exam"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+```
+
+
+# Selected Review Problems
+
+Please see the study guide for a more comprehensive list of what the final exam will cover.
+
+---
+
+1. Make up an example of a (non-constant) probability density function for a continuous random variable $X$, obtain a formula for the cumulative distribution function $F(x)$, and compute $E(X)$ and $V(X)$.
+
+---
+
+2. Suppose that $X$ is a normal random variable with mean $\mu$ and variance $\sigma^2$, and that $P(5 \leq X \leq 10) = 0.95$. Find values of $\mu$ and $\sigma$ consistent with this information. Is the answer unique?
+
+---
+
+3. Explain, with diagrams, how the out-of-bag error (OOB) for a random forest is calculated.
+
+---
+
+
